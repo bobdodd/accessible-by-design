@@ -7,16 +7,26 @@ This research note establishes the scope of a design system, surveys existing ac
 
 ## Evidence for the approach
 
-Design systems were the most frequently cited accessibility strategy in practitioner interviews, appearing in 48% overall and rising from 33% in 2017 to 52% in 2019-2020.
-The reported conclusion was that organisations should build accessibility into components rather than rely only on specialist teams or post-hoc audits.
-Usability testing with disabled people was cited in 31% of interviews, audits in 17%, and empathy labs in 10%.
+Putnam, Rose and MacDonald interviewed user-experience practitioners in three phases between 2017 and 2020 and asked what their organisations had done about accessibility [1].
+Of 58 analysed interview sessions, 44 (76%) reported awareness of at least some action and 14 (24%) reported that no action had been taken.
+The paper identifies four common concrete actions, and gives a count for each: design systems in 28 sessions (48%), inclusion of people with disabilities in usability testing in 18 (31%), training in 7 (12%), and code considerations in 5 (8%).
+
+Design systems were the most cited of the four, described as "component and/or pattern libraries" in which "accessibility was coded in reusable components".
+Adoption rose across the fieldwork: 2 of 6 sessions in 2017 (33%), 4 of 10 in late 2018 and early 2019 (40%), and 22 of 42 between November 2019 and March 2020 (52%).
+The paper states its implication for industry directly, that an organisation not moving towards a design system is "behind and therefore not capitalizing on a design system's abilities to structurally embed accessibility in your products".
+
+Two further findings in the same paper constrain what this project may claim from it, and are recorded here for that reason.
+First, the groups most cited as responsible for accessibility were dedicated teams or specialists and engineers or developers, and the paper warns that resting responsibility there can produce "an attitude of 'that is someone else's problem'" and at worst "an abdication of responsibility" among other practitioners.
+A design system can concentrate responsibility the same way, if it becomes the place where accessibility is assumed to have been dealt with already.
+Second, the paper reports that the primary drivers of accessibility were compliance with top-down standards rather than ethical commitment, and reads this as indicating "a need for rigorous regulation".
+It does not present design systems as a replacement for audit or for regulation, and this note does not either.
 
 Accessibility is usefully understood as a crosscutting concern.
 It spans components rather than residing in one module.
 A productive split is between user technology support and user layout support.
 
 The split needs care.
-The WCAG Reflow exception seems to be about layout but depends on semantics: whether the two-dimensional relationship carries meaning needed to understand the content.
+The WCAG Reflow exception seems to be about layout but depends on semantics: whether the two-dimensional relationship carries meaning needed to understand the content [8].
 Classification follows what carries meaning, not the visual mechanism that produces it.
 
 ## Five layers
@@ -33,7 +43,7 @@ Confusing these layers is the source of many scope disputes.
 
 ## Tokens
 
-The W3C Design Tokens format reached its first stable version in 2025.
+The W3C Design Tokens Community Group published Design Tokens Format Module 2025.10, announced on 28 October 2025 as the specification's first stable version [2].
 It provides a vendor-neutral way to exchange named values, types, descriptions, aliases, themes, and modern colour spaces including OKLCH.
 It supports accessibility variants and cross-platform transformation.
 
@@ -51,7 +61,7 @@ Aliasing can express each scale step by reference to the prior step.
 ### GOV.UK Design System
 
 GOV.UK provides the strongest public example of a rigorous and honest design system.
-It says directly that using the system does not immediately make a service accessible.
+It says directly that "Using the GOV.UK Design System in a service does not immediately make that service accessible", and that additional "research, design, development and testing work" is needed "even when using accessible styles, components and patterns" [3].
 
 Practices to adopt:
 
@@ -64,16 +74,17 @@ The realistic-page rule matters because isolated components can still generate b
 
 ### Annotations
 
-GitHub describes annotations as carriers for intent that design mock-ups do not visibly express: controls, landmarks, heading structure, image purpose, labels, roles, and focus order.
-VA.gov provides categories for these concerns and includes a Notes category for known uncertainty about assistive-technology behaviour.
+GitHub describes annotations as notes that "help make the unseen explicit by conveying design intent that isn't shown visually", adding "technical semantics and specialist knowledge" to a design [4].
+VA.gov defines categories for these concerns, including Buttons, Feedback, Focus order, Headings, Images, Inputs, Landmarks, Links, Lists, and Reading order [5].
+Its Notes category is for "Any details that don't fit into the other annotation categories", and the page gives uncertainty as its worked example: "if you're uncertain how an interaction may work (eg. for assistive technology users) and want to call attention to that unknown" [5].
 
-The project adopts uncertainty explicitly.
-It also follows GitHub's economy rule: do not annotate what the visual design, component API, or coded component already guarantees.
+The project adopts uncertainty explicitly, and goes further than VA.gov by making it a record type in the package rather than a note in a design file.
+It also follows GitHub's economy rule, which is to "Only include key information that isn't conveyed visually, isn't in the component properties, and isn't already baked into a coded component" [6].
 
 ### Readiness gates
 
-A common readiness model checks visual accessibility, screen-reader compatibility, operability, and understandability.
-It is useful but incomplete when it does not record engines tested or address reflow, zoom, text spacing, and forced colours.
+Vendor guidance of the kind Supernova publishes checks visual accessibility, screen-reader compatibility, operability, and understandability [7].
+A model of that shape is useful but incomplete when it does not record which engines were tested, or address reflow, zoom, text spacing, and forced colours.
 
 ## Recurring gaps
 
@@ -85,7 +96,7 @@ It is useful but incomplete when it does not record engines tested or address re
 
 ## How Every Layout fits
 
-The layout method is a foundation concern, not a component concern.
+The layout method, following Pickering and Bell [9], is a foundation concern, not a component concern.
 It must appear in four forms.
 
 ### Principles
@@ -128,13 +139,20 @@ Each primitive needs tests for 400% zoom, doubled root font size, text-spacing o
 5. Composition conformance beside component conformance
 6. A documented token-format gap around contrast relationships
 
-## Sources
+## References
 
-- W3C Design Tokens Community Group, Design Tokens Format Module
-- GOV.UK Design System accessibility strategy and acceptance criteria
-- GitHub engineering articles on design-system annotations
-- VA.gov Design System accessibility annotations
-- Supernova accessibility-in-design-system guidance
-- Practitioner research on accessibility strategy adoption
-- W3C WAI, Understanding SC 1.4.10 Reflow
-- *Every Layout*, Heydon Pickering and Andy Bell
+1. Putnam, C., Rose, E. J. and MacDonald, C. M. (2022). "It would be better. It would be much worse": Understanding Accessibility in User Experience Practice with Implications for Industry and Education. *ACM Transactions on Accessible Computing*. <https://doi.org/10.1145/3575662>
+2. W3C Design Tokens Community Group (2025). *Design Tokens Format Module 2025.10*. <https://www.designtokens.org/TR/2025.10/format/>. Announcement, 28 October 2025: <https://www.w3.org/community/design-tokens/2025/10/28/design-tokens-specification-reaches-first-stable-version/>
+3. Government Digital Service. *GOV.UK Design System: accessibility*. <https://design-system.service.gov.uk/accessibility/>. Accessibility strategy: <https://design-system.service.gov.uk/accessibility/accessibility-strategy/>. Accessibility acceptance criteria in version control: <https://github.com/alphagov/govuk-frontend/blob/main/docs/contributing/test-components-using-accessibility-acceptance-criteria.md>
+4. Ellis, J. *Design system annotations, part 1: How accessibility gets left out of components*. The GitHub Blog. <https://github.blog/engineering/user-experience/design-system-annotations-part-1-how-accessibility-gets-left-out-of-components/>
+5. Department of Veterans Affairs. *Accessibility annotations for VA.gov applications*. VA.gov Design System. <https://design.va.gov/accessibility/accessibility-annotations>
+6. Ellis, J. *Design system annotations, part 2: Advanced methods of annotating components*. The GitHub Blog. <https://github.blog/engineering/user-experience/design-system-annotations-part-2-advanced-methods-of-annotating-components/>
+7. Supernova. *Accessibility in Design Systems: A Comprehensive Approach Through Documentation and Assets*. <https://www.supernova.io/blog/accessibility-in-design-systems-a-comprehensive-approach-through-documentation-and-assets>
+8. W3C Web Accessibility Initiative. *Understanding Success Criterion 1.4.10: Reflow*. <https://www.w3.org/WAI/WCAG22/Understanding/reflow>
+9. Pickering, H. and Bell, A. *Every Layout: Relearn CSS layout*. <https://every-layout.dev/>
+
+## Corrections
+
+2026-08-30. An earlier version of the "Evidence for the approach" section stated that audits were cited in 17% of interviews and empathy labs in 10%. Neither figure appears in reference [1] and neither is supported by any source. The paper reports four common concrete actions only, with counts for design systems (48%), usability testing (31%), training (12%), and code considerations (8%); it gives no percentage for audits, and "empathy lab" appears in it as one participant's description of a facility rather than as a counted category. The false figures have been removed and every remaining figure in that section has been checked against the paper.
+
+The same version summarised the paper as concluding that organisations should build accessibility into components "rather than rely only on specialist teams or post-hoc audits". That misstated it in the direction of this project's argument. The paper does warn that concentrating responsibility in specialist teams and developers risks abdication by others, but on audit and compliance it reports the opposite emphasis, reading its findings as indicating "a need for rigorous regulation". The section now records that.
