@@ -1,4 +1,10 @@
-// Build AFDS-Draft-Specification-v1.0.0.docx from the parsed AST.
+// Build a Word document from the AST written by tools/docx/parse.py.
+//
+// Usage: node tools/docx/build.js
+//
+// Every document-specific value comes from the AST, which carries the
+// tools/docx/documents.json entry that parse.py was run for. Run parse.py with
+// the same document key first.
 const fs = require('fs');
 const docx = require('docx');
 const {
@@ -11,10 +17,11 @@ const {
 const path = require('path');
 const REPO = path.resolve(__dirname, '..', '..');
 const ast = JSON.parse(fs.readFileSync(path.join(REPO, 'ast.json'), 'utf8'));
-const OUT = path.join(REPO, 'dist', 'AFDS-Draft-Specification-v1.0.0.docx');
+const DOC = ast.doc;
+const OUT = path.join(REPO, DOC.output);
 
-const TITLE = 'AFDS Draft Specification';
-const VERSION = '1.0.0';
+const TITLE = DOC.title;
+const VERSION = DOC.version;
 const USABLE = 9360;           // US Letter minus 1in margins
 const BODY = 22;               // 11pt
 const MONO = 17;               // 8.5pt
@@ -109,9 +116,17 @@ function buildTable(b) {
 const HL = [null, HeadingLevel.HEADING_1, HeadingLevel.HEADING_2,
   HeadingLevel.HEADING_3, HeadingLevel.HEADING_4];
 
+// Each ordered list gets its own numbering instance, so a new numbered list
+// restarts at 1 instead of continuing the previous list's count.
+let orderedInstance = 0;
+
 function render(blocks) {
   const out = [];
-  blocks.forEach((b) => {
+  blocks.forEach((b, bx) => {
+    if (b.k === 'li' && b.ord) {
+      const prev = blocks[bx - 1];
+      if (!prev || prev.k !== 'li' || !prev.ord) orderedInstance += 1;
+    }
     if (b.k === 'h') {
       out.push(new Paragraph({
         heading: HL[b.level],
@@ -125,7 +140,9 @@ function render(blocks) {
       }));
     } else if (b.k === 'li') {
       out.push(new Paragraph({
-        numbering: { reference: b.ord ? 'steps' : 'bullets', level: 0 },
+        numbering: b.ord
+          ? { reference: 'steps', level: 0, instance: orderedInstance }
+          : { reference: 'bullets', level: 0 },
         spacing: { before: 0, after: 120, line: 300 },
         children: runs(b.runs),
       }));
@@ -180,7 +197,7 @@ const statusTable = new Table({
   width: { size: USABLE, type: WidthType.DXA },
   columnWidths: [2600, 6760],
   rows: [
-    new TableRow({
+    new TableRow({ // header row
       tableHeader: true,
       cantSplit: true,
       children: ['Field', 'Value'].map((txt, ci) => new TableCell({
@@ -194,16 +211,7 @@ const statusTable = new Table({
         })],
       })),
     }),
-    statusRow('Version', `${VERSION} (draft)`),
-    statusRow('Status', 'Project draft. Not a W3C standard and not on any standards track.'),
-    statusRow('Date', '2026-08-29'),
-    statusRow('Project', 'Accessible by Design'),
-    statusRow('Publisher', 'Bob Dodd'),
-    statusRow('Canonical source', 'docs/AFDS-PACKAGE-FORMAT.md and docs/COLOPHON.md'),
-    statusRow('Source commit', ast.commit),
-    statusRow('Documentation licence', 'CC BY-SA 4.0'),
-    statusRow('Code licence', 'GPL-3.0-only'),
-    statusRow('Companion asset', 'AFDS-Sample-1.0.0.afds, a verified ten-entry sample package'),
+    ...ast.status.map(([label, value]) => statusRow(label, value)),
   ],
 });
 
@@ -222,15 +230,14 @@ const title = [
     spacing: { before: 0, after: 480 },
     border: { top: { style: BorderStyle.SINGLE, size: 6, color: '01696F', space: 8 } },
     children: [new TextRun({
-      text: 'The .afds package: the single-file distribution format for an '
-        + 'Accessibility Focused Design System bundle.',
+      text: DOC.subtitle,
       font: 'Arial', size: 24, color: INK,
     })],
   }),
   new Paragraph({
     heading: HeadingLevel.HEADING_1,
     keepNext: true,
-    children: [new TextRun({ text: 'Abstract', bold: true, font: 'Arial', size: 30 })],
+    children: [new TextRun({ text: DOC.abstractHeading, bold: true, font: 'Arial', size: 30 })],
   }),
   ...render(ast.intro),
   new Paragraph({
@@ -266,26 +273,24 @@ const title = [
   new Paragraph({ children: [new PageBreak()] }),
 ];
 
-const annexHead = [
+// The annex is optional: a document with no annex entry renders nothing here.
+const annexHead = DOC.annex ? [
   new Paragraph({
     pageBreakBefore: true,
     heading: HeadingLevel.HEADING_1,
     keepNext: true,
     children: [new TextRun({
-      text: 'Annex A. Adopted colophon decisions', bold: true, font: 'Arial', size: 30,
+      text: DOC.annex.heading, bold: true, font: 'Arial', size: 30,
     })],
   }),
   new Paragraph({
     spacing: { before: 0, after: 160, line: 300 },
     children: [new TextRun({
-      text: 'This annex is informative. It reproduces the two adopted project decisions '
-        + 'that this specification implements, as recorded in docs/COLOPHON.md. Each decision '
-        + 'states what was chosen, the reasoning, the cost accepted, the alternatives rejected, '
-        + 'and how the decision is verified.',
+      text: DOC.annex.intro,
       font: 'Arial', size: BODY,
     })],
   }),
-];
+] : [];
 
 // ---- document -------------------------------------------------------------
 const heading = (id, name, size, before, after, outline) => ({
@@ -296,11 +301,10 @@ const heading = (id, name, size, before, after, outline) => ({
 
 const doc = new Document({
   title: `${TITLE} ${VERSION}`,
-  description: 'Specification of the .afds single-file distribution format for an '
-    + 'Accessibility Focused Design System bundle.',
+  description: DOC.description,
   creator: 'Bob Dodd — Accessible by Design',
-  subject: 'Accessibility Focused Design System package format',
-  keywords: 'accessibility, design system, AFDS, package format, WCAG, design tokens',
+  subject: DOC.subject,
+  keywords: DOC.keywords,
   styles: {
     default: {
       document: { run: { font: 'Arial', size: BODY, color: INK, language: { value: 'en-GB' } } },
@@ -345,7 +349,7 @@ const doc = new Document({
         children: [new Paragraph({
           alignment: AlignmentType.RIGHT,
           children: [new TextRun({
-            text: `${TITLE} ${VERSION} — project draft`,
+            text: `${TITLE} ${VERSION} — ${DOC.headerSuffix}`,
             font: 'Arial', size: 17, color: MUTED,
           })],
         })],
@@ -364,7 +368,7 @@ const doc = new Document({
         })],
       }),
     },
-    children: [...title, ...render(ast.spec), ...annexHead, ...render(ast.annex)],
+    children: [...title, ...render(ast.body), ...annexHead, ...render(ast.annex)],
   }],
 });
 

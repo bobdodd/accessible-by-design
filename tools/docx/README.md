@@ -3,9 +3,18 @@ SPDX-FileCopyrightText: 2026 Bob Dodd
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-# tools/docx — Word build for the AFDS draft specification
+# tools/docx — Word build for the project's documents
 
-Generates `dist/AFDS-Draft-Specification-v1.0.0.docx` from committed Markdown. The Markdown is authoritative; this directory only re-presents it.
+Generates a Word document from committed Markdown. The Markdown is authoritative; this directory only re-presents it.
+
+The build takes a **document key** naming an entry in `documents.json`. Two documents are defined:
+
+| Key | Source | Output |
+| --- | --- | --- |
+| `spec` | `docs/AFDS-PACKAGE-FORMAT.md`, plus the two adopted portable-representation decisions in `docs/COLOPHON.md` as Annex A | `dist/AFDS-Draft-Specification-v1.0.0.docx` |
+| `guide` | `docs/AFDS-USER-GUIDE.md` | `dist/AFDS-User-Guide-v1.0.0.docx` |
+
+Each entry in `documents.json` holds the source path, the output path, the title, version, subtitle, the heading used for the opening section, the rows of the title-page status table, the document metadata, and an optional `annex` block naming a second file and the span to slice out of it. Adding a document means adding an entry, not editing the scripts.
 
 The document is built rather than exported by hand so that the accessibility properties are guaranteed by the build instead of remembered by an author.
 
@@ -13,12 +22,14 @@ The document is built rather than exported by hand so that the accessibility pro
 
 ```
 npm install docx@9
-python3 tools/docx/parse.py                        # docs/*.md  ->  ast.json
-node     tools/docx/build.js                       # ast.json   ->  .docx
-python3  tools/docx/postprocess.py <output.docx>   # required, see below
+python3 tools/docx/parse.py guide                  # markdown  ->  ast.json
+node     tools/docx/build.js                       # ast.json  ->  .docx
+python3  tools/docx/postprocess.py dist/AFDS-User-Guide-v1.0.0.docx   # required, see below
 ```
 
-`parse.py` reads `docs/AFDS-PACKAGE-FORMAT.md` plus the two adopted portable-representation decisions in `docs/COLOPHON.md`, and records the source commit so the title page can state it. It strips SPDX comments, joins the repository's one-sentence-per-line paragraphs into real paragraphs, and soft-wraps over-long code lines at 90 characters, printing a note wherever it wrapped.
+The document key is `parse.py`'s only argument and defaults to `spec`. `build.js` takes no argument: it reads the key, the document's configuration, and the output path out of `ast.json`, so the parse step decides which document is being built and the two steps cannot disagree.
+
+`parse.py` reads the document's source, slices in the annex if one is configured, and records the source commit so the title page can state it. It strips SPDX comments, joins the repository's one-sentence-per-line paragraphs into real paragraphs, and soft-wraps over-long code lines at 90 characters, printing a note wherever it wrapped.
 
 ## Why postprocess.py is not optional
 
@@ -34,6 +45,7 @@ The `docx` library emits its own `Heading1`–`Heading4` style definitions befor
 - `en-GB` document language, so a screen reader pronounces the project's British spellings correctly.
 - Full document metadata, including title and author, so the file is identifiable without being opened.
 - Black heading text at full contrast, not the library's default blue.
+- A separate numbering instance for each ordered list, so a list of steps starts at 1 rather than continuing the count of the previous list and misnumbering every item in it.
 
 ## Column widths and word breaking
 

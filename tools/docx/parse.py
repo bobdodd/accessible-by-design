@@ -1,7 +1,14 @@
-# Parse the committed AFDS Markdown into a structural AST for the Word build.
-import json, re, subprocess, textwrap, pathlib
+# Parse a committed AFDS Markdown document into a structural AST for the Word build.
+#
+# Usage: python3 tools/docx/parse.py [document-key]
+#
+# The document key selects an entry in tools/docx/documents.json, which names the
+# source Markdown, the output path, the title-page fields, and an optional annex
+# sliced out of a second file. The key defaults to "spec".
+import json, re, subprocess, sys, textwrap, pathlib
 
 REPO = pathlib.Path(__file__).resolve().parents[2]
+HERE = pathlib.Path(__file__).resolve().parent
 OUT = REPO / "ast.json"
 WRAP = 90  # max monospace chars per rendered code line
 
@@ -134,34 +141,47 @@ def strip_front(md):
     return title, [p.strip() for p in intro.strip().split("\n\n") if p.strip()], rest
 
 
-spec_md = (REPO / "docs/AFDS-PACKAGE-FORMAT.md").read_text()
-_, intro_paras, spec_body = strip_front(spec_md)
+key = sys.argv[1] if len(sys.argv) > 1 else "spec"
+documents = json.loads((HERE / "documents.json").read_text())
+if key not in documents:
+    raise SystemExit(f"unknown document key {key!r}; known keys: {', '.join(sorted(documents))}")
+doc = documents[key]
 
-# Annex: the two adopted colophon decisions.
-col = (REPO / "docs/COLOPHON.md").read_text()
-start = col.index("## Portable representation decisions")
-end = col.index("## Repository decisions")
-annex_md = col[start:end]
-annex_md = annex_md.replace("## Portable representation decisions", "").strip()
+source_md = (REPO / doc["source"]).read_text()
+_, intro_paras, body_md = strip_front(source_md)
+
+# Optional annex: a named span sliced out of a second document.
+annex_blocks = []
+annex = doc.get("annex")
+if annex:
+    other = (REPO / annex["file"]).read_text()
+    annex_md = other[other.index(annex["start"]):other.index(annex["end"])]
+    annex_md = annex_md.replace(annex["start"], "").strip()
+    # source h3 (each decision) -> Word Heading 2 under the annex Heading 1
+    annex_blocks = parse(annex_md, -1)
 
 commit = subprocess.run(["git", "-C", str(REPO), "rev-parse", "--short", "HEAD"],
                         capture_output=True, text=True).stdout.strip()
 
 ast = {
+    "key": key,
     "commit": commit,
+    "doc": doc,
+    # The title page records the commit, so the placeholder is filled here.
+    "status": [[label, value.replace("{commit}", commit)] for label, value in doc["status"]],
     "intro": [{"k": "p", "runs": inline(" ".join(p.split("\n")))} for p in intro_paras],
     # source h2 -> Word Heading 1, h3 -> Heading 2
-    "spec": parse(spec_body, -1),
-    # source h3 (each decision) -> Word Heading 2 under the Annex A Heading 1
-    "annex": parse(annex_md, -1),
+    "body": parse(body_md, -1),
+    "annex": annex_blocks,
 }
 OUT.write_text(json.dumps(ast, indent=1))
 
 kinds = {}
-for b in ast["spec"] + ast["annex"]:
+for b in ast["body"] + ast["annex"]:
     kinds[b["k"] + (str(b.get("level", "")) if b["k"] == "h" else "")] = \
         kinds.get(b["k"] + (str(b.get("level", "")) if b["k"] == "h" else ""), 0) + 1
+print("document:", key, "from", doc["source"])
 print("commit:", commit)
 print("blocks:", kinds)
-print("wrapped code blocks:", sum(1 for b in ast["spec"] if b["k"] == "code" and b["wrapped"]))
+print("wrapped code blocks:", sum(1 for b in ast["body"] if b["k"] == "code" and b["wrapped"]))
 print("intro paras:", len(ast["intro"]))
