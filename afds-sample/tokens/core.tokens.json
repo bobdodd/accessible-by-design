@@ -1,0 +1,93 @@
+{
+  "$schema": "https://design-tokens.org/schemas/2025.10/tokens.schema.json",
+  "$description": "Core AFDS sample tokens. Spacing and typography share one modular scale rooted at 1rem so that user font-size changes propagate through both type and space.",
+  "scale": {
+    "$type": "dimension",
+    "$description": "Modular scale steps. Each step is expressed in rem so that it tracks the user's root font size.",
+    "step-0": {
+      "$value": {
+        "value": 1,
+        "unit": "rem"
+      },
+      "$description": "The seed of the scale: one line of body text."
+    },
+    "step-1": {
+      "$value": {
+        "value": 1.5,
+        "unit": "rem"
+      },
+      "$description": "One step above the seed."
+    },
+    "step-2": {
+      "$value": {
+        "value": 2.25,
+        "unit": "rem"
+      },
+      "$description": "Two steps above the seed."
+    },
+    "step-minus-1": {
+      "$value": {
+        "value": 0.75,
+        "unit": "rem"
+      },
+      "$description": "One step below the seed. Not used for body copy."
+    }
+  },
+  "space": {
+    "$type": "dimension",
+    "$description": "Spacing tokens are aliases of scale steps rather than independent values, so spacing cannot drift away from the type scale.",
+    "tight": {
+      "$value": "{scale.step-minus-1}",
+      "$description": "Alias reference to the scale step below the seed."
+    },
+    "default": {
+      "$value": "{scale.step-0}",
+      "$description": "Alias reference to the seed step. This is the default Stack gap."
+    },
+    "loose": {
+      "$value": "{scale.step-1}",
+      "$description": "Alias reference to one step above the seed."
+    }
+  },
+  "typography": {
+    "$description": "Typographic values. Line height is unitless so that it scales with font size.",
+    "body-size": {
+      "$type": "dimension",
+      "$value": "{scale.step-0}",
+      "$description": "Alias reference to the seed step. Body copy is never smaller than this."
+    },
+    "body-line-height": {
+      "$type": "number",
+      "$value": 1.5,
+      "$description": "Unitless line height for body copy, meeting the WCAG 1.4.12 text-spacing expectation."
+    },
+    "measure": {
+      "$type": "dimension",
+      "$value": {
+        "value": 60,
+        "unit": "ch"
+      },
+      "$description": "Maximum inline size of a text block, in character widths. The ch unit follows the font's character width as font size changes."
+    }
+  },
+  "colour": {
+    "$type": "color",
+    "$description": "Colour tokens are candidates for contrast pairing, not guarantees. DTCG carries values, not contrast relationships, so the pairing constraint lives in the component specification.",
+    "surface": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [1, 1, 1],
+        "alpha": 1
+      },
+      "$description": "Default page surface."
+    },
+    "ink": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0.07, 0.07, 0.09],
+        "alpha": 1
+      },
+      "$description": "Default body text colour, intended for use on colour.surface."
+    }
+  }
+}

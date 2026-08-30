@@ -1,0 +1,113 @@
+{
+  "afdsEvidenceVersion": "1.0.0",
+  "description": "Engine-qualified assistive-technology evidence records for the AFDS Sample package. Every result in this file is the placeholder value not-yet-tested. No record in this file describes an observation that actually took place.",
+  "resultVocabulary": [
+    {
+      "value": "not-yet-tested",
+      "meaning": "No observation has been made. The claim it would support is uncertainty, not a guarantee."
+    },
+    {
+      "value": "supported",
+      "meaning": "The expected behaviour was observed on the stated engine, browser, and assistive-technology versions on the stated date."
+    },
+    {
+      "value": "partial",
+      "meaning": "The behaviour was observed but differs materially from the expectation. The difference MUST be described."
+    },
+    {
+      "value": "unsupported",
+      "meaning": "The expected behaviour was not observed."
+    },
+    {
+      "value": "not-applicable",
+      "meaning": "The combination cannot exhibit the behaviour, for example because the platform has no such feature."
+    }
+  ],
+  "records": [
+    {
+      "id": "stack-nvda-chromium",
+      "componentId": "stack",
+      "claim": "The Stack container element itself is not announced as an additional structural object.",
+      "engine": "Blink",
+      "engineVersion": "not-yet-tested",
+      "browser": "Chrome",
+      "browserVersion": "not-yet-tested",
+      "at": "NVDA",
+      "atVersion": "not-yet-tested",
+      "platform": "Windows",
+      "date": "not-yet-tested",
+      "result": "not-yet-tested",
+      "observation": "not-yet-tested",
+      "tester": "not-yet-tested",
+      "uncertaintyRef": "stack-u1"
+    },
+    {
+      "id": "stack-jaws-chromium",
+      "componentId": "stack",
+      "claim": "The Stack container element itself is not announced as an additional structural object.",
+      "engine": "Blink",
+      "engineVersion": "not-yet-tested",
+      "browser": "Chrome",
+      "browserVersion": "not-yet-tested",
+      "at": "JAWS",
+      "atVersion": "not-yet-tested",
+      "platform": "Windows",
+      "date": "not-yet-tested",
+      "result": "not-yet-tested",
+      "observation": "not-yet-tested",
+      "tester": "not-yet-tested",
+      "uncertaintyRef": "stack-u1"
+    },
+    {
+      "id": "stack-voiceover-webkit",
+      "componentId": "stack",
+      "claim": "The Stack container element itself is not announced as an additional structural object.",
+      "engine": "WebKit",
+      "engineVersion": "not-yet-tested",
+      "browser": "Safari",
+      "browserVersion": "not-yet-tested",
+      "at": "VoiceOver",
+      "atVersion": "not-yet-tested",
+      "platform": "macOS",
+      "date": "not-yet-tested",
+      "result": "not-yet-tested",
+      "observation": "not-yet-tested",
+      "tester": "not-yet-tested",
+      "uncertaintyRef": "stack-u1"
+    },
+    {
+      "id": "stack-orca-gecko",
+      "componentId": "stack",
+      "claim": "The Stack container element itself is not announced as an additional structural object.",
+      "engine": "Gecko",
+      "engineVersion": "not-yet-tested",
+      "browser": "Firefox",
+      "browserVersion": "not-yet-tested",
+      "at": "Orca",
+      "atVersion": "not-yet-tested",
+      "platform": "Linux",
+      "date": "not-yet-tested",
+      "result": "not-yet-tested",
+      "observation": "not-yet-tested",
+      "tester": "not-yet-tested",
+      "uncertaintyRef": "stack-u1"
+    },
+    {
+      "id": "stack-electron-font-scaling",
+      "componentId": "stack",
+      "claim": "Rem-anchored gaps grow with operating-system font scaling inside an Electron shell.",
+      "engine": "Blink",
+      "engineVersion": "not-yet-tested",
+      "browser": "Electron",
+      "browserVersion": "not-yet-tested",
+      "at": "none",
+      "atVersion": "not-applicable",
+      "platform": "not-yet-tested",
+      "date": "not-yet-tested",
+      "result": "not-yet-tested",
+      "observation": "not-yet-tested",
+      "tester": "not-yet-tested",
+      "uncertaintyRef": "stack-u2"
+    }
+  ]
+}

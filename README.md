@@ -23,8 +23,12 @@ A system manages some of the available UI resources and modalities; it cannot re
 | [Colophon](docs/COLOPHON.md) | Decisions with reasoning, cost, alternatives, and verification |
 | [Layout method](docs/LAYOUT-METHOD.md) | Intrinsic layout, primitives, axioms, and WCAG mapping |
 | [Reflow and data tables](docs/REFLOW-AND-DATA-TABLES.md) | SC 1.4.10 research and the semantic scope of its exception |
+| [APG support](docs/APG-SUPPORT.md) | How the system adopts ARIA Authoring Practices patterns by reference |
+| [AFDS package format](docs/AFDS-PACKAGE-FORMAT.md) | The `.afds` ZIP container, manifest, inventory, and verification rules |
 | [Open questions](docs/OPEN-QUESTIONS.md) | Single source of truth for the research agenda |
 | [Design systems research](research/DESIGN-SYSTEMS.md) | Scope, prior art, tokens, annotations, and gaps |
+| [Portable representations research](research/PORTABLE-REPRESENTATIONS.md) | Standards, proposals, and commercial formats for portable design systems |
+| [AFDS sample package](afds-sample/) | Unpacked sources of a verified sample `.afds` package |
 
 ## Documentation rule
 
@@ -32,10 +36,31 @@ Every material decision is recorded in five parts: the decision, reasoning, cost
 An entry without a stated cost is incomplete.
 When a decision turns out to be wrong, the superseded reasoning is retained in a note rather than silently deleted.
 
+## The design system representation
+
+The project's base representation is the Accessibility Focused Design System (AFDS), currently at draft version 1.0.0.
+AFDS is a portable bundle rather than a single universal file format, because no existing standard carries a complete design system.
+It composes DTCG design tokens, structured component contracts, Custom Elements Manifest, Component Story Format stories, engine-qualified assistive-technology evidence, documentation, and explicit adapters, linked by a manifest.
+
+A bundle is distributed as one ZIP-based file with the `.afds` extension, carrying a root manifest and a SHA-256 inventory so a consumer can verify it before relying on its contents.
+AFDS 1.0.0 is a project draft and not a W3C standard.
+
 ## Licensing
 
-Documentation and written content are licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), as marked by each file's SPDX header.
-Code licensing will be added before implementation begins.
+This repository is dual-licensed.
+
+| Material | Licence | SPDX identifier |
+| --- | --- | --- |
+| Code, scripts, tooling, and components | GNU General Public License v3.0 only | `GPL-3.0-only` |
+| Documentation and written content in `docs/` and `research/` | Creative Commons Attribution-ShareAlike 4.0 International | `CC-BY-SA-4.0` |
+
+The full texts are in [LICENSE](LICENSE) and [LICENSE-DOCS](LICENSE-DOCS).
+Every file carries an SPDX header so that its licence travels with it when copied out of the repository.
+
+CC BY-SA 4.0 is only one-way compatible with GPLv3: documentation from here may be absorbed into a GPLv3 work, but GPLv3 material may not be relicensed as CC BY-SA.
+[CONTRIBUTING.md](CONTRIBUTING.md) explains what this means in practice for anyone contributing.
+
+Copyright (C) 2026 Bob Dodd.
 
 ## Attribution
 

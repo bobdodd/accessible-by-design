@@ -121,7 +121,11 @@ Sticky and fixed positioning are deferred because they can obscure focus at zoom
 | Scroll | Two-dimensional scrolling scoped to the excepted container |
 | Positioning | No sticky or fixed positioning pending a container-driven equivalent |
 | Documentation | Markdown, sentence-per-line, real headings, regular tables |
-| Licencing | Documentation is CC BY-SA 4.0; implementation licence remains to be added |
+| Base representation | AFDS 1.0.0, a portable bundle rather than one universal file format |
+| Distribution | One ZIP-based `.afds` package with a root manifest and a SHA-256 inventory |
+| Token format | DTCG JSON is canonical for token values, and never the carrier of accessibility contracts |
+| Adapters | No adapter is canonical; every transform reports mappings, warnings, and losses |
+| Licencing | Code is GPL-3.0-only; documentation is CC BY-SA 4.0 |
 
 ## What this project claims to add
 
@@ -131,11 +135,20 @@ Sticky and fixed positioning are deferred because they can obscure focus at zoom
 4. Assertions that travel with specifications
 5. Composition conformance as well as component conformance
 6. A documented token-standard gap around contrast relationships
+7. A portable package format that carries the accessibility contract, evidence, and uncertainty as first-class records rather than leaving them in a design tool or an untracked spreadsheet
 
 ## Open questions
 
 The full agenda is [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md).
 The most consequential near-term questions are token source-of-truth, AAA contrast in data-dense reporting, container queries versus the Switcher technique, a non-media-query strategy for sticky behaviour, and component-inventory derivation for organisations without a design system.
+
+## Related documents
+
+| Document | Purpose |
+| --- | --- |
+| [APG support](APG-SUPPORT.md) | How ARIA Authoring Practices patterns are adopted by reference, with a registry, keyboard contracts, and a testing model |
+| [AFDS package format](AFDS-PACKAGE-FORMAT.md) | The `.afds` container, manifest, inventory, verification procedure, and security rules |
+| [Portable representations](../research/PORTABLE-REPRESENTATIONS.md) | Survey of DTCG, Custom Elements Manifest, CSF, Open UI, W3C community work, and the commercial ecosystem |
 
 ## Sources
 

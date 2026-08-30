@@ -1,0 +1,76 @@
+{
+  "afdsFormat": "afds-inventory",
+  "afdsVersion": "1.0.0",
+  "packageId": "com.a11ybob.abd.afds-sample",
+  "packageVersion": "1.0.0",
+  "digestAlgorithm": "SHA-256",
+  "digestEncoding": "lowercase-hex",
+  "excludesSelf": true,
+  "entryCount": 9,
+  "description": "Inventory of every entry in this package except this inventory itself. A consumer must verify every record before relying on package content. These digests detect transfer changes; they are not a digital signature and do not identify a signer or prove provenance.",
+  "records": [
+    {
+      "path": "LICENSES.md",
+      "mediaType": "text/markdown; charset=utf-8",
+      "byteLength": 2136,
+      "role": "documentation",
+      "sha256": "59e2e4430494ceadffc00f9bd7c6465074df86b233fd9fe835cb538f8e3dd136"
+    },
+    {
+      "path": "adapters/README.md",
+      "mediaType": "text/markdown; charset=utf-8",
+      "byteLength": 3139,
+      "role": "documentation",
+      "sha256": "47fc3990fbabc2e6a75364b4a8b6dbd63961e12ccb69edda6640df19316d05fa"
+    },
+    {
+      "path": "afds-manifest.json",
+      "mediaType": "application/json",
+      "byteLength": 2767,
+      "role": "canonical",
+      "sha256": "b480866e44ae0d668893821d3fe394e00d36707ac05485b2654d38475cf51748"
+    },
+    {
+      "path": "components/stack/stack.md",
+      "mediaType": "text/markdown; charset=utf-8",
+      "byteLength": 5595,
+      "role": "documentation",
+      "sha256": "62ab895d1936ff60ca7910a0f58365acd07108d59968ddb433b42a02ef9e1ef6"
+    },
+    {
+      "path": "components/stack/stack.spec.json",
+      "mediaType": "application/json",
+      "byteLength": 6888,
+      "role": "canonical",
+      "sha256": "bad45e48901513f2affc9ebe11856554e652d506b708eb03ae68e6550fd73886"
+    },
+    {
+      "path": "docs/PACKAGE.md",
+      "mediaType": "text/markdown; charset=utf-8",
+      "byteLength": 3214,
+      "role": "documentation",
+      "sha256": "d330ac498c1609458699a4427a906b6946b8a3dc80b60d998f630b66beafd12a"
+    },
+    {
+      "path": "evidence/at-matrix.json",
+      "mediaType": "application/json",
+      "byteLength": 4008,
+      "role": "evidence",
+      "sha256": "e51db3e6309759abffb85972cc71f738491e4984a73988c6645a3f1b066e5747"
+    },
+    {
+      "path": "evidence/known-limitations.md",
+      "mediaType": "text/markdown; charset=utf-8",
+      "byteLength": 3134,
+      "role": "evidence",
+      "sha256": "625d0c28416f5ab7c1695c40f812caa6d662b115e33bc50b7b8993fa077f666f"
+    },
+    {
+      "path": "tokens/core.tokens.json",
+      "mediaType": "application/json",
+      "byteLength": 3055,
+      "role": "canonical",
+      "sha256": "b45bb732e28f4c3f906bb37231442e7051fb2ffe34ef6b57753b29dc68c7a29b"
+    }
+  ]
+}

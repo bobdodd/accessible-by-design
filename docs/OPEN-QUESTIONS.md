@@ -39,6 +39,9 @@ CSS custom properties already satisfy the immediate need without a build step.
 
 **To settle:** whether tokens generate CSS or CSS exports tokens.
 
+**Partly settled.** The colophon now adopts DTCG JSON as the canonical portable representation for token values, so DTCG is the source of truth for the values themselves.
+The build direction is still open, and DTCG remains explicitly incapable of carrying component semantics, keyboard behaviour, evidence, non-guarantees, or contrast assertions.
+
 ### B2. The `ch` problem
 
 `ch` has no direct iOS or Android equivalent.
@@ -50,6 +53,8 @@ CSS custom properties already satisfy the immediate need without a build step.
 Token formats carry values, not assertions that one foreground token is valid against one background token at a threshold such as 7:1.
 
 **To settle:** whether to propose an interchange representation and implement an interim project convention.
+
+**Note.** [The portable representations research note](../research/PORTABLE-REPRESENTATIONS.md) records why such an assertion must not be stored only in DTCG `$extensions`, since extensions are optional metadata that a tool may preserve without understanding.
 
 ## C. Colour and typography
 
@@ -166,7 +171,67 @@ A design system does not automatically make a service accessible.
 
 **To settle:** exact project wording and where it appears.
 
-## G. Deferred
+## G. Components and APG patterns
+
+The detailed treatment is in [the APG support research note](APG-SUPPORT.md), which ends with its own open-questions list.
+The headline items are recorded here so this register stays the single source of truth.
+
+### G1. Which APG patterns enter the approved catalogue?
+
+A priority order exists, running from native primitives through disclosure, dialog, and status messaging, with tree, treegrid, and ARIA grid last.
+The order is reasoned rather than evidenced.
+
+**To settle:** what user or task evidence admits a pattern to the catalogue, and what removes one.
+
+### G2. Adopting APG by reference
+
+A proposed decision states that APG patterns are adopted by reference and not copied by default.
+It is drafted but not yet adopted.
+
+**To settle:** whether the decision moves to the colophon as written, and how a deviation from an APG convention is recorded and reviewed.
+
+### G3. Minimum assistive-technology matrix per component
+
+A component contract is only as real as the engine support behind it.
+No minimum matrix has been fixed for an APG-derived component.
+
+**To settle:** which browser, engine, and screen-reader pairs are mandatory, and what retest cadence applies when versions change.
+
+## H. Portable representation and packaging
+
+Two decisions are adopted and recorded in [the colophon](COLOPHON.md): AFDS is a portable bundle rather than a monolithic format, and a bundle is distributed as a single `.afds` package.
+The supporting survey is in [the portable representations research note](../research/PORTABLE-REPRESENTATIONS.md) and the container is specified in [the AFDS package format document](AFDS-PACKAGE-FORMAT.md).
+What remains open is listed there in full; the headline items follow.
+
+### H1. The component-contract schema
+
+A provisional component-specification format exists, pairing human-readable Markdown with machine-readable JSON.
+It is project-invented terminology and has no external validation.
+
+**To settle:** the JSON Schema, the stable identifier scheme, and how the vocabulary maps onto external work rather than becoming isolated.
+
+### H2. Alignment targets after the UI Specification Schema group closed
+
+The W3C UI Specification Schema Community Group was the closest external match to this project's needs and is now closed.
+Its charter remains a useful requirements input.
+
+**To settle:** which live group, if any, becomes the alignment target, and whether the project contributes requirements to the Design System Documentation Community Group instead.
+
+### H3. Package identity and signing
+
+Inventory integrity uses SHA-256 and detects transfer changes.
+It does not identify a signer or establish provenance.
+
+**To settle:** the signature mechanism, what it signs, and how a consumer expresses trust in a publisher.
+
+### H4. IANA registration and package-aware tooling
+
+The underlying media type is `application/zip` in the interim, identified by the `.afds` extension and root manifest.
+Editing an artefact currently means unpacking the whole package.
+
+**To settle:** whether to pursue a dedicated media-type registration, and what editing, diffing, and delta-distribution tooling a package format needs to be workable.
+
+## I. Deferred
 
 - Implementation language and framework beyond Electron with raw HTML, CSS, and JavaScript
 - Remediation-tool design

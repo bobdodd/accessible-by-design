@@ -1,0 +1,7 @@
+# Built AFDS packages are derived artefacts and are not committed.
+# Regenerate with afds-sample/tools/build-inventory.py pack <destination>.
+*.afds
+
+# Python bytecode from the package tooling.
+__pycache__/
+*.pyc

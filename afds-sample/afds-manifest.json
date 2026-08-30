@@ -1,0 +1,90 @@
+{
+  "afdsFormat": "afds-package",
+  "afdsVersion": "1.0.0",
+  "packageId": "com.a11ybob.abd.afds-sample",
+  "packageVersion": "1.0.0",
+  "title": "AFDS Sample",
+  "description": "A minimal but complete Accessibility Focused Design System package demonstrating the declared hierarchy, canonical source declarations, a DTCG token sample, one layout-primitive component contract, structured assistive-technology evidence, adapter guidance, and dual licensing.",
+  "created": "2026-08-29",
+  "conformanceProfile": "afds-components",
+  "licences": {
+    "code": "GPL-3.0-only",
+    "documentation": "CC-BY-SA-4.0"
+  },
+  "publisher": {
+    "name": "Bob Dodd",
+    "project": "Accessible by Design",
+    "uri": "https://a11ybob.com/"
+  },
+  "tokens": {
+    "dtcgVersion": "2025.10",
+    "canonicalSources": [
+      {
+        "id": "core",
+        "path": "tokens/core.tokens.json",
+        "role": "canonical",
+        "description": "Core spacing, typography, measure, and colour tokens for the sample."
+      }
+    ]
+  },
+  "components": {
+    "canonicalSources": [
+      {
+        "id": "stack",
+        "name": "Stack",
+        "kind": "layout-primitive",
+        "specification": "components/stack/stack.spec.json",
+        "documentation": "components/stack/stack.md",
+        "role": "canonical"
+      }
+    ]
+  },
+  "patterns": {
+    "canonicalSources": []
+  },
+  "evidence": {
+    "canonicalSources": [
+      {
+        "id": "at-matrix",
+        "path": "evidence/at-matrix.json",
+        "role": "evidence",
+        "description": "Engine-qualified assistive-technology evidence records. All results in this sample are placeholders."
+      },
+      {
+        "id": "known-limitations",
+        "path": "evidence/known-limitations.md",
+        "role": "evidence",
+        "description": "Narrative record of known limitations, non-guarantees, and uncertainty."
+      }
+    ]
+  },
+  "schemas": {
+    "canonicalSources": []
+  },
+  "documentation": {
+    "sources": [
+      {
+        "path": "docs/PACKAGE.md",
+        "role": "documentation",
+        "description": "What this sample package demonstrates."
+      },
+      {
+        "path": "LICENSES.md",
+        "role": "documentation",
+        "description": "Dual licensing arrangement for code and documentation."
+      },
+      {
+        "path": "adapters/README.md",
+        "role": "documentation",
+        "description": "Adapter guidance and the no-adapter-is-canonical rule."
+      }
+    ]
+  },
+  "adapters": [],
+  "stories": [],
+  "notes": [
+    "AFDS 1.0.0 is a project draft, not a W3C standard.",
+    "Inventory integrity is not a digital signature and does not prove provenance.",
+    "No assistive-technology test results in this package are real; every result field is marked not-yet-tested."
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "afdsSpecVersion": "1.0.0",
+  "id": "stack",
+  "name": "Stack",
+  "kind": "layout-primitive",
+  "version": "1.0.0",
+  "status": "draft",
+  "summary": "Stack applies consistent vertical rhythm between sibling elements in document order. It supplies geometry only.",
+  "semanticModel": {
+    "role": "none",
+    "implicitElement": "div",
+    "accessibleName": "none",
+    "rationale": "A layout primitive cannot know whether its children form a list, a group, a set of landmarks, or unrelated blocks. Only the consumer knows, so Stack adds no ARIA role, no accessible name, and no state.",
+    "domOrderIsReadingOrder": true,
+    "consumerObligations": [
+      "If the children form a list, the consumer MUST supply list semantics on its own markup.",
+      "If the children form a labelled group, the consumer MUST supply the grouping role and accessible name.",
+      "The consumer MUST NOT rely on Stack to convey any relationship between children."
+    ]
+  },
+  "keyboardContract": {
+    "hasKeyboardContract": false,
+    "statement": "Stack has no keyboard contract. It is stated explicitly rather than omitted so that a reviewer cannot mistake absence for oversight.",
+    "focusable": false,
+    "tabStops": 0,
+    "keyBindings": [],
+    "focusLifecycle": {
+      "receivesFocus": false,
+      "movesFocus": false,
+      "trapsFocus": false,
+      "restoresFocus": false,
+      "note": "Stack never moves, traps, or restores focus. Focus behaviour belongs entirely to its children."
+    }
+  },
+  "reflowBehaviour": {
+    "intrinsic": true,
+    "usesLayoutMediaQueries": false,
+    "authorFixedDimensions": "none",
+    "fixedHeights": false,
+    "mechanism": "A flex column with a gap expressed in rem. The block direction grows with content, so the primitive reflows at any viewport size, zoom level, or root font size without a breakpoint.",
+    "gapToken": "space.default",
+    "measureToken": "typography.measure",
+    "claimsTwoDimensionalException": false,
+    "exceptionRationale": "Stack arranges blocks along one axis and creates no header-to-cell relationship, so no region arranged with Stack may claim the WCAG 1.4.10 two-dimensional exception.",
+    "operatesWithoutJavaScript": true
+  },
+  "wcagMapping": [
+    {
+      "criterion": "1.3.2",
+      "name": "Meaningful Sequence",
+      "level": "A",
+      "branch": "user technology support",
+      "relationship": "supports",
+      "note": "Visual order follows DOM order because Stack never reorders children."
+    },
+    {
+      "criterion": "1.4.10",
+      "name": "Reflow",
+      "level": "AA",
+      "branch": "user layout support",
+      "relationship": "supports",
+      "note": "Single-axis flex composition with no author-fixed dimensions, consistent with sufficient technique C31."
+    },
+    {
+      "criterion": "1.4.4",
+      "name": "Resize Text",
+      "level": "AA",
+      "branch": "user layout support",
+      "relationship": "supports",
+      "note": "The gap is rem-anchored, so spacing grows with the user's text size."
+    },
+    {
+      "criterion": "1.4.12",
+      "name": "Text Spacing",
+      "level": "AA",
+      "branch": "user layout support",
+      "relationship": "supports",
+      "note": "No fixed heights and no clipping, so user spacing overrides do not truncate content."
+    },
+    {
+      "criterion": "1.3.1",
+      "name": "Info and Relationships",
+      "level": "A",
+      "branch": "user technology support",
+      "relationship": "does-not-address",
+      "note": "Stack conveys no relationships. The consumer owns this criterion."
+    }
+  ],
+  "assertions": [
+    {
+      "id": "stack-a1",
+      "type": "automated",
+      "statement": "The computed gap resolves to the value of the space.default token.",
+      "procedure": "Read the resolved value of the gap property and compare it with the token value after alias resolution."
+    },
+    {
+      "id": "stack-a2",
+      "type": "automated",
+      "statement": "No descendant introduced by the primitive declares a fixed height or an author-fixed dimension other than a hairline border.",
+      "procedure": "Inspect the primitive's stylesheet for height, min-height, and px length declarations."
+    },
+    {
+      "id": "stack-a3",
+      "type": "automated",
+      "statement": "The primitive adds no role, aria-* attribute, or tabindex to its own element.",
+      "procedure": "Assert the rendered element exposes no accessibility-affecting attributes."
+    },
+    {
+      "id": "stack-a4",
+      "type": "manual",
+      "statement": "At 320 CSS pixels of available inline size, and at 400% zoom, no content is clipped and no horizontal scrollbar appears at page level.",
+      "procedure": "Resize to 1280 by 1024 at 400% zoom and inspect the realistic-page fixture."
+    },
+    {
+      "id": "stack-a5",
+      "type": "manual",
+      "statement": "With the root font size doubled and text-spacing overrides applied, spacing grows proportionally and nothing overlaps.",
+      "procedure": "Apply the user text-spacing bookmarklet and doubled root font size to the realistic-page fixture."
+    },
+    {
+      "id": "stack-a6",
+      "type": "manual",
+      "statement": "Visual order matches DOM order in the realistic-page fixture.",
+      "procedure": "Compare a linearised reading of the DOM with the rendered order."
+    }
+  ],
+  "nonGuarantees": [
+    "Stack does not provide list semantics.",
+    "Stack does not provide a grouping role or an accessible name.",
+    "Stack does not provide a heading structure or landmark.",
+    "Stack does not enforce the measure; that is the Center primitive's responsibility.",
+    "Stack does not manage focus, focus order, focus trapping, or focus return.",
+    "Stack does not guarantee contrast between any pair of colour tokens.",
+    "Stack does not provide a basis for claiming the WCAG 1.4.10 two-dimensional exception."
+  ],
+  "uncertainty": [
+    {
+      "id": "stack-u1",
+      "subject": "Screen-reader announcement of a bare grouping container",
+      "statement": "Whether any shipping screen reader announces or otherwise exposes the Stack container element itself has not been tested for this sample.",
+      "status": "not-yet-tested",
+      "evidenceRef": "evidence/at-matrix.json#stack"
+    },
+    {
+      "id": "stack-u2",
+      "subject": "Interaction of rem-anchored gaps with operating-system font scaling in Electron",
+      "statement": "The behaviour of rem-anchored gaps under operating-system font scaling inside an Electron shell has not been tested for this sample.",
+      "status": "not-yet-tested",
+      "evidenceRef": "evidence/at-matrix.json#stack"
+    }
+  ],
+  "tests": {
+    "isolated": "stories/stack.isolated.md",
+    "realisticPage": "stories/stack.in-page.md",
+    "note": "This sample does not ship the story fixtures. The paths record where they belong in a complete package and a consumer MUST treat them as absent here."
+  }
+}
