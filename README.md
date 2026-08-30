@@ -29,6 +29,8 @@ A system manages some of the available UI resources and modalities; it cannot re
 | [Design systems research](research/DESIGN-SYSTEMS.md) | Scope, prior art, tokens, annotations, and gaps |
 | [Portable representations research](research/PORTABLE-REPRESENTATIONS.md) | Standards, proposals, and commercial formats for portable design systems |
 | [AFDS sample package](afds-sample/) | Unpacked sources of a verified sample `.afds` package |
+| [Build outputs](dist/) | Derived artefacts published with a tagged release: the packed sample and the Word specification |
+| [Word build](tools/docx/) | How the Word specification is generated, and the accessibility properties the build guarantees |
 
 ## Documentation rule
 

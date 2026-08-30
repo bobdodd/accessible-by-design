@@ -2,6 +2,14 @@
 # Regenerate with afds-sample/tools/build-inventory.py pack <destination>.
 *.afds
 
+# Exception: dist/ holds the build outputs published with a tagged release.
+# They remain derived artefacts; see dist/README.md.
+!dist/*.afds
+
+# Intermediate output of the Word build.
+ast.json
+node_modules/
+
 # Python bytecode from the package tooling.
 __pycache__/
 *.pyc
