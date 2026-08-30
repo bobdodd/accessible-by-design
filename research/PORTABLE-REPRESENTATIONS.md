@@ -73,16 +73,19 @@ Maturity is stated in terms of the publishing body's own status language whereve
 | Web Component public APIs | [Custom Elements Manifest](https://custom-elements-manifest.open-wc.org/) | Mature community file format with a maintained analyser and a published schema | Adopt if primitives ship as custom elements; generate rather than hand-author |
 | Component examples and states | [Storybook Component Story Format](https://storybook.js.org/docs/api/csf/index) | Mature de facto format, described by Storybook as an open standard based on ES6 modules | Adopt for executable fixtures only, never as semantic truth |
 | Component anatomy and state vocabulary | [Open UI Community Group](https://open-ui.org/) | Active W3C Community Group incubation | Follow and borrow vocabulary; do not depend on it as a file format |
-| UI behaviour, layout, and accessibility schema | [UI Specification Schema Community Group](https://www.w3.org/community/uispec/) | Community Group closed on 2026-05-21 after being proposed on 2025-08-11 | Treat its published charter as a design input, not as a live dependency |
-| Structured design-system documentation | [Design System Documentation Community Group](https://www.w3.org/community/designsystemdocs/) | Very new; proposed 2026-07-29 and launched, with a chair still to be chosen | Monitor and consider contributing requirements; do not depend on yet |
+| UI behaviour, layout, and accessibility schema | [UI Specification Schema Community Group](https://www.w3.org/community/uispec/) | **Closed on 2026-05-21**, proposed 2025-08-11; never chose a chair and produced no output | Treat the charter as a requirements document. It is not a dependency and not an alignment target |
+| Structured design-system documentation | [Design System Documentation Community Group](https://www.w3.org/community/designsystemdocs/) | Very new; proposed 2026-07-29, now co-chaired by Ben Callahan and Afyia Smith, no draft published | The live alignment target. Monitor and consider contributing requirements; do not depend on yet |
 
 Two rows in that table correct assumptions that are easy to carry into this research.
 
-The UI Specification Schema Community Group is the closest thing anyone has proposed to the artefact this project needs, and its own W3C page now records that the group "was closed on 2026-05-21" ([UI Specification Schema Community Group](https://www.w3.org/community/uispec/)).
-Its charter therefore remains a valuable statement of requirements, but it is not an active standards track to align to.
+The UI Specification Schema Community Group is the closest thing anyone has proposed to the artefact this project needs, and its own W3C page records that the group "was closed on 2026-05-21" ([UI Specification Schema Community Group](https://www.w3.org/community/uispec/)).
+It is important to be precise about what closed: the group never chaired itself, its `public-uispec` mailing list holds **zero messages** ([public-uispec archive](https://lists.w3.org/Archives/Public/public-uispec/)), and no report or draft was ever published.
+The charter is therefore not the residue of abandoned work; it is the only thing that ever existed.
+That makes it useful as a statement of requirements and useless as a vocabulary to align to, because no vocabulary was written.
 
-The Design System Documentation Community Group is newer than it might appear.
-Its W3C page records that it "was originally proposed on 2026-07-29 by PJ Onori" and that "the group must now choose a chair" ([Design System Documentation Community Group](https://www.w3.org/community/designsystemdocs/)).
+The Design System Documentation Community Group is newer than it might appear, but it has begun to organise.
+Its W3C page records that it "was originally proposed on 2026-07-29 by PJ Onori", and its group page now names Ben Callahan and Afyia Smith as co-chairs ([Design System Documentation Community Group listing](https://www.w3.org/groups/cg/designsystemdocs/)).
+Having chairs is the difference between this group and the closed one; its mailing list nonetheless holds a single message ([public-designsystemdocs archive](https://lists.w3.org/Archives/Public/public-designsystemdocs/)).
 That is a promising beginning, not a format a project can build on this year.
 
 ## Design tokens: DTCG
@@ -301,7 +304,21 @@ Its deliverables list includes reference example specifications, guidance for in
 That is, almost line for line, the missing layer identified earlier in this note: a platform-neutral JSON meta-model covering layout, behaviour, constraints, responsive behaviour, and accessibility requirements.
 
 The group's own W3C page, however, records that it "was closed on 2026-05-21", having been "originally proposed on 2025-08-11 by Vasilis Danias" ([UI Specification Schema Community Group](https://www.w3.org/community/uispec/)).
-The charter therefore has to be read as a requirements document rather than as a live specification effort.
+
+The closure needs to be read carefully, because the obvious reading is wrong.
+A group that closes after publishing drafts leaves behind a vocabulary a project can map onto; this group left nothing.
+It was launched on 2025-08-13 ([August 2025 announcement](https://www.w3.org/community/uispec/2025/08/)), and at closure its page still said "the group must now choose a chair" — the sentence W3C shows for a group that never organised itself ([UI Specification Schema Community Group](https://www.w3.org/community/uispec/)).
+Its `public-uispec` mailing list holds zero messages ([public-uispec archive](https://lists.w3.org/Archives/Public/public-uispec/)).
+No report, draft, or schema appears in the [W3C Community Group reports index](https://www.w3.org/community/reports/).
+
+The charter is therefore the entire output of the group, and it has to be read as a requirements document rather than as a live specification effort.
+The practical consequence for this project is narrower than "monitor for alignment" implies: there is no schema to validate against, no field names to adopt, and no mapping table to produce.
+What survives is the charter's *scope claim* — that geometry rules, responsive behaviour, content constraints, and accessibility requirements belong in one machine-readable per-element specification — and that claim is independent evidence that the gap this project is filling is real and was recognised by someone else at W3C.
+
+No successor group has been announced.
+The closed-groups listing records the closure without naming a replacement, unlike other entries there which point readers to the group that took over the work ([Closed Community Groups](https://www.w3.org/groups/cg/?closed=1)).
+The nearest new W3C activity in the same broad area is the [Generative UI Community Group](https://www.w3.org/community/gen-ui/), "originally proposed on 2026-01-29 by Ruoxi Ran", but its scope is the runtime synthesis of interfaces — evaluation and performance, validation and testing, intermediate representations, and alignment with the web platform — rather than a portable specification format for authored components.
+It is not a successor and should not be recorded as one.
 
 ### Design System Documentation Community Group
 
@@ -312,12 +329,19 @@ Its mission is "to lower the burden of design system management by developing an
 The launch announcement confirms the same mission statement and that "this group will develop Specifications" ([Proposed Group: Design System Documentation Community Group](https://www.w3.org/community/blog/2026/07/30/proposed-group-design-system-documentation-community-group/)).
 
 The alignment is strong: an open documentation format explicitly designed to compose with DTCG and CEM is the third leg of the bundle this note proposes.
-The maturity is very low: the group page records a proposal date of 2026-07-29 and states that "the group must now choose a chair" ([Design System Documentation Community Group](https://www.w3.org/community/designsystemdocs/)).
+
+The maturity is low but no longer nominal, and this is the one respect in which it differs decisively from the closed group.
+The group page records a proposal date of 2026-07-29, and the group listing now names **Ben Callahan and Afyia Smith as co-chairs** ([Design System Documentation Community Group listing](https://www.w3.org/groups/cg/designsystemdocs/)).
+Choosing chairs is precisely the step the UI Specification Schema group never took before it closed.
+Activity is nonetheless minimal: `public-designsystemdocs` holds a single message ([public-designsystemdocs archive](https://lists.w3.org/Archives/Public/public-designsystemdocs/)), and no draft has been published.
+
+This is the group to engage with, and engagement means contributing requirements now rather than waiting to consume a format.
+The project has something specific to offer it that its charter does not yet mention: assistive-technology evidence, explicit non-guarantees, and recorded uncertainty as first-class documentation fields rather than prose.
 
 ### Why these are alignment targets, not dependencies
 
 Neither group currently supplies a schema this project could validate against.
-One is closed and the other has barely started.
+One is closed having published nothing, and the other has chairs but no draft.
 
 The correct posture is therefore to design project-owned formats that are deliberately mappable to these charters' vocabularies, and to treat the charters as a requirements checklist during that design.
 That posture keeps two options open at once.
@@ -675,11 +699,15 @@ Each row states what the anti-pattern looks like in practice and what specifical
 6. Introduce a minimal `design-system.manifest.json` whose only job is to link canonical artefacts and declare versions and identifiers, and refuse any proposal to move content into it.
 7. Keep Figma and Penpot integrations behind explicit adapters in `adapters/`, each emitting a report of mappings, approximations, unsupported features, and losses, with no live read-through dependency on a vendor's model.
 8. Make engine-qualified assistive-technology evidence, non-guarantees, and uncertainty first-class portable records from the outset, rather than retrofitting them once claims are already being made.
-9. Follow, and potentially contribute requirements to, the [UI Specification Schema Community Group](https://www.w3.org/community/uispec/) charter and the [Design System Documentation Community Group](https://www.w3.org/community/designsystemdocs/), designing project formats to be mappable onto their vocabularies while depending on neither.
+9. Contribute requirements to the [Design System Documentation Community Group](https://www.w3.org/community/designsystemdocs/), follow [Open UI](https://open-ui.org/) for anatomy and state vocabulary, and read the closed [UI Specification Schema Community Group](https://www.w3.org/community/uispec/) charter as a requirements checklist — designing project formats to be mappable onto whatever vocabulary emerges while depending on none of them.
 
-Recommendation 9 needs one honest qualification.
-The UI Specification Schema Community Group is closed, so "follow" means treating its charter as a requirements document and watching for a successor effort, not waiting for a deliverable.
-The Design System Documentation Community Group is active but very new, so contribution is currently more realistic than consumption.
+Recommendation 9 changed shape once the UI Specification Schema group's closure was checked properly, and the reasoning is worth keeping visible.
+An earlier version of this note told the project to "follow" that group and watch for a successor.
+That instruction was unactionable: the group published nothing, no successor has been announced, and "watch for a successor" is a standing task no one can ever complete or close.
+It has been replaced by a single live target.
+The Design System Documentation Community Group has chairs, an explicit DTCG and CEM compatibility goal, and no draft yet, which is exactly the window in which contributing requirements is more useful than consuming a format.
+Open UI remains the only genuinely active vocabulary source in this area.
+The closed charter stays in the note as a checklist, not as a dependency.
 
 ## Next research tasks
 
@@ -688,11 +716,14 @@ The Design System Documentation Community Group is active but very new, so contr
 3. Specify a contrast-assertion representation that expresses a foreground token, a background token, a threshold, and a result, and settle it by deciding whether it lives in the component contract, a separate assertions file, or a proposed DTCG extension, with the reasoning recorded.
 4. Test DTCG round-tripping in practice across Tokens Studio, Penpot, and Style Dictionary v4 or v5, and settle it by producing a documented loss report for each path, including whether composite types and the 2025.10 module survive.
 5. Prototype the adapter loss report format, and settle it by running one real Figma-variables import and one CSS-custom-property export and confirming that every approximation and omission appears in the report.
-6. Map the project's provisional field names onto Open UI's part and state vocabulary and onto the UI Specification Schema charter's section names, and settle it by producing a mapping table with unmapped fields explicitly justified.
+6. Map the project's provisional field names onto Open UI's part and state vocabulary and onto the UI Specification Schema charter's section names, and settle it by producing a mapping table with unmapped fields explicitly justified. The charter names scope areas rather than fields, so expect the mapping to be coarse and record where it cannot be made precise.
 7. Decide the component-identifier and versioning scheme, and settle it by demonstrating that a contract, a story, an evidence record, and a manifest entry can all be joined by identifier alone, and that a breaking contract change is detectable from version metadata.
 
 ## Relationship to the adopted decision
 
 This research is the basis of the adopted colophon decision recorded as "AFDS uses a portable bundle, not a monolithic format" in the project [colophon of decisions](../docs/COLOPHON.md).
 That entry states the decision, its reasoning, its cost, the alternatives rejected, and how it is verified.
-This note supplies the evidence behind it, and should be updated rather than replaced if the standards landscape moves — in particular if a successor to the UI Specification Schema Community Group appears, or if the Design System Documentation Community Group publishes a draft format.
+This note supplies the evidence behind it, and should be updated rather than replaced if the standards landscape moves.
+The two changes that would matter most are the Design System Documentation Community Group publishing a draft format, which would turn a contribution target into a mapping target, and a new group chartering the per-element specification work the UI Specification Schema group never started.
+
+The group statuses in this note were last checked on 2026-08-30.

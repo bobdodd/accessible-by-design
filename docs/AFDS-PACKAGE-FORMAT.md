@@ -13,8 +13,9 @@ Where this document and those decisions disagree, the disagreement is a defect i
 AFDS 1.0.0 is a project draft.
 It is not a W3C standard, not a published industry specification, and not on any standards track.
 
-The project intends to monitor and seek alignment with the W3C UI Specification Schema Community Group, the Design System Documentation Community Group, Open UI, and future Design Tokens Community Group work.
-The AFDS component-specification and evidence formats are provisional and are intended to be mapped to, or contributed as requirements for, those efforts rather than to become isolated terminology.
+The project intends to monitor and seek alignment with the W3C Design System Documentation Community Group, Open UI, and future Design Tokens Community Group work.
+The W3C UI Specification Schema Community Group was previously named here as an alignment target; that group closed on 2026-05-21 without publishing a schema, so its charter is now read as a requirements input rather than as a vocabulary to align to.
+The AFDS component-specification and evidence formats are provisional and are intended to be mapped to, or contributed as requirements for, the remaining efforts rather than to become isolated terminology.
 A reader should treat every identifier and field name here as stable within this project and unstable outside it.
 
 ### 1.1 What this document specifies

@@ -212,10 +212,14 @@ It is project-invented terminology and has no external validation.
 
 ### H2. Alignment targets after the UI Specification Schema group closed
 
-The W3C UI Specification Schema Community Group was the closest external match to this project's needs and is now closed.
-Its charter remains a useful requirements input.
+The W3C UI Specification Schema Community Group was the closest external match to this project's needs.
+It closed on 2026-05-21 having never chosen a chair, with an empty mailing list and no published report, so its charter is the whole of its output and there is no vocabulary to map onto.
+No successor has been announced.
 
-**To settle:** which live group, if any, becomes the alignment target, and whether the project contributes requirements to the Design System Documentation Community Group instead.
+The live target is now the Design System Documentation Community Group, which has co-chairs, an explicit DTCG and CEM compatibility goal, and no draft yet.
+The question is therefore no longer which group but what to send it.
+
+**To settle:** which AFDS requirements are worth contributing, in what form, and by when — specifically whether assistive-technology evidence, explicit non-guarantees, and recorded uncertainty are proposed to that group as documentation fields, given that its charter does not currently mention them.
 
 ### H3. Package identity and signing
 

@@ -371,9 +371,18 @@ Every transform emits a report containing mappings, warnings, losses, unsupporte
 No adapter becomes the only source for a fact owned by a canonical artefact.
 
 **Note.** AFDS 1.0.0 is a project draft, not a W3C standard.
-The project will monitor and seek alignment with the W3C UI Specification Schema Community Group, the Design System Documentation Community Group, Open UI, and future DTCG work.
+As originally recorded, this decision said the project "will monitor and seek alignment with the W3C UI Specification Schema Community Group, the Design System Documentation Community Group, Open UI, and future DTCG work".
+That list is superseded and is kept here rather than deleted, because the reasoning above was formed while the first of those groups was believed to be live.
+
+The UI Specification Schema Community Group closed on 2026-05-21.
+It never chose a chair, its mailing list holds no messages, and it published no report or schema, so its charter is the entirety of its output.
+No successor has been announced.
+The consequence for this decision is limited but real: the charter is still valid evidence that a portable per-element specification covering layout, behaviour, constraints, and accessibility requirements is a recognised gap, which is part of why a bundle rather than a single format was chosen — but it is not a vocabulary this project can map onto, because no vocabulary exists.
+
+The alignment list is therefore the Design System Documentation Community Group, which now has co-chairs and an explicit DTCG and CEM compatibility goal but no draft, together with Open UI and future DTCG work.
 The AFDS component-spec and evidence formats are provisional and are intended to be mapped to, or contributed as requirements for, those efforts rather than become isolated terminology.
-The supporting research is recorded in [the portable representations research note](../research/PORTABLE-REPRESENTATIONS.md).
+Because the one live documentation group has no draft yet, contribution is currently the realistic form of alignment and consumption is not.
+The supporting research, including the evidence for each group's status, is recorded in [the portable representations research note](../research/PORTABLE-REPRESENTATIONS.md).
 
 ### AFDS bundles are distributed as a single `.afds` package
 
