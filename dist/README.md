@@ -29,13 +29,15 @@ Inventory integrity is **not** a digital signature. A SHA-256 digest detects acc
 
 ## Digests
 
-Recorded at the time these files were committed, for the `v1.0.0-draft` release:
+Recorded at the time these files were last rebuilt:
 
 ```
-45b4783bc15d0c6910474e70888d52a22455f8200c98d695731748162e5ad90e  AFDS-Draft-Specification-v1.0.0.docx
+5d9e88a763d35763362edb910a74b2482ee1efbad5a61df2c20e12d58a93dfd1  AFDS-Draft-Specification-v1.0.0.docx
 b6d9097a2767f38330551934235db8efa3c3be557a12104b0c9e0935567e81dc  AFDS-Sample-1.0.0.afds
 ```
 
 Neither build is byte-for-byte reproducible. Both files are ZIP containers, so entry order and embedded timestamps depend on the build environment, and a rebuild will normally produce a different digest even from identical sources. The digests above identify **these committed files**; they are not a reproducibility target.
 
 What must match on a rebuild is the **content**: for the package, the path, byte length, and SHA-256 digest of every inventory record; for the document, the text and structure of the Markdown it was generated from.
+
+The document's own title page records the source commit it was generated from, so a reader can tell whether it is current without comparing digests. The `v1.0.0-draft` release tag carries the artefacts as they stood at that tag; `main` may carry newer ones.
