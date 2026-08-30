@@ -11,16 +11,46 @@
   "subject": "Accessibility Focused Design System package format",
   "keywords": "accessibility, design system, AFDS, package format, WCAG, design tokens",
   "status": [
-   ["Version", "1.0.0 (draft)"],
-   ["Status", "Project draft. Not a W3C standard and not on any standards track."],
-   ["Date", "2026-08-29"],
-   ["Project", "Accessible by Design"],
-   ["Publisher", "Bob Dodd"],
-   ["Canonical source", "docs/AFDS-PACKAGE-FORMAT.md and docs/COLOPHON.md"],
-   ["Source commit", "{commit}"],
-   ["Documentation licence", "CC BY-SA 4.0"],
-   ["Code licence", "GPL-3.0-only"],
-   ["Companion asset", "AFDS-Sample-1.0.0.afds, a verified ten-entry sample package"]
+   [
+    "Version",
+    "1.0.0 (draft)"
+   ],
+   [
+    "Status",
+    "Project draft. Not a W3C standard and not on any standards track."
+   ],
+   [
+    "Date",
+    "2026-08-29"
+   ],
+   [
+    "Project",
+    "Accessible by Design"
+   ],
+   [
+    "Publisher",
+    "Bob Dodd"
+   ],
+   [
+    "Canonical source",
+    "docs/AFDS-PACKAGE-FORMAT.md and docs/COLOPHON.md"
+   ],
+   [
+    "Source commit",
+    "{commit}"
+   ],
+   [
+    "Documentation licence",
+    "CC BY-SA 4.0"
+   ],
+   [
+    "Code licence",
+    "GPL-3.0-only"
+   ],
+   [
+    "Companion asset",
+    "AFDS-Sample-1.0.0.afds, a verified ten-entry sample package"
+   ]
   ],
   "annex": {
    "file": "docs/COLOPHON.md",
@@ -28,7 +58,8 @@
    "end": "## Repository decisions",
    "heading": "Annex A. Adopted colophon decisions",
    "intro": "This annex is informative. It reproduces the two adopted project decisions that this specification implements, as recorded in docs/COLOPHON.md. Each decision states what was chosen, the reasoning, the cost accepted, the alternatives rejected, and how the decision is verified."
-  }
+  },
+  "numberedHeadings": false
  },
  "guide": {
   "source": "docs/AFDS-USER-GUIDE.md",
@@ -42,17 +73,51 @@
   "subject": "Accessibility Focused Design System guidance",
   "keywords": "accessibility, design system, AFDS, WCAG, design tokens, layout, keyboard, testing",
   "status": [
-   ["Version", "1.0.0 (draft)"],
-   ["Status", "Project draft. Documentation, not specification."],
-   ["Date", "2026-08-29"],
-   ["Project", "Accessible by Design"],
-   ["Publisher", "Bob Dodd"],
-   ["Audience", "Designers, developers, and testers new to design systems"],
-   ["Canonical source", "docs/AFDS-USER-GUIDE.md"],
-   ["Source commit", "{commit}"],
-   ["Documentation licence", "CC BY-SA 4.0"],
-   ["Code licence", "GPL-3.0-only"],
-   ["Companion documents", "AFDS-Draft-Specification-v1.0.0.docx and AFDS-Sample-1.0.0.afds"]
-  ]
+   [
+    "Version",
+    "1.0.0 (draft)"
+   ],
+   [
+    "Status",
+    "Project draft. Documentation, not specification."
+   ],
+   [
+    "Date",
+    "2026-08-29"
+   ],
+   [
+    "Project",
+    "Accessible by Design"
+   ],
+   [
+    "Publisher",
+    "Bob Dodd"
+   ],
+   [
+    "Audience",
+    "Designers, developers, and testers new to design systems"
+   ],
+   [
+    "Canonical source",
+    "docs/AFDS-USER-GUIDE.md"
+   ],
+   [
+    "Source commit",
+    "{commit}"
+   ],
+   [
+    "Documentation licence",
+    "CC BY-SA 4.0"
+   ],
+   [
+    "Code licence",
+    "GPL-3.0-only"
+   ],
+   [
+    "Companion documents",
+    "AFDS-Draft-Specification-v1.0.0.docx and AFDS-Sample-1.0.0.afds"
+   ]
+  ],
+  "numberedHeadings": true
  }
 }

@@ -11,7 +11,7 @@ const {
   Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
   Header, Footer, AlignmentType, TableOfContents, HeadingLevel,
   BorderStyle, WidthType, ShadingType, VerticalAlign, PageNumber,
-  PageBreak, LevelFormat, ExternalHyperlink,
+  PageBreak, LevelFormat, LevelSuffix, ExternalHyperlink,
 } = docx;
 
 const path = require('path');
@@ -22,6 +22,9 @@ const OUT = path.join(REPO, DOC.output);
 
 const TITLE = DOC.title;
 const VERSION = DOC.version;
+// Documents whose source headings already carry literal section numbers must not
+// be auto-numbered, or every heading would show its number twice.
+const NUMBER_HEADINGS = DOC.numberedHeadings === true;
 const USABLE = 9360;           // US Letter minus 1in margins
 const BODY = 22;               // 11pt
 const MONO = 17;               // 8.5pt
@@ -120,6 +123,23 @@ const HL = [null, HeadingLevel.HEADING_1, HeadingLevel.HEADING_2,
 // restarts at 1 instead of continuing the previous list's count.
 let orderedInstance = 0;
 
+// A heading must not be stranded at the foot of a page. keepNext on the heading
+// alone only binds it to one following paragraph, which still allows a heading
+// plus a single orphaned line. Blocks close behind a heading therefore carry
+// keepNext too, so the heading and the opening of its section travel together
+// and Word breaks the page before the heading instead.
+const KEEP_AFTER_HEADING = 2;
+
+function keepWithHeading(blocks, bx) {
+  for (let d = 1; d <= KEEP_AFTER_HEADING; d += 1) {
+    const prev = blocks[bx - d];
+    if (!prev) return false;
+    if (prev.k === 'h') return true;
+    if (prev.k !== 'p' && prev.k !== 'li') return false;
+  }
+  return false;
+}
+
 function render(blocks) {
   const out = [];
   blocks.forEach((b, bx) => {
@@ -131,10 +151,15 @@ function render(blocks) {
       out.push(new Paragraph({
         heading: HL[b.level],
         keepNext: true,
+        keepLines: true,
+        numbering: NUMBER_HEADINGS
+          ? { reference: 'headings', level: b.level - 1, instance: 0 }
+          : undefined,
         children: runs(b.runs, { size: b.level === 1 ? 30 : b.level === 2 ? 25 : 23, bold: true }),
       }));
     } else if (b.k === 'p') {
       out.push(new Paragraph({
+        keepNext: keepWithHeading(blocks, bx),
         spacing: { before: 0, after: 160, line: 300 },
         children: runs(b.runs),
       }));
@@ -143,6 +168,7 @@ function render(blocks) {
         numbering: b.ord
           ? { reference: 'steps', level: 0, instance: orderedInstance }
           : { reference: 'bullets', level: 0 },
+        keepNext: keepWithHeading(blocks, bx),
         spacing: { before: 0, after: 120, line: 300 },
         children: runs(b.runs),
       }));
@@ -326,6 +352,21 @@ const doc = new Document({
           alignment: AlignmentType.LEFT,
           style: { paragraph: { indent: { left: 620, hanging: 300 } } },
         }],
+      },
+      {
+        // Section numbers for headings: 1, 1.1, 1.1.1, 1.1.1.1. The number is
+        // produced by the numbering definition rather than typed into the
+        // heading text, so it renumbers itself when sections move and it is
+        // carried into the table of contents.
+        reference: 'headings',
+        levels: [0, 1, 2, 3].map((lvl) => ({
+          level: lvl,
+          format: LevelFormat.DECIMAL,
+          text: `${[0, 1, 2, 3].slice(0, lvl + 1).map((i) => `%${i + 1}`).join('.')}.`,
+          alignment: AlignmentType.LEFT,
+          suffix: LevelSuffix.SPACE,
+          style: { paragraph: { indent: { left: 0, firstLine: 0 } } },
+        })),
       },
       {
         reference: 'steps',

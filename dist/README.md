@@ -33,8 +33,8 @@ Inventory integrity is **not** a digital signature. A SHA-256 digest detects acc
 Recorded at the time these files were last rebuilt:
 
 ```
-5d9e88a763d35763362edb910a74b2482ee1efbad5a61df2c20e12d58a93dfd1  AFDS-Draft-Specification-v1.0.0.docx
-0d17f846ddf8f29cfc8c1860387592f92e774e87b74bb010e1305eb46a7cde01  AFDS-User-Guide-v1.0.0.docx
+b3ef56d30bd2ef7dfed0e2fca203895d67b15785b25ebad888d2a9296471f4a6  AFDS-Draft-Specification-v1.0.0.docx
+d858f8b534810ffa28f3b98b7c392918a3cb94f1342b89ec53decf4bac371a68  AFDS-User-Guide-v1.0.0.docx
 b6d9097a2767f38330551934235db8efa3c3be557a12104b0c9e0935567e81dc  AFDS-Sample-1.0.0.afds
 ```
 
