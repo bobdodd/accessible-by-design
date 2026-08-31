@@ -13,3 +13,5 @@ node_modules/
 # Python bytecode from the package tooling.
 __pycache__/
 *.pyc
+# Scratch file used when composing commit messages.
+.commitmsg
