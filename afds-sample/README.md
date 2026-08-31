@@ -109,7 +109,8 @@ The helper script here covers the inventory steps only and is a development aid 
 ## Two things this sample does not prove
 
 The sample does not prove anything about assistive-technology support.
-Every `result` field in `evidence/at-matrix.json` is `not-yet-tested`, and every engine version, AT version, date, and observation is the same placeholder.
+Every `result` field in `evidence/at-matrix.json` is `not-yet-tested`, and every engine version, date, observation, and tester is the same placeholder.
+Assistive-technology version reads `not-applicable` on the records that name no assistive technology, which is the field-level sense of that value rather than a result.
 No value in that file records an observation that took place.
 
 The sample does not prove anything about provenance.

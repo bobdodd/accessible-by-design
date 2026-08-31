@@ -97,15 +97,21 @@ Stack does not provide a basis for claiming the WCAG 1.4.10 two-dimensional exce
 
 ## Uncertainty
 
-Two questions are recorded as unknown rather than settled by assumption.
+Four questions are recorded as unknown rather than settled by assumption.
 
 | Identifier | Subject | Status |
 | --- | --- | --- |
 | stack-u1 | Whether any shipping screen reader exposes the bare Stack container element | Not yet tested |
 | stack-u2 | How rem-anchored gaps behave under operating-system font scaling in an Electron shell | Not yet tested |
+| stack-u3 | Whether a Stack clips content or produces a page-level horizontal scrollbar at 320 CSS pixels of available inline size, or at 400% zoom | Not yet tested |
+| stack-u4 | Whether the Stack container interferes with pointer or voice-driven activation of its children | Not yet tested |
 
-Both point at `evidence/at-matrix.json`, where the corresponding evidence records also carry the status `not-yet-tested`.
+All four point at `evidence/at-matrix.json`, where the corresponding evidence records also carry the status `not-yet-tested`.
 No result in this sample package is a real test result.
+
+`stack-u3` restates assertion `stack-a4` as uncertainty.
+The assertion says what is expected, and it is manual, so until an observation is recorded the expectation is not a guarantee.
+`stack-u4` is a non-interference question, because the primitive exposes no operable target of its own and so cannot itself be addressed by voice.
 
 ## Tests
 

@@ -10,6 +10,7 @@ It exists because a package that shows only its guarantees is advocacy rather th
 
 The sample is deliberately small.
 It contains one token file, one component, and one evidence file, so it cannot exercise every rule in the package format.
+The single component is a layout primitive, so no claim in this sample exercises a role, an accessible name, a state, or a keyboard contract.
 
 | Limitation | Consequence |
 | --- | --- |
@@ -23,12 +24,21 @@ It contains one token file, one component, and one evidence file, so it cannot e
 
 No assistive-technology result in this package is real.
 
-Every `result` field in `evidence/at-matrix.json` carries the value `not-yet-tested`, and every version, date, and observation field carries the same placeholder.
+Every `result` field in `evidence/at-matrix.json` carries the value `not-yet-tested`, and every date, observation, and tester field carries the same placeholder.
+The version fields carry it too, with one exception: the record whose `at` value is `none` carries `not-applicable` for `atVersion`, because there is no assistive technology to have a version.
 This is a deliberate choice.
 Fabricated evidence is worse than absent evidence, because absent evidence is visible as a gap while fabricated evidence looks like a guarantee.
 
 Consequently, every claim in the sample that depends on assistive-technology behaviour is uncertainty rather than a guarantee.
-That includes both records in the Stack uncertainty list.
+That includes all four records in the Stack uncertainty list.
+
+The matrix records nine combinations against four claims: screen-reader announcement of the container on four engine and screen-reader pairs, rem-anchored gaps under operating-system font scaling, reflow at two environments, and voice-driven targeting on two platforms.
+The environment fields `device`, `startingViewport`, and `zoom` were added so that the reflow records can state the conditions an observation would have to be made under.
+They carry `not-applicable` on records whose claim does not involve them, which is the field-level sense of that value rather than the result-level one.
+
+Two manual assertions still have no evidence record of any kind.
+`stack-a5` covers text-spacing overrides with a doubled root font size, and `stack-a6` covers visual order matching DOM order.
+Neither has a matching uncertainty entry or matrix row, so the propagation rule has not yet been applied to them.
 
 ## Limitations of the Stack component
 

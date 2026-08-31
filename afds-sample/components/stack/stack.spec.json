@@ -147,6 +147,20 @@
       "statement": "The behaviour of rem-anchored gaps under operating-system font scaling inside an Electron shell has not been tested for this sample.",
       "status": "not-yet-tested",
       "evidenceRef": "evidence/at-matrix.json#stack"
+    },
+    {
+      "id": "stack-u3",
+      "subject": "Reflow of a Stack at 320 CSS pixels of available inline size and at 400% zoom",
+      "statement": "Whether a Stack clips content or produces a page-level horizontal scrollbar at 320 CSS pixels of available inline size, or at 400% zoom, has not been tested for this sample. Assertion stack-a4 states the expected behaviour but is manual, and no observation has been recorded against it.",
+      "status": "not-yet-tested",
+      "evidenceRef": "evidence/at-matrix.json#stack"
+    },
+    {
+      "id": "stack-u4",
+      "subject": "Voice-driven targeting of content placed inside a Stack",
+      "statement": "Whether the Stack container interferes with pointer or voice-driven activation of its children has not been tested for this sample. The claim is one of non-interference, because the primitive exposes no operable target of its own.",
+      "status": "not-yet-tested",
+      "evidenceRef": "evidence/at-matrix.json#stack"
     }
   ],
   "tests": {

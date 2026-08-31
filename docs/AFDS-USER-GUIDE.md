@@ -1228,9 +1228,14 @@ The evidence file declares its own version and then, before any record, declares
 
 Defining the vocabulary inside the file matters, because "partial" and "unsupported" mean different things to different testers, and a shared record needs a shared meaning.
 
-Each record then names an identifier, the component, the claim being tested, the engine, engine version, browser, browser version, assistive technology, its version, the platform, the date, the result, the observation, the tester, and a reference to the uncertainty record it relates to.
+Each record then names an identifier, the component, the claim being tested, the engine, engine version, browser, browser version, assistive technology, its version, the platform, the device, the starting viewport, the zoom level, the date, the result, the observation, the tester, and a reference to the uncertainty record it relates to.
 
-In this sample every one of those fields except the structural ones reads "not yet tested", and the file says so in its own description.
+The device, starting viewport, and zoom fields describe the environment an observation was or would be made in.
+They matter because a reflow claim is meaningless without them: "no content is clipped" is a different statement at a 320 CSS pixel viewport than at 1280 by 1024 with 400% zoom applied, and a screen reader on a phone is not the same observation as the same screen reader on a desktop.
+On a record whose claim does not involve them, they read `not-applicable`, which is the field-level sense of that value.
+A field that says "this does not apply here" is not the same as a result that says the combination cannot exhibit the behaviour, and the sample's own description separates the two senses.
+
+In this sample every observed field reads "not yet tested", leaving only the fields that declare the combination and the environment carrying real values, and the file says so in its own description.
 The record for NVDA on Chromium, for instance, names the claim that the Stack container element is not announced as an additional structural object, names Blink as the engine and Windows as the platform, and then records nothing observed, because nothing was observed.
 
 That is an engine-qualified claim with the observation missing, which under the project's rule is uncertainty rather than a guarantee, and the record is the mechanism that makes the distinction visible instead of leaving it to be assumed.
