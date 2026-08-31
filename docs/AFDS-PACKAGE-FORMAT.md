@@ -638,7 +638,7 @@ Open Packaging Conventions, standardised as ECMA-376 Part 2 and ISO/IEC 29500-2,
 An OPC package holds *parts*, each with a name and a content type.
 Content types are declared in a `[Content_Types].xml` part at the package root, either by file extension default or by explicit override.
 Relationships between parts are declared in separate XML relationship parts under `_rels` directories, so that a consumer discovers the package's structure by walking relationships from a package-level root rather than by convention.
-OOXML uses this machinery to collect the many related parts of one document — the document body, styles, numbering definitions, embedded images, themes, and so on — into a single logical file, and other formats such as XPS and NuGet reuse it.
+OOXML uses this machinery to collect the many related parts of one document — the document body, styles, numbering definitions, embedded images, themes, and so on — into a single logical file, and other formats reuse it: ECMA-388 states that the OpenXPS format requirements "are an extension of the packaging requirements described in the Open Packaging Conventions (OPC) Standard".
 
 AFDS borrows the principle and rejects the machinery.
 
@@ -697,8 +697,9 @@ The following sources inform this document.
 
 - Design Tokens Community Group, Design Tokens Format Module — https://tr.designtokens.org/format/
 - IETF RFC 2119, Key words for use in RFCs to Indicate Requirement Levels — https://www.rfc-editor.org/rfc/rfc2119
-- ECMA-376 Part 2, Open Packaging Conventions — https://ecma-international.org/publications-and-standards/standards/ecma-376/
-- ISO/IEC 29500-2, Office Open XML File Formats — Open Packaging Conventions — https://www.iso.org/standard/71691.html
+- ECMA-376 Part 2, Open Packaging Conventions, fifth edition, December 2021 — https://ecma-international.org/publications-and-standards/standards/ecma-376/
+- ISO/IEC 29500-2:2021, Office Open XML file formats — Part 2: Open Packaging Conventions, fourth edition, August 2021 — https://www.iso.org/standard/77818.html
+- ECMA-388, Open XML Paper Specification (Open XPS), first edition, June 2009 — https://www.ecma-international.org/wp-content/uploads/ECMA-388_1st_edition_june_2009.pdf
 - IANA Media Types registry — https://www.iana.org/assignments/media-types/media-types.xhtml
 - FIPS 180-4, Secure Hash Standard — https://csrc.nist.gov/pubs/fips/180-4/upd1/final
 - W3C WAI, Understanding SC 1.4.10 Reflow — https://www.w3.org/WAI/WCAG22/Understanding/reflow.html
