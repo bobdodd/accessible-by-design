@@ -50,7 +50,7 @@ The publishable claims are the WCAG criteria met, the ARIA semantics used, and t
 ### What the APG actually offers
 
 The APG exists to show how ARIA semantics, HTML, CSS, JavaScript, keyboard support, accessible names, page structure, and high-contrast support fit together for common user-interface patterns.
-It provides more than thirty patterns, ranging from buttons and disclosure controls through to complex tree grids.
+It provides thirty patterns, ranging from buttons and disclosure controls through to complex tree grids, counted from the [pattern index](https://www.w3.org/WAI/ARIA/apg/patterns/) on 31 August 2026.
 Each pattern typically describes the interaction, the required and expected keyboard behaviour, the roles, states, and properties involved, and one or more functional examples.
 
 That combination is genuinely valuable and hard to reproduce.
@@ -106,8 +106,12 @@ A prohibition must state the cost that motivated it, and must be revisitable if 
 
 ### Required specification fields for an APG-derived component
 
-Every APG-derived entry records the following.
+Every APG-derived entry records the following twelve fields.
 These are fields, not prose suggestions: a specification missing one of them is incomplete and should fail review.
+
+These twelve are specification fields, written for engineering review.
+They are not the eleven design-tool annotation fields defined further down this document, which are written for design handoff.
+The two lists overlap in subject and differ in audience, count, and purpose, so a count of one is never a count of the other.
 
 1. **APG pattern name and source URL.**
    The specific pattern, linked, so a reader can check the reference rather than trust the summary.
@@ -124,11 +128,16 @@ These are fields, not prose suggestions: a specification missing one of them is 
    Every function reachable by keyboard must be reachable by the other modalities, and vice versa.
 7. **Visible focus and forced-colours requirements.**
    What the focus indicator must look like, and what must survive a forced-colours theme.
-8. **WCAG criteria affected.**
+8. **Reflow and two-dimensional exception behaviour.**
+   How the component behaves at 320 CSS pixels and at 400 per cent zoom, and, where it claims the two-dimensional exception, the semantic argument for that claim rather than a visual one.
+9. **WCAG criteria affected.**
    The specific success criteria the component is responsible for, by number.
-9. **Test matrix and observed assistive-technology behaviour.**
-   Engine, version, browser, observed behaviour, and test date.
-10. **Explicit non-guarantees and known uncertainty.**
+10. **Test matrix and observed assistive-technology behaviour.**
+    Engine, version, browser, observed behaviour, and test date.
+11. **Deviations from the pattern, and why.**
+    Every departure from the APG convention, with its reason and its cost, tagged as a product-specific deviation.
+    An entry with no deviations records that explicitly, so silence is never ambiguous.
+12. **Explicit non-guarantees and known uncertainty.**
     What the component does not promise, and what has not been verified.
 
 This fits the project's existing rules directly.
@@ -164,11 +173,21 @@ The final row is the one this project must get right, because the product is a r
 
 The APG's [Grid pattern](https://www.w3.org/WAI/ARIA/apg/patterns/grid/) describes a composite widget with directional navigation using the arrow keys, Home, and End.
 Its scope ranges from a grouped set of checkboxes through to a spreadsheet-like application.
-It is an interaction pattern for operating cells, not a way of presenting data.
+
+It would be convenient to say that the grid is an interaction pattern for operating cells and not a way of presenting data, but the APG does not support that reading and the system must not rely on it.
+The pattern is titled "Grid (Interactive Tabular Data and Layout Containers)" in the pattern index, and the APG states that uses of it "broadly fall into two categories: presenting tabular information (data grids) and grouping other widgets (layout grids)".
+It says plainly that a grid "can be used to present tabular information that has column titles, row titles, or both", that the pattern "is particularly useful if the tabular information is editable or interactive", and it ships both data grid examples and an advanced data grid example with spreadsheet-like selection.
+So the role is not disqualified merely because the content is data.
+
+What separates a grid from a table is the keyboard model, and the APG supplies the usable test itself.
+In a grid, "only one of the focusable elements contained by the grid is included in the page tab sequence" and the author must "provide code that manages focus movement inside it", whereas "all focusable elements contained in a table are included in the page tab sequence".
+The decision is therefore a question about interaction cost, not about subject matter: does this report need cell-by-cell directional navigation, or does it need a shorter tab sequence through many in-cell controls?
+For a static audit table whose cells hold at most one link each, the answer is no, and a semantic table is correct.
+For a remediation surface with editable cells or several controls per row, the grid pattern becomes a defensible choice, and the tab-sequence argument is the reason to record.
 
 Three different things share the word "grid", and the system must keep them apart.
 
-- An **ARIA grid** is a composite widget with a roving-focus keyboard model, intended for cell-by-cell operation.
+- An **ARIA grid** is a composite widget, distinguished by its roving-focus keyboard model and its single tab stop rather than by the kind of content it holds.
 - A **semantic table** is content structure, where meaning comes from header-to-cell relationships rather than from keyboard navigation.
 - **CSS Grid** is a layout technique, and `display: grid` creates no accessibility semantics at all.
 
@@ -244,8 +263,14 @@ Specifying these eight parts is what turns APG guidance into a system contract i
 
 The keyboard requirements cover far more than keyboard hardware, and the system's language should reflect that.
 
-WCAG defines the keyboard interface broadly.
-It includes input from scanning software, sip-and-puff systems, on-screen keyboards, speech recognition, and other keyboard substitutes.
+WCAG's glossary definition is narrow and mechanical: a keyboard interface is an "interface used by software to obtain keystroke input", per [the definition in WCAG 2.2](https://www.w3.org/TR/WCAG22/#dfn-keyboard-interface).
+The breadth comes from what drives that interface, and that list belongs to [Understanding 2.1.1 Keyboard](https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html) rather than to the definition: "Keyboard emulators include speech input software, sip-and-puff software, on-screen keyboards, scanning software and a variety of assistive technologies and alternate keyboards."
+The attribution matters, because a reviewer who cites the definition for the emulator list is citing the wrong document and will lose the argument as soon as someone checks it.
+
+The definition also carries an exclusion worth knowing.
+Its second note records that operation "through a keyboard-operated mouse emulator, such as MouseKeys, does not qualify as operation through a keyboard interface", because the program is being driven through its pointing-device interface instead.
+So MouseKeys support does not discharge a keyboard obligation, and a component exercised only that way is untested for this purpose.
+
 A keyboard interface is an input pathway, not a physical device.
 This is why keyboard operability is such a load-bearing requirement: it is the shared abstraction that many different assistive technologies drive.
 
@@ -258,7 +283,9 @@ Four consequences follow directly, and each should appear as a review check.
 - **Avoid drag-only movement.**
   Any reordering or moving operation needs a single-pointer and keyboard-interface alternative, which is also the substance of [WCAG 2.5.7 Dragging Movements](https://www.w3.org/TR/WCAG22/#dragging-movements).
 - **Avoid inaccessible custom shortcuts.**
-  Single-character shortcuts collide with speech-recognition and screen-reader command sets unless they can be turned off or remapped.
+  Single-character shortcuts collide with speech-recognition and screen-reader command sets.
+  [WCAG 2.1.4 Character Key Shortcuts](https://www.w3.org/TR/WCAG22/#character-key-shortcuts) is Level A and is satisfied by any one of three escapes: a mechanism to turn the shortcut off, a mechanism to remap it to include one or more non-printable keys such as Ctrl or Alt, or the shortcut being active "only when that component has focus".
+  The third escape is the one most often forgotten, and it is frequently the cheapest, because a component-scoped shortcut needs no global preference screen to be built.
 
 The design-system implication is that a component's keyboard contract is simultaneously its switch-access contract, its scanning contract, and a large part of its speech-input contract.
 Testing with a physical keyboard is necessary and is not sufficient.
@@ -266,7 +293,8 @@ Testing with a physical keyboard is necessary and is not sufficient.
 ## Worked example: the Dialog component
 
 A dialog is an appropriate APG-derived component because native HTML alone does not settle all product decisions around initial focus, focus restoration, dismissibility, destructive confirmation, and assistive-technology behaviour.
-The example below is the shape a completed specification takes.
+The example below illustrates the shape, abridged: classification, native baseline, APG source, guarantees, non-guarantees, keyboard contract, and assertions.
+It does not restate all twelve required fields, and a real registry entry would carry every one of them, including Reflow and two-dimensional exception behaviour and its recorded deviations.
 
 The assertions section is deliberately presented as the required shape to be filled in.
 No assistive-technology results are recorded here, because none have been gathered.
@@ -466,10 +494,18 @@ Priorities 6 to 8 are gated on demonstrated need, and each gate should be record
 
 Two cautions are strong enough to belong in the catalogue itself, and this is the first.
 
-The APG's [Menu and Menubar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/) has a specialised composite keyboard model, including roving-focus approaches, intended for application menu semantics rather than for generic navigation.
-Adopting it for a navigation bar imports that whole contract and changes what a screen reader tells the user the thing is.
-A list of links is usually just navigation, and belongs in a landmark.
-A list of buttons is usually just an action group.
+The APG's [Menu and Menubar pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menubar/) describes a widget that "offers a list of choices to the user, such as a set of actions or functions", behaving "like native operating system menus", and notes that "a menu that is visually persistent is a menubar".
+
+Accuracy about its scope first, because the temptation is to overstate the case.
+The APG does not restrict this pattern to application menus.
+It ships a Navigation Menubar Example, described as demonstrating "a menubar that provides site navigation".
+Using a menubar for site navigation is therefore a sanctioned use of the pattern, not a misuse of it, and this document must not claim otherwise.
+
+The caution stands as a project convention with a stated cost, which is the honest form for it.
+Adopting menubar for ordinary navigation imports the entire composite contract: a roving-focus model, a single tab stop, author-managed arrow-key movement, submenu open and close behaviour, and a role that makes a screen reader describe the thing as a menu rather than as navigation.
+For this product I judge that cost unjustified, because a list of links inside a navigation landmark already gives users a structure they know and costs nothing to maintain.
+A list of buttons is usually just an action group, and a toolbar is the cheaper composite where one is genuinely warranted.
+If a future surface does adopt menubar, the justification belongs in its specification, tagged as a product-specific deviation from this convention, with the keyboard contract written out in full.
 
 ### Caution: do not adopt ARIA Grid for visual density
 
@@ -487,14 +523,14 @@ Until then it has no force, and no component specification should cite it as set
 **Decision.** APG patterns are adopted by reference, not copied by default.
 Native HTML is preferred.
 An APG pattern is selected only when a custom composite interaction is necessary.
-Every APG-derived component records its APG source, the native alternative considered, its semantic contract, keyboard contract, focus lifecycle, Reflow behaviour, WCAG criteria, tests, assistive-technology evidence, deviations, non-guarantees, and uncertainty.
+Every APG-derived component records twelve fields: its APG source, the native alternative considered, its semantic model, its keyboard contract, its focus lifecycle, pointer, touch, and speech-input equivalence, visible focus and forced-colours requirements, Reflow and two-dimensional exception behaviour, the WCAG criteria affected, its test matrix and assistive-technology evidence, its deviations from the pattern, and its non-guarantees and known uncertainty.
 
 **Reasoning.** The APG is informative guidance, while WCAG and WAI-ARIA are normative, so a system that copies APG examples inherits neither a conformance claim nor any evidence about the code it ships.
 Adoption by reference keeps the valuable part, which is the interaction and keyboard model users already know, and places responsibility for semantics, testing, and support evidence in the layer that actually ships.
 Users of keyboard interfaces, including scanning software, sip-and-puff systems, and speech recognition, benefit because the keyboard contract becomes a specified and tested artefact rather than an implementation accident.
 Preferring native HTML benefits every user of every assistive technology, because native elements arrive with focus, activation, and forced-colours behaviour already implemented and already tested by browser vendors.
 
-**Cost.** Specification work increases substantially, because each APG-derived component needs eleven recorded fields rather than a link to a pattern page.
+**Cost.** Specification work increases substantially, because each APG-derived component needs twelve recorded fields rather than a link to a pattern page.
 The system cannot claim the reassurance of "we follow the APG", and must instead defend its own contracts and publish its own gaps.
 Deliberate deviations become the team's burden to document, justify, and support, where copying would have deferred that cost to users.
 Assistive-technology evidence expires, so the record needs periodic re-testing rather than one-time completion.
@@ -506,7 +542,7 @@ Linking to APG pattern pages from component documentation in place of writing co
 Implementing the full APG pattern set up front, because most patterns are unnecessary for an audit and remediation product and each unused composite adds untested surface.
 Allowing per-team ad-hoc keyboard models with no registry, because it produces inconsistent behaviour and no way to audit deviations.
 
-**Verification.** Review rejects any component labelled APG-derived that is missing one of the eleven required fields.
+**Verification.** Review rejects any component labelled APG-derived that is missing one of the twelve required fields.
 Review rejects any documentation sentence that presents APG guidance as a WCAG requirement, or that claims APG conformance.
 Every requirement in a component specification carries one of the five requirement categories.
 Every assistive-technology claim names engine, version, browser, observed behaviour, and date, and any claim lacking one is recorded as uncertainty.
