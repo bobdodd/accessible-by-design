@@ -419,6 +419,55 @@ The `.afds` extension and root manifest identify the format in the interim.
 AFDS 1.0.0 inventory integrity is not a digital signature and does not prove author identity or trusted provenance.
 The container is specified in full in [the AFDS package format document](AFDS-PACKAGE-FORMAT.md).
 
+### Adapters carry information in both directions
+
+**Decision.** Adapters are defined in both directions.
+An export adapter reads canonical artefacts and writes what an external tool expects.
+An import adapter reads an external tool's representation and drafts the artefacts an AFDS package requires.
+Import output is a draft and never carries the role `canonical`.
+A draft becomes canonical only through promotion, which is a review performed by a person who supplies what the source could not and accepts responsibility for the resulting accessibility claims.
+Every fact an import could not obtain is recorded as a gap in the import report and must appear in the promoted artefact as uncertainty or as a declared non-guarantee.
+
+**Reasoning.** This restores a position the project had already taken and the package format document had lost.
+The governance rule in [the portable representations research note](../research/PORTABLE-REPRESENTATIONS.md) states that the rule cuts in both directions, that `adapters/` holds every outbound and inbound transformation, and that an inbound adapter reading Figma variables must write into `tokens/` through a reviewed change rather than becoming a live read-through dependency.
+The research plan in the same note settles the report format by running one real Figma-variables import alongside one CSS-custom-property export.
+Clause 11 of the package format document defined an adapter as converting canonical artefacts into what an external tool expects, which silently narrowed the rule to one direction.
+Promotion is the reviewed change the research note required, named and given obligations.
+
+No established design system begins in AFDS.
+An adopter arrives holding a design-tool library, a token file, a component library, and accumulated undocumented knowledge, and the question that decides adoption is what it costs to get from there to a conforming package.
+A format that only exports answers that question badly, because it is usable only by a system that started in it.
+
+Refusing to define import does not prevent importing.
+It moves importing into hand transcription and single-use scripts, whose results enter packages with no declaration, no report, and no marker recording which facts were guessed.
+The project's position everywhere else is that declared absence beats silence, and an undefined import path is the silent case.
+
+An import report is also evidence the project wants in its own right.
+An export report records what a target could not accept.
+An import report records what a target was unable to express in the first place, which is the more direct evidence that accessibility meaning does not survive in tool-native form.
+
+**Cost.** Two directions mean two sets of obligations, two report shapes, and a promotion step that cannot be automated.
+An import of any realistic design-tool library will report a large number of gaps, so an adopter's first conforming package requires substantial human authorship, and the format makes that cost visible rather than hiding it.
+An import report is the one artefact exempt from the rule that a `derived` or `adapter` artefact must be regenerable from canonical artefacts alone, because its source lies outside the package by definition.
+That exemption is a stated irregularity in an otherwise uniform rule.
+
+**Rejected.** Export-only adapters, because they restrict the format to systems that began in it.
+Automated promotion, because a canonical artefact asserts a contract somebody has to be willing to defend, and a transform cannot accept that responsibility.
+Shipping unpromoted drafts inside a conforming package, because a draft in a package is indistinguishable from a contract at the moment somebody relies on it.
+Treating an import as a round trip that restores what an export discarded, because a projection does not become reversible by being run backwards.
+
+**Verification.** Each adapter declaration states exactly one direction, and a target supported both ways is declared as two adapters.
+No artefact produced by an adapter in either direction carries the role `canonical`.
+An export output is regenerable from canonical artefacts alone.
+An import declaration lists the canonical artefacts promoted from it, and every gap of severity `error` in its report corresponds to an uncertainty record or a declared non-guarantee in one of those artefacts.
+An import report carrying a gap of severity `error` reports a validation status of failed, which states that the source cannot yield a conforming artefact without human authorship.
+Every import is a discrete run with a dated report, and no adapter holds a live read-through dependency on an external tool's model.
+
+**Note.** Adapter requirements for both directions are specified in clause 11 of [the AFDS package format document](AFDS-PACKAGE-FORMAT.md).
+That clause previously defined export only, and the correction is recorded here rather than made silently, because the one-directional wording had already been published as a project position.
+How a promotion is recorded in the promoted artefact is not yet decided and is tracked in [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md).
+AFDS 1.0.0 ships no adapter implementations in either direction; the clause defines the contract an adapter must satisfy.
+
 ## Repository decisions
 
 ### Per-file licence headers

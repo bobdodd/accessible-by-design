@@ -235,6 +235,14 @@ Editing an artefact currently means unpacking the whole package.
 
 **To settle:** whether to pursue a dedicated media-type registration, and what editing, diffing, and delta-distribution tooling a package format needs to be workable.
 
+### H5. Recording a promotion
+
+An import adapter drafts artefacts, and a person promotes a draft to canonical by supplying what the source could not and accepting responsibility for the claims it makes.
+The adapter declaration lists the artefacts promoted from an import, so the package records that a promotion happened.
+What the promoted artefact says about its own origin is undefined, so a reader of a canonical contract cannot currently tell which of its statements a transform drafted and which a person authored.
+
+**To settle:** whether a promoted artefact carries a provenance field naming the import report, whether a promotion records a reviewer and a date, and whether a reviewer's identity belongs in a package that makes no other identity claim.
+
 ## I. Deferred
 
 - Implementation language and framework beyond Electron with raw HTML, CSS, and JavaScript

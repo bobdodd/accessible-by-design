@@ -19,9 +19,9 @@
     {
       "path": "adapters/README.md",
       "mediaType": "text/markdown; charset=utf-8",
-      "byteLength": 3139,
+      "byteLength": 5418,
       "role": "documentation",
-      "sha256": "47fc3990fbabc2e6a75364b4a8b6dbd63961e12ccb69edda6640df19316d05fa"
+      "sha256": "5538f94639f9482e7efdbde9ae8900eeb3529b85dca58f5ba1dac74cd7ee6a90"
     },
     {
       "path": "afds-manifest.json",

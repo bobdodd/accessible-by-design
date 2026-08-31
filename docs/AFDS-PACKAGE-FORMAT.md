@@ -118,7 +118,7 @@ Beneath the root sit up to nine directories.
 `patterns/` holds multi-component flow documentation.
 `manifests/` holds generated interface manifests such as a Custom Elements Manifest.
 `evidence/` holds assistive-technology evidence records and known-limitations prose.
-`adapters/` holds one subdirectory per adapter target, each with a declaration, a transform report, and generated output.
+`adapters/` holds one subdirectory per adapter target, each with a declaration, a transform report, and, for an export adapter, the generated output.
 `docs/` holds package documentation.
 `schemas/` holds JSON Schema documents for the package's own machine-readable artefacts.
 `stories/` holds executable examples and fixtures.
@@ -137,7 +137,7 @@ No other root-level file is defined by this document, and a producer SHOULD NOT 
 | `patterns/` | Directory | OPTIONAL | Multi-component flow and guidance documentation |
 | `manifests/` | Directory | OPTIONAL | Generated interface manifests, for example a Custom Elements Manifest |
 | `evidence/` | Directory | REQUIRED in the full profile | Engine-qualified evidence records and known-limitations prose |
-| `adapters/` | Directory | OPTIONAL | Adapter declarations, transform reports, and generated output |
+| `adapters/` | Directory | OPTIONAL | Adapter declarations, transform reports, and export output |
 | `docs/` | Directory | RECOMMENDED | Human-readable package documentation |
 | `schemas/` | Directory | OPTIONAL | JSON Schema documents for the package's machine-readable artefacts |
 | `stories/` | Directory | OPTIONAL | Executable examples and test fixtures |
@@ -147,7 +147,7 @@ No other root-level file is defined by this document, and a producer SHOULD NOT 
 
 A producer MUST NOT place a canonical token file outside `tokens/`.
 A producer MUST NOT place a component contract outside `components/`.
-A producer MUST NOT place adapter output outside `adapters/`.
+A producer MUST NOT place adapter output or a transform report outside `adapters/`.
 
 An empty optional directory carries no information.
 A producer SHOULD omit an optional directory rather than shipping it empty, and MUST declare the absence in the manifest where the manifest has a corresponding field.
@@ -185,6 +185,7 @@ Two testable consequences follow.
 
 The first is that any `derived` or `adapter` artefact MUST be regenerable from the canonical artefacts in the same package alone.
 If regeneration loses a fact, the fact was only in the derived artefact and the package does not conform.
+Section 11.4 states the single exception, which is an import report, because an import reads a source that lies outside the package by definition.
 
 The second is that a consumer MAY discard every `derived` and `adapter` entry and still hold a complete design system.
 A verifier can approximate this check by confirming that no `canonical` artefact references a `derived` or `adapter` path as its source.
@@ -516,59 +517,131 @@ Until such a mechanism exists, trust in a package MUST come from the channel it 
 
 ## 11. Adapters
 
-An adapter converts canonical artefacts into the representation an external tool or platform expects.
+An adapter moves information between the canonical artefacts of a package and the representation an external tool or platform uses.
 Figma, Penpot, CSS custom properties, native platform resources, and Electron shells are all adapter targets.
 
-### 11.1 Adapter requirements
+An adapter has a direction.
+An **export** adapter reads canonical artefacts and writes the representation a target expects.
+An **import** adapter reads a target's representation and drafts the artefacts an AFDS package requires.
 
-An adapter MUST report its mappings, warnings, losses, and unsupported features.
+Both directions are in scope.
+The reason is recorded in the project colophon: a format that can only export can be adopted only by a design system that began in it, and no established design system did.
+
+The two directions do not carry the same obligations.
+An export knows the full set of facts it is permitted to state, because it reads artefacts that own them.
+An import does not, because the representation it reads was never obliged to carry an accessibility contract at all.
+
+### 11.1 Direction
+
+Each element of the manifest's `adapters` array MUST declare exactly one `direction`, either `export` or `import`.
+A target supported in both directions MUST be declared as two adapters sharing a `target` value.
+
+One direction per declaration is required because the two produce different artefacts and different reports.
+A single object describing both would leave a consumer unable to determine which obligations had been discharged.
+
+### 11.2 Requirements common to both directions
+
+An adapter MUST report its mappings and its warnings, and MUST report whatever it could not carry.
 An adapter MUST NOT silently flatten meaning.
 
 Silent flattening is the more dangerous behaviour of the two, because the output looks complete.
 A `ch`-based measure has no direct native analogue.
-A forced-colours boundary expressed as a transparent outline has no equivalent in a tool that models only fills.
+A forced-colours boundary has no equivalent in a target that has no concept of a user-forced colour palette.
 A keyboard contract has no representation at all in a token pipeline.
-In each case the honest output is a recorded loss, not an approximation presented as an equivalent.
+In each case the honest output is a recorded finding, not an approximation presented as an equivalent.
 
-Adapter output MUST carry the role `adapter` or `derived`, never `canonical`, and MUST be regenerable from the canonical artefacts alone, as section 6.2 requires.
+No adapter in either direction may produce an artefact with the role `canonical`.
+Section 6.2 gives the reason: an artefact shaped by a target's limits cannot own a fact.
 
-### 11.2 The adapter declaration
+### 11.3 Export adapters
+
+Export output MUST carry the role `adapter` or `derived`, never `canonical`.
+Export output MUST be regenerable from the canonical artefacts alone, as section 6.2 requires.
+A producer MUST place export output under `adapters/<target>/out/`.
+
+### 11.4 Import adapters
+
+An import adapter MUST NOT write an artefact with the role `canonical`.
+
+The output of an import is a draft.
+A draft becomes canonical only when a person reviews it, supplies what the source could not, and accepts responsibility for the accessibility claims the artefact then makes.
+This document calls that act **promotion**.
+Promotion MUST be performed by a person and MUST NOT be performed by a transform, because a canonical artefact asserts a contract that somebody has to be willing to defend.
+
+Import output is therefore not itself a package artefact.
+A producer MUST NOT ship an unpromoted draft in a conforming package.
+What the package retains from an import is the import report, which is the provenance of every artefact promoted from that import.
+
+An import report MUST carry the role `adapter`, and is exempt from the regenerability consequence stated in section 6.2.
+The exemption is narrow and its reason is structural: an import reads a source that lies outside the package by definition, so no package can regenerate it.
+The alternative to the exemption is to discard the provenance of every imported artefact, which is a worse outcome than a stated exception.
+
+Every `gaps` entry in an import report MUST appear in the promoted artefact as an uncertainty record or as a declared non-guarantee.
+An import that could not supply a fact does not thereby excuse the package from declaring that the fact is unknown.
+
+An import MUST be a discrete run that produces a dated report.
+An import MUST NOT be a live read-through dependency on an external tool's model.
+A read-through dependency makes the external tool the effective owner of whatever it supplies, which is the failure section 6.2 exists to prevent, and it leaves no report a reviewer can examine.
+
+### 11.5 The adapter declaration
 
 Each element of the manifest's `adapters` array is an adapter object.
 
 | Field | Type | Required | Meaning |
 | --- | --- | --- | --- |
 | `id` | String | REQUIRED | Adapter identifier, unique within the package. |
+| `direction` | String | REQUIRED | Either `export` or `import`. |
 | `target` | String | REQUIRED | The external tool or platform, for example `figma` or `css-custom-properties`. |
 | `adapterVersion` | String | REQUIRED | Semantic version of the adapter that produced the output. |
 | `declaration` | String | REQUIRED | Path to the adapter's own declaration file. |
-| `report` | String | REQUIRED | Path to the transform report for the shipped output. |
-| `outputs` | Array of strings | REQUIRED | Paths of the generated artefacts. |
-| `inputs` | Array of strings | REQUIRED | Paths of the canonical artefacts consumed. |
+| `report` | String | REQUIRED | Path to the transform report. |
+| `inputs` | Array of strings | REQUIRED | For `export`, paths of the canonical artefacts consumed. For `import`, identifiers of the external sources read, which are not package paths. |
+| `outputs` | Array of strings | REQUIRED | For `export`, paths of the generated artefacts. For `import`, an empty array, because import output is not a package artefact. |
+| `promoted` | Array of strings | REQUIRED for `import` | Paths of the canonical artefacts promoted from this import. An empty array where nothing has yet been promoted. |
 
-### 11.3 The transform report
+### 11.6 The transform report
 
 A transform report records what the adapter did, what it could not do, and what it wants a reader to notice.
 
-| Field | Type | Required | Meaning |
-| --- | --- | --- | --- |
-| `adapterId` | String | REQUIRED | Identifier of the adapter that produced this report. |
-| `adapterVersion` | String | REQUIRED | Version of the adapter. |
-| `target` | String | REQUIRED | The external tool or platform. |
-| `runDate` | String | REQUIRED | ISO 8601 date of the transform run. |
-| `validationStatus` | String | REQUIRED | One of `passed`, `passed-with-warnings`, or `failed`. |
-| `mappings` | Array of mapping objects | REQUIRED | One record per source fact that was carried across. |
-| `warnings` | Array of finding objects | REQUIRED | Facts carried across with a caveat. Empty array if none. |
-| `losses` | Array of finding objects | REQUIRED | Facts that could not be carried across. Empty array if none. |
-| `unsupported` | Array of finding objects | REQUIRED | Source features the target has no concept of. Empty array if none. |
+The following fields are REQUIRED in both directions.
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `adapterId` | String | Identifier of the adapter that produced this report. |
+| `adapterVersion` | String | Version of the adapter. |
+| `direction` | String | Either `export` or `import`, matching the adapter declaration. |
+| `target` | String | The external tool or platform. |
+| `runDate` | String | ISO 8601 date of the transform run. |
+| `validationStatus` | String | One of `passed`, `passed-with-warnings`, or `failed`. |
+| `mappings` | Array of mapping objects | One record per fact carried across. |
+| `warnings` | Array of finding objects | Facts carried across with a caveat. Empty array if none. |
+
+An export report additionally REQUIRES the following two arrays.
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `losses` | Array of finding objects | Facts the target could not accept. Empty array if none. |
+| `unsupported` | Array of finding objects | Source features the target has no concept of. Empty array if none. |
+
+An import report additionally REQUIRES the following two arrays.
+
+| Field | Type | Meaning |
+| --- | --- | --- |
+| `gaps` | Array of finding objects | Facts that an AFDS artefact requires and the source could not supply. Empty array if none. |
+| `unmapped` | Array of finding objects | Source content for which AFDS has no representation. Empty array if none. |
 
 A **mapping object** has `source`, `sourceKind`, `targetName`, and `fidelity`, where `fidelity` is one of `exact`, `approximate`, or `partial`.
 A **finding object** has `source`, `severity`, `statement`, and `consumerAction`, where `severity` is one of `info`, `warning`, or `error` and `consumerAction` says plainly what a person consuming the output must do about it.
 
 Every array is REQUIRED even when empty.
 An empty `losses` array is a positive claim that nothing was lost, which a reviewer can challenge; an omitted `losses` field is merely silence.
+The same reasoning applies to `gaps`: an empty `gaps` array claims that the source supplied every fact an AFDS artefact requires, which is a strong claim and rarely a true one.
 
-An adapter whose report contains a `losses` or `unsupported` entry with severity `error` MUST set `validationStatus` to `failed`.
+An export report containing a `losses` or `unsupported` entry with severity `error` MUST set `validationStatus` to `failed`.
+
+An import report containing a `gaps` entry with severity `error` MUST set `validationStatus` to `failed`.
+A `failed` import report is not a malfunction, and for most targets it is the expected result.
+It states that the source cannot yield a conforming artefact without human authorship, which is information a person needs before deciding how much work an adoption will cost.
 
 ## 12. Conformance profiles
 

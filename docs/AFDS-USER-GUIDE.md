@@ -971,6 +971,7 @@ If a fact exists only in a generated stylesheet, a design-tool library, or a pla
 
 Two testable consequences follow.
 Every derived or adapter artefact must be regenerable from the canonical artefacts in the same package alone, so if regeneration loses a fact then the fact was only in the derived artefact and the package does not conform.
+The single exception is an import report, described later under adapters, because an import reads a source that sits outside the package and no package can regenerate it.
 And a consumer may discard every derived and adapter entry and still hold a complete design system.
 
 One further rule deserves its own emphasis, because it will feel counter-intuitive.
@@ -1047,39 +1048,100 @@ That is deliberate: recording an untested combination is the mechanism by which 
 
 ### Adapters and honest transforms
 
-An adapter converts canonical artefacts into whatever an external tool or platform expects, and design tools, CSS custom properties, native platform resources, and application shells are all adapter targets.
+An adapter moves information between the canonical artefacts of a package and whatever an external tool or platform uses, and design tools, CSS custom properties, native platform resources, and application shells are all adapter targets.
 
-An adapter must report its mappings, warnings, losses, and unsupported features, and must not silently flatten meaning.
+Adapters run in both directions, and the two directions are not mirror images of each other.
+
+An export adapter reads canonical artefacts and writes what a target expects.
+It knows the full set of facts it is allowed to state, because it reads the artefacts that own them, so its whole problem is what the target refuses to accept.
+
+An import adapter reads a target's representation and drafts the artefacts a package requires.
+Its problem is the opposite one.
+The representation it reads was never obliged to carry an accessibility contract, so most of what a component contract needs simply is not there to be read.
+
+Import matters because no existing design system began in AFDS.
+An adopter arrives holding a design-tool library, a token file, a component library, and a good deal of knowledge that was never written down, and the question that decides whether adoption happens at all is what it costs to get from there to a conforming package.
+Leaving import undefined would not stop anyone importing.
+It would push the work into hand transcription and one-off scripts, whose output lands in a package with nothing recording which facts were real and which were guessed, and that is the silence the format exists to eliminate.
+
+An adapter in either direction must report its mappings, its warnings, and whatever it could not carry, and must not silently flatten meaning.
 
 Silent flattening is the more dangerous of the two behaviours, because the output looks complete.
 A `ch`-based measure has no direct native analogue.
-A forced-colours boundary expressed as a transparent outline has no equivalent in a tool that models only fills.
+A forced-colours boundary has no equivalent in a target that has no concept of a user-forced colour palette.
 A keyboard contract has no representation at all in a token pipeline.
-In each case the honest output is a recorded loss, not an approximation presented as an equivalent.
+In each case the honest output is a recorded finding, not an approximation presented as an equivalent.
 
-Adapter output carries the adapter or derived role, never canonical.
+No adapter output in either direction carries the canonical role.
+
+### What an import may not do
+
+An import produces a draft, and a draft is not a contract.
+
+A draft becomes canonical only when a person reads it, supplies what the source could not, and accepts responsibility for the accessibility claims the artefact then makes.
+The format calls that promotion, and it deliberately cannot be automated, because a canonical artefact asserts something somebody has to be willing to defend when it is challenged.
+
+Two rules follow from that.
+
+An unpromoted draft must never ship inside a conforming package, because once a draft is in a package it is indistinguishable from a contract to whoever relies on it.
+
+And every gap the import recorded must appear in the promoted artefact as uncertainty or as a declared non-guarantee.
+An import that could not discover a component's keyboard behaviour has not thereby excused the package from saying that the keyboard behaviour is unknown.
+The uncertainty record already exists for exactly this purpose, and an import is the situation that produces the most of them.
+
+There is also a rule about how an import runs, not just what it produces.
+An import is a discrete run that leaves a dated report, and it must never be a live read-through dependency on an external tool.
+A read-through dependency quietly makes the tool the owner of whatever it supplies, which is the one thing the role system exists to prevent, and it leaves nothing for a reviewer to examine.
+
+What a package keeps from an import is the import report, which is the provenance of everything promoted from it.
+The report is also the one artefact exempt from the regeneration rule, for the structural reason that its source was never in the package.
+
+### The transform report
 
 The transform report is where the honesty is made checkable.
+
+These fields are required in both directions.
 
 | Field | Meaning |
 | --- | --- |
 | `adapterId` | Identifier of the adapter that produced the report |
 | `adapterVersion` | Version of the adapter |
+| `direction` | Either export or import |
 | `target` | The external tool or platform |
 | `runDate` | Date of the transform run |
 | `validationStatus` | One of passed, passed with warnings, or failed |
-| `mappings` | One record per source fact carried across |
+| `mappings` | One record per fact carried across |
 | `warnings` | Facts carried across with a caveat |
-| `losses` | Facts that could not be carried across |
-| `unsupported` | Source features the target has no concept of |
+
+An export report adds two arrays: `losses`, for facts the target could not accept, and `unsupported`, for source features the target has no concept of.
+
+An import report adds the two that face the other way: `gaps`, for facts an AFDS artefact requires and the source could not supply, and `unmapped`, for source content AFDS has no representation for.
 
 A mapping record names the source, its kind, the target name, and a fidelity of exact, approximate, or partial.
 A finding record names the source, a severity of information, warning, or error, a statement, and the action a consumer must take about it.
 
 Every array is required even when empty, and the reason is precise.
 An empty losses array is a positive claim that nothing was lost, which a reviewer can challenge, whereas an omitted losses field is merely silence.
+An empty gaps array makes the far stronger claim that the source supplied every fact an AFDS artefact requires, and it will rarely be true.
 
-An adapter whose report contains a loss or unsupported entry with error severity must set its validation status to failed.
+An export report containing a loss or unsupported entry of error severity must set its validation status to failed.
+
+An import report containing a gap of error severity must also set its validation status to failed, and this is worth understanding rather than working around.
+A failed import is not a malfunction.
+For most targets it is the expected result, and what it states is that the source cannot yield a conforming artefact without human authorship.
+That is the number an adopter needs before deciding what the work will cost, and a format that hid it would be flattering rather than useful.
+
+### Round-tripping
+
+An export followed by an import is not a round trip in any sense that returns what was sent.
+
+An export is a projection, and a projection discards.
+Running it backwards does not restore what it dropped, because the information is not in the target to be read.
+A system exported to a token pipeline and imported back is a system with no keyboard contracts, no evidence, and no non-guarantees, because a token pipeline never held any of those.
+
+The value of a defined import path is not that it makes round-tripping work.
+It is that the returned system arrives saying so, in a report, instead of arriving looking complete.
+
 
 ### Versioning
 
