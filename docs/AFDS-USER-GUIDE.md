@@ -213,8 +213,11 @@ Accessibility work is commonly retrofitted: build, audit late, patch individual 
 That cycle treats symptoms, because a finding fixed on one page recurs on the next page that uses the same component.
 
 A design-system approach attaches requirements to reusable components and patterns instead, so that a fix and its reasoning propagate to everything built from them.
-Survey research supports the shift: design systems were the most frequently cited accessibility strategy among practitioners, rising from 33% of interviews in 2017 to 52% in 2019-2020.
-For comparison, in the same research usability testing with disabled people was cited in 31% of interviews, audits in 17%, and empathy labs in 10%.
+Survey research supports the shift.
+Putnam, Rose and MacDonald analysed 58 interview sessions with user-experience practitioners between 2017 and 2020, and design systems were the most cited of the four concrete actions the paper identifies, named in 28 sessions (48%).
+Adoption rose across the fieldwork, from 2 of 6 sessions in 2017 (33%) to 22 of 42 between November 2019 and March 2020 (52%).
+For comparison, in the same research the inclusion of people with disabilities in usability testing was cited in 18 sessions (31%), training in 7 (12%), and code considerations in 5 (8%).
+Every figure here is checked against the paper in [the design systems research note](../research/DESIGN-SYSTEMS.md), which also records two figures this project once published and has retracted.
 
 The project's own decision follows from that.
 Requirements attach to components and patterns, not to pages or to individual audit findings, and coverage is measured against the component inventory rather than against a page count.

@@ -167,3 +167,9 @@ Two of the four practices listed under GOV.UK were not supported by the page the
 Reference [5] carried "Department of Veterans Affairs" as a corporate author, which the page does not state. Reference [7] had no author, and the article is by Cintia Romero. Reference [2] omitted the editors and the announcement's author. The Supernova scorecard categories were paraphrased and are now quoted. References [8] and [9] were checked and were already correct.
 
 Reference [1] was also cited incorrectly, as "It would be better. It would be much worse" and dated 2022. The title reads "It could be better. It could be much worse", and the article was published in volume 16, issue 1, in March 2023. The 2022 date was taken from the copyright line of the author-accepted PDF rather than from the published record. Citation metadata in this note should be checked against the DOI record, not against the front matter of a hosted copy.
+
+2026-09-01. The retraction of the two false figures was applied to this note only.
+`docs/AFDS-USER-GUIDE.md` and `docs/RESEARCH-SUMMARY.md` both restated them and continued to carry them for two days after they were retracted here.
+Both documents now give the supported counts instead, and the user guide points back to this note for the check.
+The lesson recorded is that retracting a figure in the note that established it does not retract it from the documents derived from it, so a correction has to be followed through every document that repeated the claim.
+The website did not carry the false figures and needed no change.

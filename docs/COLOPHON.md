@@ -101,6 +101,27 @@ For example, Stack provides vertical rhythm, not list semantics; Imposter provid
 
 **Verification.** Review rejects an empty non-guarantees section.
 
+### The specification binds a core and names its method choices as profiles
+
+**Decision.** The specification is one document with a binding core and a set of named method profiles.
+The core binds every AFDS package: the container, the manifest and inventory, the contract vocabulary of guarantees and non-guarantees, evidence, uncertainty and assertions, the keyboard contract model, the testing levels, verification, security, adapters and versioning.
+The method profiles bind only a package that claims them, and carry this project's own choices: the intrinsic layout method and its primitives, reflow and the two-dimensional exception, the colour system and typography, and the approved component catalogue.
+
+**Reasoning.** A standard that made intrinsic layout, OKLCH and a specific typeface conditions of using the format would be a description of this design system rather than a format any design system can produce.
+A standard that excluded them would be a container and a vocabulary, which is not the substantial definition this project set out to write.
+Separating them keeps the method inside the specification, where it can be cited and argued with, without making it a barrier to entry for an organisation whose brand palette is already mandated.
+
+**Cost.** A package can conform to AFDS while adopting nothing this project believes about layout, so the profiles have to persuade on their merits rather than by being unavoidable.
+
+**Rejected.** Making the layout method normative for the format, and exiling it to a non-normative note.
+
+**Verification.** Every normative statement in the specification sits either in the core or under a named profile, and no statement of method appears in the core.
+
+**Note.** Method profiles are a different axis from the completeness profiles of the package format, which say how much of a hierarchy a package contains.
+The two are independent: a tokens-only package may follow the layout method, and a full package may not.
+They therefore travel in separate manifest fields rather than in one profile identifier.
+This entry is also distinct from the testing decision below, which is about where a component is tested rather than about what the specification binds.
+
 ### Conformance is measured at two levels
 
 **Decision.** Components are tested in isolation and inside a realistic page with landmarks, header, footer, and realistic content.

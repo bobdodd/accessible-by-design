@@ -14,6 +14,13 @@ Five layers are in use: principles, tokens, layout primitives, components, and p
 The current work defines principles, tokens in concept, and layout primitives.
 Components and patterns remain unspecified.
 
+**Partly settled.** One half of this question was about what the standard binds rather than about what the project builds, and that half is now a colophon decision.
+The specification has a binding core and a set of named method profiles: the core binds every package, and this project's own layout, colour, typography and catalogue choices bind only a package that claims the relevant profile.
+So the layout primitives are inside the standard and are not a condition of using the format.
+
+That decision does not touch the rest of the item.
+It says what is normative for a package, not whether this project ships the components it specifies, and those are independent: a specification-only project and an implementing project can produce identical normative text.
+
 **To settle:** whether the project ships components or only component specifications; whether a reference implementation is normative or illustrative; and where multi-component patterns such as error-summary forms, wizards, and filterable results live.
 
 ### A2. Component inventory

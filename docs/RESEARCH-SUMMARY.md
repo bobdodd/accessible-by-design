@@ -11,8 +11,8 @@ It states the premise, evidence, prior art, decisions, additions, and unresolved
 Accessibility work is commonly retrofitted: build, audit late, patch individual findings, repeat.
 A design-system approach instead attaches requirements to reusable components and patterns, allowing fixes and their rationale to propagate.
 
-Survey research found design systems were the most frequently cited accessibility strategy among practitioners, rising from 33% of interviews in 2017 to 52% in 2019-2020.
-Usability testing with disabled people was cited in 31%, audits in 17%, and empathy labs in 10%.
+Survey research found design systems were the most cited of four concrete accessibility actions among practitioners, named in 28 of 58 analysed interview sessions (48%), with adoption rising from 2 of 6 sessions in 2017 (33%) to 22 of 42 between November 2019 and March 2020 (52%).
+The inclusion of people with disabilities in usability testing was cited in 18 sessions (31%), training in 7 (12%), and code considerations in 5 (8%).
 
 Accessibility is treated here as a crosscutting concern with two branches:
 
