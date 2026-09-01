@@ -67,8 +67,24 @@ OKLCH with constant-lightness pairings and a roughly 95% lightness surface is th
 ### C2. Typeface
 
 Atkinson Hyperlegible is the leading candidate.
+[Braille Institute](https://www.brailleinstitute.org/freefont/) describes the family as fonts “designed to improve legibility and readability for individuals with low vision”, focused on “letterform distinction”, and offers them free for personal use and all commercial applications.
 
-**To settle:** its performance at small data-dense sizes, a monospace companion, and variable-font implications for the scale.
+**Partly settled.** The monospace companion exists, so that sub-item is closed.
+The download page states that “the hyperlegible® family of fonts is now available in three versions: Atkinson Hyperlegible®, Atkinson Hyperlegible Next®, and Atkinson Hyperlegible Mono®”, and describes the monospaced member as having “characters that each occupy the same amount of horizontal space, allowing for them to be scanned quickly in table-based and coding environments”.
+The [release announcement](https://www.brailleinstitute.org/about-us/news/braille-institute-launches-enhanced-atkinson-hyperlegible-font-to-make-reading-easier/), dated 10 February 2025, calls it “Atkinson Hyperlegible Monospace” and says it is “specifically designed to assist coders by improving readability in environments where precise character spacing is critical”.
+The two pages name that face differently, so the product name should be taken from the download page at the point of adoption rather than from the announcement.
+
+The same announcement resolves the factual part of the variable-font sub-item and enlarges its consequences.
+Next is described as “building upon the original Atkinson Hyperlegible typeface that was introduced in 2019”, supporting “over 150 languages (up from 27)”, and offering “seven font weights (up from two), as well as new variable and monospace versions”.
+So a variable version is not hypothetical, and the weight axis went from two positions to seven.
+
+That is a larger change to this item than closing the monospace sub-item.
+The type scale is currently specified as discrete steps, which was an easy commitment when the typeface offered two weights and is a real design decision when it offers seven and a continuous axis.
+A scale that admits intermediate weights has to say which weights carry meaning, because a weight difference that is too small to perceive is a distinction that exists in the specification and not on the screen.
+
+Selecting between the original and Next is therefore a question about which set of letterform decisions the scale is built on, not a matter of taking the newest.
+
+**To settle:** which of the three versions is the candidate, its performance at small data-dense sizes, and how seven weights and a continuous axis affect a type scale specified as discrete steps.
 
 ### C3. Conformance target
 
