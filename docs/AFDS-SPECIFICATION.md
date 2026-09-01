@@ -739,7 +739,10 @@ Doing so abuses both the role and the criterion, and a consumer encountering suc
 
 The `wcagMapping` array *MUST* contain one entry for every success criterion the component bears on.
 
-Each entry *MUST* record the criterion number, its name, its conformance level, its branch under clause 12.2, its relationship under clause 12.3, and a note.
+Each entry *MUST* record the criterion number, its name, the level at which WCAG 2.2 assigns it, its branch under clause 12.2, its relationship under clause 12.3, and a note.
+
+The assigned level is a property of the criterion and is fixed by WCAG.
+It is not the target level of clause 12.4, which is a property of the package or the component and is chosen by the author.
 
 #### 12.2 The two branches
 
@@ -770,6 +773,46 @@ Extending it is a change to this specification and *MUST NOT* be done within a p
 
 A `does-not-address` entry is not an admission of failure and *MUST NOT* be treated as one.
 Recording that a layout primitive conveys no relationships, and that the consumer therefore owns Info and Relationships, is more useful than silence, because silence leaves the consumer to discover the ownership in an audit.
+
+#### 12.4 The target level is declared, not mandated
+
+This specification does not fix a target WCAG conformance level and *MUST NOT* be read as requiring one.
+
+The choice between Level A, Level AA, and Level AAA is the author's.
+This specification requires only that the choice be declared, and that a reader be able to determine which level applies to any given component without guessing.
+
+WCAG 2.2 supports leaving the choice open rather than fixing it.
+Its Conformance section states that "It is not recommended that Level AAA conformance be required as a general policy for entire sites because it is not possible to satisfy all Level AAA success criteria for some content".
+A format that mandated a single level for every package would be imposing exactly the blanket policy WCAG advises against, and would do so across content whose nature it cannot know.
+
+A package *MUST* declare a default target level.
+
+A component *MAY* amend that default.
+A component that amends it *MUST* record the amended level and the reason for the amendment.
+
+A method profile *MAY* set a default target level for packages claiming it.
+Where a package claims such a profile, that default governs the package, because a profile is claimed whole under clause 20.3.
+
+The effective target level for a component resolves in this order, and the first available declaration governs.
+
+The component's own declaration.
+The default set by a claimed method profile, where a claimed profile sets one.
+The package default.
+
+An effective level *MUST NOT* be inferred from anything other than these three declarations.
+It *MUST NOT* be inferred from a conformance profile, which states completeness and says nothing about level.
+It *MUST NOT* be inferred from the presence of evidence recorded at a higher threshold, because measuring a ratio is not the same act as committing to it.
+
+A declared target level is a statement of intent.
+It *MUST NOT* be read as evidence that the level is met.
+Whether a criterion is met at the declared level is an assertion under clause 15 and is substantiated under clause 16, and clause 4.4 already forbids presenting a package claim as evidence that a service is accessible.
+
+Amending a level downward is permitted, and *MUST* be recorded rather than concealed.
+A component targeting Level AA inside a package that defaults to Level AAA is a disclosure, and the disclosure is worth more than a package-wide claim a reviewer would have to disprove component by component.
+The reverse case matters as much: a component that can honestly reach Level AAA in a package defaulting to Level AA should be able to say so without the package overstating itself elsewhere.
+
+A level is declared per component and not per criterion.
+A package needing to record that one criterion is held to a different threshold than the rest of its component does so as an assertion under clause 15, not as a second target level.
 
 ### 13. Kinds of requirement
 
@@ -1109,6 +1152,11 @@ This keeps the core and the profiles from drifting apart, and it means a reader 
 A profile *MUST NOT* weaken a core requirement.
 A profile that purported to excuse a package from a Part II obligation would not be a profile, and a package claiming it does not conform to this specification.
 
+A profile *MUST* impose at least one requirement that the core does not.
+The two preceding rules leave open a profile that restates nothing, weakens nothing, and requires nothing, and such a profile would be a label rather than a commitment.
+A package claiming it would appear to have taken on an obligation while taking on none, which is the kind of unearned claim this specification exists to prevent.
+Where the intended content of a profile turns out to be entirely a matter of citing existing work, the correct action is to cite that work directly and define no profile.
+
 #### 20.2 Claiming a profile
 
 A package that claims one or more method profiles *MUST* declare them in a `methodProfiles` array in its manifest.
@@ -1193,6 +1241,43 @@ It does not establish which idea came from where, which is the only thing that m
 Each profile in this part carries its provenance in its final subclause.
 A package claiming a profile defined here inherits that statement and *MUST NOT* be required to restate it.
 A package defining a local profile *MUST* supply its own.
+
+#### 20.6 The provenance object
+
+A local profile's provenance *MUST* be carried as a structured object and *MUST NOT* be carried only as prose.
+
+The object has four members, corresponding to the four elements of clause 20.5.
+
+| Member | Type | Required | Content |
+| --- | --- | --- | --- |
+| `adopted` | array | Yes, *MAY* be empty | What the profile takes from work outside the package |
+| `changed` | array | Yes, *MAY* be empty | What the profile alters about an adopted idea |
+| `originates` | array | Yes, *MUST NOT* be empty | What the profile asserts on its own authority |
+| `statement` | string | No | Prose accompanying the structured members |
+
+Each entry in `adopted` *MUST* record what is adopted, and *MUST* record its source as an object with `author`, `title`, and, where one exists, `uri`.
+
+Each entry in `changed` *MUST* record what is changed, *MUST* reference the adopted entry it changes, and *MUST* record whether the change is `stricter`, `weaker`, or `different`.
+
+A `weaker` value is permitted here and is not a conformance failure.
+A profile may legitimately relax something its source requires, and recording that plainly is the point of the member.
+What is not permitted is recording such a change as `stricter` or omitting it.
+
+Each entry in `originates` *MUST* record what originates in the profile and *MUST* reference the clause or requirement it applies to.
+
+`originates` *MUST NOT* be empty.
+This follows from clause 20.1, which requires a profile to impose at least one requirement the core does not.
+A profile with nothing in `originates` is asserting that it adopts everything and adds nothing, and the two statements cannot both be true of a conforming profile.
+A validator can therefore treat an empty `originates` as a defect without reading a word of the content.
+
+An entry *MUST NOT* name a source in `adopted` that does not support the thing adopted from it, which is the clause 20.5 prohibition applied to the serialized form.
+
+The structure exists so that provenance can be checked mechanically for completeness, which prose cannot be.
+A validator can determine that every `changed` entry references a real `adopted` entry and that `originates` is non-empty.
+It cannot determine that an attribution is truthful, and *MUST NOT* be represented as doing so.
+That check is a reading task and remains one.
+
+The binding to a manifest field is specified in Part IV.
 
 ### 21. The intrinsic layout profile
 
@@ -1562,18 +1647,25 @@ A colour-only encoding is also unavailable to any user in a forced-colours mode,
 
 The accepted cost is that interfaces look plainer.
 
-#### 23.5 Contrast is declared, not fixed by this profile
+#### 23.5 Contrast
 
-A package claiming this profile *MUST* declare the contrast threshold it holds itself to, and *MUST* record, for each foreground and background token pair it treats as valid, the measured ratio and the threshold that pair satisfies.
+This profile sets its default target level under clause 12.4 at **Level AA**.
 
-This profile *MUST NOT* be read as fixing a threshold.
+A component in a package claiming this profile *MAY* amend that default under clause 12.4, upward or downward, and amending it *MUST* be recorded with a reason.
 
-The omission is deliberate and is not an oversight.
-Whether this project commits to the WCAG 2.2 AAA threshold of 7:1 for body text as a per-surface obligation, and whether that threshold remains usable in data-dense reporting, is an open question in this project and is not settled.
-Fixing a number in a normative clause while the question is open would state a commitment that has not been made, and a reader would have no way to know it was unsettled.
+This profile *MUST NOT* be read as fixing a contrast ratio independently of the declared level.
+The applicable ratios are those WCAG 2.2 attaches to the effective target level, and restating them here would duplicate WCAG and would go stale when WCAG does not.
 
-What the profile does require is that the threshold be stated rather than assumed, and that the claim be measured per token pair rather than asserted for the palette as a whole.
-A palette-level claim is not checkable, because contrast is a property of a pair and not of a set.
+The reason the default is AA rather than AAA is worth stating, because AAA would look like the more rigorous choice.
+A profile-wide AAA default would set a threshold this project has not established is usable across data-dense reporting surfaces, and a default that packages routinely amend downward is a worse instrument than a default they can honestly hold.
+AAA remains available and is expected to be the right amendment for many components, which is why clause 12.4 makes amending upward as ordinary an act as amending downward.
+
+What this profile does require, independently of the level, is that the claim be measured per pair.
+
+A package claiming this profile *MUST* record, for each foreground and background token pair it treats as valid, the measured ratio and the effective target level that pair was measured against.
+
+A palette-level claim *MUST NOT* be recorded in place of per-pair records.
+Contrast is a property of a pair and not of a set, so a claim about a palette is not checkable, and a palette that satisfies a threshold in most combinations satisfies nothing in particular.
 
 There is a known gap here that this profile cannot close.
 Design token formats carry values and have no standard expression for the statement that one foreground token is valid on one background token at a given threshold.
@@ -1581,16 +1673,27 @@ Until such an expression exists, a package claiming this profile *MUST* carry it
 
 #### 23.6 Typeface
 
-This profile *MUST NOT* be read as requiring a particular typeface.
+A typeface is treated the same way as a target level: declared by the author, not mandated by the profile.
 
-A package claiming this profile *MUST* declare the typefaces it depends on, and *MUST* declare whether the interface remains usable when they are unavailable.
+This profile *MUST NOT* be read as requiring a particular typeface, and it sets no default typeface.
 
-No typeface requirement is stated because this project has not settled one.
+A package claiming this profile *MUST* declare the typefaces it depends on.
+It *MUST* declare whether the interface remains usable when they are unavailable.
+A component *MAY* declare a typeface dependency of its own, and one that does *MUST* record why the package default is insufficient for it.
+
+No default is set because this project has not settled one.
 Atkinson Hyperlegible, published by the Braille Institute, is under consideration and has not been adopted, and clause 23.8 records what is known about it.
+Were it adopted later, the mechanism for adopting it already exists: the profile would name it as its default and packages would remain free to amend.
 
 #### 23.7 What this profile does not settle
 
-The contrast threshold of clause 23.5 and the typeface of clause 23.6 are both open.
+This profile sets a default target level of Level AA and sets no default typeface.
+Neither is a finding about what is sufficient for users.
+
+Whether this project should raise its own default to Level AAA, and whether the 7:1 ratio that Level AAA attaches to body text remains usable on data-dense reporting surfaces, is open.
+What is settled is that the answer is a declaration and not a requirement of this specification, so the question can stay open without blocking a package from conforming.
+
+Whether this profile should name a default typeface, and whether that typeface should be Atkinson Hyperlegible, is open.
 
 Whether the 60ch measure applies inside a region claiming the clause 22 exception is also open, and is recorded identically in clause 21.7 and clause 22.7.
 
@@ -1604,8 +1707,14 @@ A line height of 1.5 for body text corresponds to the line-height value that Suc
 The reasoning that over-long lines make it harder to track from one line to the next, and that this bears particularly on users with dyslexia, low vision, or attention-related disabilities, is the standard argument for a measure cap in typographic practice.
 This profile asserts no research finding of its own on the point and quantifies no benefit.
 
-The 7:1 body-text figure named in clause 23.5 is the WCAG 2.2 Success Criterion 1.4.6 Contrast (Enhanced) threshold, at <https://www.w3.org/TR/WCAG22/>.
-It is named there as the threshold under consideration and is not adopted by this profile.
+The conformance levels this profile defaults to, and that components may amend to, are the levels defined by WCAG 2.2, at <https://www.w3.org/TR/WCAG22/>.
+The 7:1 ratio referred to in clause 23.7 is the Success Criterion 1.4.6 Contrast (Enhanced) threshold that WCAG attaches to Level AAA for body text.
+This profile defines no level, no ratio, and no threshold of its own.
+
+The choice of Level AA as the default is not merely this project's preference.
+WCAG 2.2 states in its Conformance section that "It is not recommended that Level AAA conformance be required as a general policy for entire sites because it is not possible to satisfy all Level AAA success criteria for some content", at <https://www.w3.org/TR/WCAG22/>.
+A profile-wide AAA default would be the general policy WCAG advises against.
+The reasoning about data-dense reporting surfaces in clause 23.5 is this project's own application of that advice to its own subject matter, and is not a finding of the Working Group.
 
 Atkinson Hyperlegible is published by the Braille Institute at <https://www.brailleinstitute.org/freefont/>.
 The family is offered in three versions, and the original typeface was introduced in 2019.
@@ -1621,8 +1730,13 @@ No published source is claimed for this figure.
 It rests on the argument that a screen-magnifier user should not have to change zoom repeatedly when moving between a heading and the body copy beneath it, and that argument is this project's own.
 A reader who wants to challenge one number in this clause should challenge this one.
 
-The requirement in clause 23.5 that a package declare its threshold and record measured ratios per token pair, and the accompanying refusal to fix a threshold while the question is open.
-The requirement in clause 23.6 that a package declare its typeface dependencies and whether the interface survives their absence.
+The requirement in clause 23.5 that contrast be recorded per foreground and background token pair, and that a palette-level claim not stand in for per-pair records.
+WCAG requires a ratio to be met and does not say where the measurement is recorded, so the per-pair record is this project's requirement.
+
+The reasoning in clause 12.4 that amending a level downward is a disclosure worth more than a package-wide claim a reviewer must disprove component by component, and the resolution order that makes a component's own declaration govern over a profile default.
+WCAG defines the levels; it does not define a mechanism for declaring a target per component and amending it, and that mechanism is this project's.
+
+The requirement in clause 23.6 that a package declare its typeface dependencies and whether the interface survives their absence, and that a component amending the typeface record why the package default is insufficient.
 The observation in clause 23.3 that the measure axiom and Success Criterion 1.4.10 address line length from opposite directions and that satisfying one does not satisfy the other.
 
 ### 24. The native-first pattern profile

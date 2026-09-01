@@ -3,7 +3,7 @@ SPDX-FileCopyrightText: 2026 Bob Dodd
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-# dist — published build outputs
+# dist: published build outputs
 
 Everything in this directory is a **derived artefact**. Nothing here is a source of truth. Each file is generated from Markdown and JSON elsewhere in this repository, and it is committed only so that a tagged release can carry it without depending on binary attachment uploads.
 

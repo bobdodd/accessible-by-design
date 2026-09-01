@@ -8,6 +8,7 @@
   "created": "2026-08-29",
   "conformanceProfile": "afds-components",
   "methodProfiles": [],
+  "targetConformanceLevel": "AA",
   "licences": {
     "code": "GPL-3.0-only",
     "documentation": "CC-BY-SA-4.0"

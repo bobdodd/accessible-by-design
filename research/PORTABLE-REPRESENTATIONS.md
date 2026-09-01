@@ -320,11 +320,11 @@ The empty mailing list and the empty reports index carry the argument on their o
 
 The charter is therefore the entire output of the group, and it has to be read as a requirements document rather than as a live specification effort.
 The practical consequence for this project is narrower than "monitor for alignment" implies: there is no schema to validate against, no field names to adopt, and no mapping table to produce.
-What survives is the charter's *scope claim* — that geometry rules, responsive behaviour, content constraints, and accessibility requirements belong in one machine-readable per-element specification — and that claim is independent evidence that the gap this project is filling is real and was recognised by someone else at W3C.
+What survives is the charter's *scope claim*: that geometry rules, responsive behaviour, content constraints, and accessibility requirements belong in one machine-readable per-element specification. That claim is independent evidence that the gap this project is filling is real and was recognised by someone else at W3C.
 
 No successor group has been announced.
 The closed-groups listing records the closure without naming a replacement, unlike other entries there which point readers to the group that took over the work ([Closed Community Groups](https://www.w3.org/groups/cg/?closed=1)).
-The nearest new W3C activity in the same broad area is the [Generative UI Community Group](https://www.w3.org/community/gen-ui/), "originally proposed on 2026-01-29 by Ruoxi Ran", but its scope is the runtime synthesis of interfaces — evaluation and performance, validation and testing, intermediate representations, and alignment with the web platform — rather than a portable specification format for authored components.
+The nearest new W3C activity in the same broad area is the [Generative UI Community Group](https://www.w3.org/community/gen-ui/), "originally proposed on 2026-01-29 by Ruoxi Ran", but its scope is the runtime synthesis of interfaces (evaluation and performance, validation and testing, intermediate representations, and alignment with the web platform) rather than a portable specification format for authored components.
 It is not a successor and should not be recorded as one.
 
 ### Design System Documentation Community Group
@@ -355,7 +355,7 @@ That posture keeps two options open at once.
 If a standard emerges, the project maps to it and retires its own provisional format.
 If no standard emerges, the project still has a validated, documented, portable format rather than a dependency on a group that stalled.
 
-The corollary is that project-specific field names should be chosen to resemble the charter vocabulary — design, layout, behaviour, constraints, responsive behaviour, accessibility requirements — rather than to be clever.
+The corollary is that project-specific field names should be chosen to resemble the charter vocabulary of design, layout, behaviour, constraints, responsive behaviour, and accessibility requirements, rather than to be clever.
 
 ## Commercial and de facto ecosystem
 
@@ -368,7 +368,7 @@ This section surveys the tools a real design system will meet, and for each one 
 Figma's variables are the closest thing the tool has to tokens.
 Figma documents variables as "raw values—like color, numbers, and strings—that can change in value depending on the context of a design, such as light and dark modes, or mobile and desktop modes" ([Overview of variables, collections, and modes](https://help.figma.com/hc/en-us/articles/14506821864087-Overview-of-variables-collections-and-modes)).
 The same page documents aliasing directly, saying that a variable can reference another variable and that this "gives you the ability to implement design tokens".
-Variables come in six documented types — colour, number, string, boolean, timing, and easing — and "any variable can reference another variable of the same type".
+Variables come in six documented types (colour, number, string, boolean, timing, and easing), and "any variable can reference another variable of the same type".
 
 Portability stops in several documented places.
 The variables overview does not document any file-based import or export format for variables at all.
@@ -464,7 +464,7 @@ Import routes include syncing with a code repository and creating tokens from Fi
 
 Portability stops at composite tokens and at prose.
 Zeroheight documents that platform-specific export formats do not support composite tokens, which is a real loss for typography and shadow tokens.
-And the documentation pages themselves — the guidance, rationale, and accessibility notes that give a design system its value — live in the product's own content model rather than in a portable format.
+And the documentation pages themselves (the guidance, rationale, and accessibility notes that give a design system its value) live in the product's own content model rather than in a portable format.
 
 ### Supernova
 
@@ -495,7 +495,7 @@ Backlight also describes building component libraries "in isolation using the Co
 
 Portability stops, as everywhere, at semantics and evidence.
 Backlight's ejectability is a genuine architectural virtue and is the model other vendors should be measured against.
-It is achieved by using portable underlying formats — files, stories, Markdown, npm packages — which is the same strategy this note recommends at the repository level.
+It is achieved by using portable underlying formats (files, stories, Markdown, npm packages), which is the same strategy this note recommends at the repository level.
 
 ### Style Dictionary
 
@@ -589,7 +589,7 @@ An outbound adapter that generates CSS custom properties or native resources mus
 
 The following example shows how an accessibility contract could be expressed in machine-readable form.
 It is provisional.
-It is a project draft used to test whether the required facts can be expressed at all, and it is explicitly intended to be mapped onto a future standard — or contributed as requirements to one — rather than defended as terminology.
+It is a project draft used to test whether the required facts can be expressed at all, and it is explicitly intended to be mapped onto a future standard, or contributed as requirements to one, rather than defended as terminology.
 
 ```json
 {
@@ -669,7 +669,7 @@ The example is worth reading as a set of deliberate choices rather than as a sch
 The component has a stable identifier and its own version, so that a contract can be cited and diffed independently of the release that contains it.
 The semantic model separates the role from the mechanism that produces the accessible name, because "has a name" and "gets its name from `aria-labelledby` pointing at the visible heading" are different claims and only the second is testable.
 The keyboard contract is a list of key, state, and behaviour triples rather than prose, so that each row can generate a test.
-The focus lifecycle is separated from the keyboard contract because focus movement on open, during, and on close is a different concern from key handling, and because the awkward case — the invoker being removed while the dialog is open — needs somewhere to be stated.
+The focus lifecycle is separated from the keyboard contract because focus movement on open, during, and on close is a different concern from key handling, and because the awkward case (the invoker being removed while the dialog is open) needs somewhere to be stated.
 
 The WCAG mapping assigns responsibility rather than merely listing criteria.
 A criterion can be owned by the component, shared with tokens, adapters, or layout primitives, or owned elsewhere entirely, and recording which is what prevents the familiar situation where every layer assumes another layer handled it.
@@ -708,7 +708,7 @@ Each row states what the anti-pattern looks like in practice and what specifical
 6. Introduce a minimal `design-system.manifest.json` whose only job is to link canonical artefacts and declare versions and identifiers, and refuse any proposal to move content into it.
 7. Keep Figma and Penpot integrations behind explicit adapters in `adapters/`, each emitting a report of mappings, approximations, unsupported features, and losses, with no live read-through dependency on a vendor's model.
 8. Make engine-qualified assistive-technology evidence, non-guarantees, and uncertainty first-class portable records from the outset, rather than retrofitting them once claims are already being made.
-9. Contribute requirements to the [Design System Documentation Community Group](https://www.w3.org/community/designsystemdocs/), follow [Open UI](https://open-ui.org/) for anatomy and state vocabulary, and read the closed [UI Specification Schema Community Group](https://www.w3.org/community/uispec/) charter as a requirements checklist — designing project formats to be mappable onto whatever vocabulary emerges while depending on none of them.
+9. Contribute requirements to the [Design System Documentation Community Group](https://www.w3.org/community/designsystemdocs/), follow [Open UI](https://open-ui.org/) for anatomy and state vocabulary, and read the closed [UI Specification Schema Community Group](https://www.w3.org/community/uispec/) charter as a requirements checklist, designing project formats to be mappable onto whatever vocabulary emerges while depending on none of them.
 
 Recommendation 9 changed shape once the UI Specification Schema group's closure was checked properly, and the reasoning is worth keeping visible.
 An earlier version of this note told the project to "follow" that group and watch for a successor.

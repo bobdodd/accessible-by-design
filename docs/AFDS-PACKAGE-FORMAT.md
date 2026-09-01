@@ -217,7 +217,9 @@ A field marked REQUIRED MUST be present; a field marked OPTIONAL MAY be omitted,
 | `title` | String | REQUIRED | Human-readable package title. |
 | `description` | String | REQUIRED | Prose description of what the package contains and is for. |
 | `created` | String | REQUIRED | Creation date of this package version, as an ISO 8601 date. |
-| `conformanceProfile` | String | REQUIRED | Declared profile identifier from section 12. |
+| `conformanceProfile` | String | REQUIRED | Declared completeness profile identifier from section 12. |
+| `methodProfiles` | Array of strings | REQUIRED, MAY be empty | Method profile identifiers the package claims, per specification clause 20.2. An empty array declares that no method is claimed. |
+| `targetConformanceLevel` | String | REQUIRED | The package's default target WCAG level, per specification clause 12.4. One of `A`, `AA`, `AAA`. Not inferable from any other field. |
 | `licences.code` | String | REQUIRED | SPDX identifier for code and machine-readable artefacts. |
 | `licences.documentation` | String | REQUIRED | SPDX identifier for prose. |
 | `publisher.name` | String | REQUIRED | Name of the person or organisation publishing the package. |
@@ -271,6 +273,8 @@ Read it alongside the field table: every REQUIRED field appears, and every optio
   "description": "A minimal but complete Accessibility Focused Design System package.",
   "created": "2026-08-29",
   "conformanceProfile": "afds-components",
+  "methodProfiles": [],
+  "targetConformanceLevel": "AA",
   "licences": {
     "code": "GPL-3.0-only",
     "documentation": "CC-BY-SA-4.0"
@@ -648,9 +652,13 @@ It states that the source cannot yield a conforming artefact without human autho
 
 ## 12. Conformance profiles
 
-A profile lets a package say how complete it is, so that a consumer can reject a package that lacks what the consumer needs without inspecting the whole hierarchy.
+A conformance profile lets a package say how complete it is, so that a consumer can reject a package that lacks what the consumer needs without inspecting the whole hierarchy.
 
 The manifest's `conformanceProfile` field carries exactly one profile identifier.
+
+This field states completeness only.
+It is a different axis from the `methodProfiles` array, which states which of the specification's method profiles the package claims, and from `targetConformanceLevel`, which states the WCAG level the package targets by default.
+None of the three may be inferred from either of the others: a package may be `afds-full`, claim no method, and target Level A.
 
 | Profile | Identifier | Requires |
 | --- | --- | --- |
@@ -714,7 +722,7 @@ Open Packaging Conventions, standardised as ECMA-376 Part 2 and ISO/IEC 29500-2,
 An OPC package holds *parts*, each with a name and a content type.
 Content types are declared in a `[Content_Types].xml` part at the package root, either by file extension default or by explicit override.
 Relationships between parts are declared in separate XML relationship parts under `_rels` directories, so that a consumer discovers the package's structure by walking relationships from a package-level root rather than by convention.
-OOXML uses this machinery to collect the many related parts of one document — the document body, styles, numbering definitions, embedded images, themes, and so on — into a single logical file, and other formats reuse it: ECMA-388 states that the OpenXPS format requirements "are an extension of the packaging requirements described in the Open Packaging Conventions (OPC) Standard".
+OOXML uses this machinery to collect the many related parts of one document (the document body, styles, numbering definitions, embedded images, themes, and so on) into a single logical file, and other formats reuse it: ECMA-388 states that the OpenXPS format requirements "are an extension of the packaging requirements described in the Open Packaging Conventions (OPC) Standard".
 
 AFDS borrows the principle and rejects the machinery.
 
@@ -771,13 +779,13 @@ Whether the project should build package-aware editing tooling, or continue to t
 
 The following sources inform this document.
 
-- Design Tokens Community Group, Design Tokens Format Module — https://tr.designtokens.org/format/
-- IETF RFC 2119, Key words for use in RFCs to Indicate Requirement Levels — https://www.rfc-editor.org/rfc/rfc2119
-- ECMA-376 Part 2, Open Packaging Conventions, fifth edition, December 2021 — https://ecma-international.org/publications-and-standards/standards/ecma-376/
-- ISO/IEC 29500-2:2021, Office Open XML file formats — Part 2: Open Packaging Conventions, fourth edition, August 2021 — https://www.iso.org/standard/77818.html
-- ECMA-388, Open XML Paper Specification (Open XPS), first edition, June 2009 — https://www.ecma-international.org/wp-content/uploads/ECMA-388_1st_edition_june_2009.pdf
-- IANA Media Types registry — https://www.iana.org/assignments/media-types/media-types.xhtml
-- FIPS 180-4, Secure Hash Standard — https://csrc.nist.gov/pubs/fips/180-4/upd1/final
-- W3C WAI, Understanding SC 1.4.10 Reflow — https://www.w3.org/WAI/WCAG22/Understanding/reflow.html
-- Project colophon decisions on the AFDS portable bundle and the `.afds` package — [COLOPHON.md](COLOPHON.md)
-- Project research on design systems and accessibility — [DESIGN-SYSTEMS.md](../research/DESIGN-SYSTEMS.md)
+- Design Tokens Community Group, Design Tokens Format Module, at https://tr.designtokens.org/format/
+- IETF RFC 2119, Key words for use in RFCs to Indicate Requirement Levels, at https://www.rfc-editor.org/rfc/rfc2119
+- ECMA-376 Part 2, Open Packaging Conventions, fifth edition, December 2021, at https://ecma-international.org/publications-and-standards/standards/ecma-376/
+- ISO/IEC 29500-2:2021, "Office Open XML file formats — Part 2: Open Packaging Conventions", fourth edition, August 2021, at https://www.iso.org/standard/77818.html
+- ECMA-388, Open XML Paper Specification (Open XPS), first edition, June 2009, at https://www.ecma-international.org/wp-content/uploads/ECMA-388_1st_edition_june_2009.pdf
+- IANA Media Types registry, at https://www.iana.org/assignments/media-types/media-types.xhtml
+- FIPS 180-4, Secure Hash Standard, at https://csrc.nist.gov/pubs/fips/180-4/upd1/final
+- W3C WAI, Understanding SC 1.4.10 Reflow, at https://www.w3.org/WAI/WCAG22/Understanding/reflow.html
+- Project colophon decisions on the AFDS portable bundle and the `.afds` package, in [COLOPHON.md](COLOPHON.md)
+- Project research on design systems and accessibility, in [DESIGN-SYSTEMS.md](../research/DESIGN-SYSTEMS.md)

@@ -26,9 +26,9 @@
     {
       "path": "afds-manifest.json",
       "mediaType": "application/json",
-      "byteLength": 2791,
+      "byteLength": 2825,
       "role": "canonical",
-      "sha256": "854503c285e84baeaa78be1e48455e4eeab9f47cfd244091a4b57342baacb058"
+      "sha256": "4a7f171b105b8e055a10a6ce1c40df63cb27b1857b48e0d57ae10ae3d2d0884a"
     },
     {
       "path": "components/stack/stack.md",
@@ -47,9 +47,9 @@
     {
       "path": "docs/PACKAGE.md",
       "mediaType": "text/markdown; charset=utf-8",
-      "byteLength": 4341,
+      "byteLength": 5131,
       "role": "documentation",
-      "sha256": "59cc7932d30c17a090488aea0d7f678e613b0d39172e076f27c42601ca5636aa"
+      "sha256": "15dd5265ecd1d7eb18b377600b8c0f48d6074b44401527487173e5d56fc20c53"
     },
     {
       "path": "evidence/at-matrix.json",

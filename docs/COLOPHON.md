@@ -107,7 +107,7 @@ For example, Stack provides vertical rhythm, not list semantics; Imposter provid
 The core binds every AFDS package: the container, the manifest and inventory, the contract vocabulary of guarantees and non-guarantees, evidence, uncertainty and assertions, the keyboard contract model, the testing levels, verification, security, adapters and versioning.
 The method profiles bind only a package that claims them, and carry this project's own choices: the intrinsic layout method and its primitives, reflow and the two-dimensional exception, the colour system and typography, and the approved component catalogue.
 
-**Reasoning.** A standard that made intrinsic layout, OKLCH and a specific typeface conditions of using the format would be a description of this design system rather than a format any design system can produce.
+**Reasoning.** A standard that made intrinsic layout, a particular colour space, and a specific typeface conditions of using the format would be a description of this design system rather than a format any design system can produce.
 A standard that excluded them would be a container and a vocabulary, which is not the substantial definition this project set out to write.
 Separating them keeps the method inside the specification, where it can be cited and argued with, without making it a barrier to entry for an organisation whose brand palette is already mandated.
 
@@ -122,10 +122,42 @@ The two are independent: a tokens-only package may follow the layout method, and
 They therefore travel in separate manifest fields rather than in one profile identifier.
 This entry is also distinct from the testing decision below, which is about where a component is tested rather than about what the specification binds.
 
+### The target conformance level is declared, not mandated
+
+**Decision.** The specification does not fix a target WCAG conformance level.
+Every package declares a default level, a method profile may set a default for packages claiming it, and an individual component may amend the default upward or downward provided it records the amended level and the reason.
+A component's own declaration governs over a profile default, which governs over the package default.
+The `afds-typography-colour` profile sets its default at Level AA.
+The same treatment applies to typefaces: declared by the author, not mandated by the profile, amendable per component, and the profile currently sets no default typeface.
+
+**Reasoning.** The level is an author decision and an attribute of a profile or of a component within it, not a property of the format.
+WCAG 2.2 says as much itself: its Conformance section states that "It is not recommended that Level AAA conformance be required as a general policy for entire sites because it is not possible to satisfy all Level AAA success criteria for some content".
+A format that mandated one level for every package would impose exactly the blanket policy WCAG advises against, across content whose nature the format cannot know.
+Declaring per component is also more useful than declaring per package, because a package-wide claim is one a reviewer has to disprove component by component, whereas a per-component declaration tells a reviewer where to look.
+
+**Cost.** A reader cannot tell the level of a component from the package alone and has to resolve three declarations in order.
+A package can declare Level AAA and demonstrate nothing, so the declaration carries no assurance on its own and depends entirely on the assertion and evidence machinery to mean anything.
+The project also loses the ability to say that AFDS conformance implies any particular level, which is a claim it would have been convenient to make.
+
+**Rejected.** Mandating Level AA for every package, which would be a blanket policy imposed on content the format cannot see, and would make the format a statement about level rather than about disclosure.
+Mandating Level AAA, for the same reason and against WCAG's own advice.
+Declaring the level per package only, because a single component held to a lower threshold then disappears inside a package-level claim.
+Declaring per criterion, because that is what the assertion records of clause 15 already do, and a second per-criterion mechanism would compete with them.
+
+**Verification.** The specification states the level requirement once, in core clause 12.4, and no clause fixes a level for every package.
+The sample package declares `targetConformanceLevel` and its documentation states that the declaration is not evidence.
+
+**Note.** The level a criterion is assigned by WCAG is a different thing from the level a package targets, and the specification keeps them in separate fields.
+Clause 12.1 records the assigned level inside each WCAG mapping entry, and clause 12.4 records the target.
+Whether this project raises its own default to Level AAA remains open, and clause 23.7 records it as open.
+
 ### Every method profile states where its ideas came from
 
 **Decision.** Every method profile in the specification states its provenance in four parts: what it adopts from work outside this project, the source of each adopted idea identified by author and title, what it changes about an adopted idea including where it is stricter than its source, and what originates in the profile itself and has no external source.
 The requirement is normative for a locally defined profile, at clause 20.5.
+A locally defined profile carries its provenance as a structured object with `adopted`, `changed`, and `originates` members, specified at clause 20.6, so that completeness can be checked mechanically.
+`originates` may not be empty, which follows from the rule that a profile must impose at least one requirement the core does not.
+A `changed` entry records whether the change is stricter, weaker, or different, and a weaker value is permitted, because a profile that relaxes something its source requires should be able to say so plainly rather than being pushed into misdescribing it.
 
 **Reasoning.** A profile is where this project's opinions are concentrated, and opinions borrow authority.
 Naming influences is the easy half.
@@ -140,9 +172,12 @@ The 3:1 ratio between the largest and smallest text on a surface is the clearest
 **Rejected.** A bibliography, because a reference list establishes that a document was read and not which idea came from where, which is the only thing that makes provenance traceable.
 Attribution in prose scattered through the clauses, because it cannot be checked for completeness.
 Recording influences without recording inventions, because that is the failure the decision exists to prevent.
+Prose alone for a local profile, because nothing about it can be validated.
 
 **Verification.** Every profile clause ends in a Provenance subclause containing all four parts.
 No requirement is attributed to an external source that does not support it; clause 20.5 makes such an attribution a conformance failure.
+A validator can confirm that every `changed` entry references a real `adopted` entry and that `originates` is non-empty.
+It cannot confirm that an attribution is truthful, and the specification says so rather than implying the check is automated.
 
 **Note.** This applies to profiles, not to components.
 Component-level traceability already exists through the `derivation` object of clause 9, which names the pattern a component derives from and why the native alternative was insufficient.
@@ -423,7 +458,7 @@ That list is superseded and is kept here rather than deleted, because the reason
 The UI Specification Schema Community Group closed on 2026-05-21.
 It never chose a chair, its mailing list holds no messages, and it published no report or schema, so its charter is the entirety of its output.
 No successor has been announced.
-The consequence for this decision is limited but real: the charter is still valid evidence that a portable per-element specification covering layout, behaviour, constraints, and accessibility requirements is a recognised gap, which is part of why a bundle rather than a single format was chosen — but it is not a vocabulary this project can map onto, because no vocabulary exists.
+The consequence for this decision is limited but real: the charter is still valid evidence that a portable per-element specification covering layout, behaviour, constraints, and accessibility requirements is a recognised gap, which is part of why a bundle rather than a single format was chosen. It is not, however, a vocabulary this project can map onto, because no vocabulary exists.
 
 The alignment list is therefore the Design System Documentation Community Group, which now has co-chairs and an explicit DTCG and CEM compatibility goal but no draft, together with Open UI and future DTCG work.
 The AFDS component-spec and evidence formats are provisional and are intended to be mapped to, or contributed as requirements for, those efforts rather than become isolated terminology.

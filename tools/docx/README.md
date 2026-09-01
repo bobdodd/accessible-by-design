@@ -3,7 +3,7 @@ SPDX-FileCopyrightText: 2026 Bob Dodd
 SPDX-License-Identifier: CC-BY-SA-4.0
 -->
 
-# tools/docx — Word build for the project's documents
+# tools/docx: Word build for the project's documents
 
 Generates a Word document from committed Markdown. The Markdown is authoritative; this directory only re-presents it.
 
@@ -51,6 +51,6 @@ The `docx` library emits its own `Heading1`–`Heading4` style definitions befor
 
 ## Column widths and word breaking
 
-Word breaks a line only at whitespace or after a hyphen. It does **not** break at a dot or a slash. A dotted identifier such as `components.canonicalSources`, or a path such as `afds-inventory.json`, is therefore a single unbreakable token, and a column narrower than that token will not wrap it — it will overflow or be clipped.
+Word breaks a line only at whitespace or after a hyphen. It does **not** break at a dot or a slash. A dotted identifier such as `components.canonicalSources`, or a path such as `afds-inventory.json`, is therefore a single unbreakable token, and a column narrower than that token will not wrap it. It will overflow or be clipped.
 
 `build.js` measures the longest unbreakable token in each column, reserves `240` DXA of padding plus `122` DXA per character for it as a per-column minimum, distributes the remaining width by content length, and falls back to proportional widths if the minimums exceed the usable page width. This is why table column widths are computed rather than fixed.

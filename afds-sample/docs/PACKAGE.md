@@ -35,6 +35,17 @@ The `adapters/` directory is present but contains guidance only, and the manifes
 Absence is declared rather than implied.
 `components/stack/stack.spec.json` records the paths of its two test fixtures and states that this sample does not ship them.
 
+### The declared target level
+
+The manifest declares `targetConformanceLevel` as `AA`.
+
+Clause 12.4 of the specification requires every package to declare a default target level and does not mandate which one.
+Stack does not amend it, so Level AA is the effective target for the one component this sample ships.
+
+The declaration is a statement of intent and nothing more.
+Every result in `evidence/at-matrix.json` is `not-yet-tested`, so this package declares a target it has not demonstrated it meets, and clause 12.4 says in terms that a declared level is not evidence the level is met.
+The `level` field inside each `wcagMapping` entry is a different thing again: it records the level WCAG itself assigns to that criterion, which is fixed by WCAG and is not a choice this package made.
+
 ### No method profile is claimed
 
 The manifest declares `methodProfiles` as an empty array.

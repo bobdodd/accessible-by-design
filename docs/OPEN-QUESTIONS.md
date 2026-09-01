@@ -95,9 +95,18 @@ Selecting between the original and Next is therefore a question about which set 
 
 ### C3. Conformance target
 
-WCAG 2.2 AA is the floor; AAA is aspirational.
+**Partly settled, 2026-09-01.** The mechanism is settled and the value is not.
 
-**To settle:** whether AAA is a per-surface commitment and whether 7:1 body contrast remains usable in data-dense reports.
+The target level is an author decision and a declaration, not something the specification mandates.
+Core clause 12.4 requires every package to declare a default level, permits a method profile to set a default for packages claiming it, and permits an individual component to amend the default upward or downward provided it records the level and the reason.
+The `afds-typography-colour` profile sets its default at Level AA.
+The colophon carries this as an adopted decision.
+
+WCAG 2.2 supports leaving the value open: its Conformance section states that "It is not recommended that Level AAA conformance be required as a general policy for entire sites because it is not possible to satisfy all Level AAA success criteria for some content".
+That is why AA is a default rather than a ceiling, and why amending upward is as ordinary an act as amending downward.
+
+**Still to settle:** whether this project raises its own default to AAA, and whether the 7:1 body contrast that AAA attaches to body text remains usable in data-dense reports.
+This question no longer blocks anything, because a package can conform while the answer is outstanding.
 
 ## D. Layout method
 
@@ -242,7 +251,7 @@ No successor has been announced.
 The live target is now the Design System Documentation Community Group, which has co-chairs, an explicit DTCG and CEM compatibility goal, and no draft yet.
 The question is therefore no longer which group but what to send it.
 
-**To settle:** which AFDS requirements are worth contributing, in what form, and by when — specifically whether assistive-technology evidence, explicit non-guarantees, and recorded uncertainty are proposed to that group as documentation fields, given that its charter does not currently mention them.
+**To settle:** which AFDS requirements are worth contributing, in what form, and by when. Specifically, whether assistive-technology evidence, explicit non-guarantees, and recorded uncertainty are proposed to that group as documentation fields, given that its charter does not currently mention them.
 
 ### H3. Package identity and signing
 

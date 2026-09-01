@@ -477,7 +477,7 @@ The intent is to prevent users from repeatedly scrolling back and forth to read 
 ### The exception, and its exact scope
 
 The criterion excepts parts of content that require two-dimensional layout for usage or meaning.
-The cited examples include images needed for understanding, video, games, presentations, data tables — and here the wording is precise — not individual cells, and interfaces where a toolbar must remain visible while content is manipulated.
+The cited examples include images needed for understanding, video, games, presentations, data tables (and here the wording is precise: not individual cells), and interfaces where a toolbar must remain visible while content is manipulated.
 
 Two phrases do all the work: "for usage or meaning" and "not individual cells".
 
@@ -1184,7 +1184,12 @@ The example below quotes the sample's actual contents.
 ### What the manifest says
 
 Its identifier is `com.a11ybob.abd.afds-sample` at package version `1.0.0`, and the format version is `1.0.0`.
-It declares the `afds-components` profile, code under GPL-3.0-only and documentation under CC BY-SA 4.0, and a token declaration naming version `2025.10` of the token format with one canonical source at `tokens/core.tokens.json`.
+It declares the `afds-components` completeness profile, code under GPL-3.0-only and documentation under CC BY-SA 4.0, and a token declaration naming version `2025.10` of the token format with one canonical source at `tokens/core.tokens.json`.
+
+It declares `methodProfiles` as an empty array and `targetConformanceLevel` as `AA`.
+Those are three separate statements and none of them implies the others.
+The first says the package is complete at the component level; the second says it claims none of the specification's method profiles; the third says it targets WCAG Level AA by default, which any component may amend if it records the reason.
+The empty method array is the interesting one, because Stack is in fact built the way the intrinsic layout profile describes, and the package declines to claim the profile because it has no forced-colours evidence to support the claim.
 
 It declares one component, Stack, of kind `layout-primitive`, with a machine-readable contract at `components/stack/stack.spec.json` and prose at `components/stack/stack.md`.
 It declares two evidence sources and three documentation sources, and it declares empty arrays for patterns, schemas, adapters, and stories, which is the positive statement of absence described earlier.
