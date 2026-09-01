@@ -440,6 +440,9 @@ The following inform the document without creating requirements.
 - W3C WAI, *Understanding Success Criterion 1.4.10: Reflow*. <https://www.w3.org/WAI/WCAG22/Understanding/reflow.html>
 - W3C, *Techniques for WCAG 2.2*. Cited in clause 22.6: C31, C33, C34, C38, G206, G224, G225, SCR34. <https://www.w3.org/WAI/WCAG22/Techniques/>
 - Braille Institute, *Atkinson Hyperlegible font*. <https://www.brailleinstitute.org/freefont/>
+- Ecma International, *ECMA-376, Office Open XML File Formats*. Part 2 is the Open Packaging Conventions, compared in Annex A. <https://ecma-international.org/publications-and-standards/standards/ecma-376/>
+- ISO/IEC 29500-2:2021, "Office Open XML file formats — Part 2: Open Packaging Conventions", fourth edition, August 2021. <https://www.iso.org/standard/77818.html>
+- Ecma International, *ECMA-388, Open XML Paper Specification*, first edition, June 2009. The source of the statement quoted in Annex A that the OpenXPS packaging requirements extend those of OPC. <https://www.ecma-international.org/wp-content/uploads/ECMA-388_1st_edition_june_2009.pdf>
 
 ## Part II. The component contract
 

@@ -31,6 +31,7 @@ A system manages some of the available UI resources and modalities; it cannot re
 | [AFDS sample package](afds-sample/) | Unpacked sources of a verified sample `.afds` package |
 | [Build outputs](dist/) | Derived artefacts published with a tagged release: the packed sample and the Word specification |
 | [Word build](tools/docx/) | How the Word specification is generated, and the accessibility properties the build guarantees |
+| [Site build](tools/site/build-spec-pages.py) | Splits the specification into the pages published at a11ybob.com, with a stable anchor on every clause |
 
 ## Documentation rule
 
