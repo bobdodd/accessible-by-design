@@ -800,8 +800,25 @@ Priorities 6 to 8 are gated on demonstrated need, and each gate is recorded when
 
 ## The records that make a claim checkable
 
-Four record types carry most of the project's distinctive weight.
+Five record types carry most of the project's distinctive weight.
 Each exists because a specific kind of dishonesty is easy to commit by accident.
+
+### Guarantees
+
+A guarantee is a declared commitment about what a component does, and it is the one record type that is authored rather than observed.
+
+The rule that keeps it honest is that a guarantee must name at least one assertion that tests it.
+A guarantee naming no assertion is invalid, and a package containing one does not conform.
+This is deliberately narrow: it does not require that the test has been run, only that somebody can say how it would be run.
+
+Whether a commitment currently holds is a separate matter, and it is computed rather than written down.
+A guarantee whose assertions all have passing evidence is substantiated; one whose assertions have no evidence yet is unsubstantiated; one with a failing result is contradicted, which is a defect in the package rather than a property of the component.
+
+Keeping the promise and the measurement apart is what makes the format able to describe a real design system.
+A component that has been specified but not yet tested has made commitments and substantiated none of them, and both halves of that are worth recording.
+If the two lived in one field, a package would either be able to promise what it had not earned, or be forced to promise nothing until testing existed, and neither is a true description of any system anyone actually has.
+
+The accepted cost is that a reader must consult two files to learn whether a promise holds, and that a producer can still declare an ambitious guarantee, provided it can be tested.
 
 ### Non-guarantees
 
@@ -1232,7 +1249,7 @@ A consumer resolving the alias gets `0.75rem`, and if the scale changes, the spa
 
 ### What the component contract says
 
-The contract carries `afdsSpecVersion`, `id`, `name`, `kind`, `version`, `status`, and `summary` as its identity, and then seven fields that are the substance.
+The contract carries `afdsSpecVersion`, `id`, `name`, `kind`, `version`, `status`, and `summary` as its identity, and then nine fields that are the substance.
 
 Its summary is that Stack applies consistent vertical rhythm between sibling elements in document order, and that it supplies geometry only.
 
@@ -1246,6 +1263,14 @@ Its `focusLifecycle` sub-object then records false for receiving, moving, trappi
 
 This is what a first-class record looks like in practice.
 A missing field is ambiguous between "nothing to say" and "nobody thought about it", and a field explicitly set to nothing is not.
+
+Its `derivation` records a status of `native-first`, because a flex column on a plain div has no interaction and therefore no published interaction pattern to derive from, and records that there are no deviations and that the component is not support-dependent.
+
+Its `guarantees` list six commitments, and every one of them names the assertions that test it.
+That naming is a requirement rather than a courtesy: a guarantee that names no test is invalid, because a commitment nobody can state a procedure for is a sentiment about the product rather than a claim about it.
+What the contract does not carry is any statement of whether those commitments have been met, because that is computed from the evidence rather than authored.
+For this sample all six compute as unsubstantiated, since every evidence record reads `not-yet-tested` and three of the six assertions have no evidence record at all.
+The sample is therefore a package that has made commitments and measured none of them, which is an accurate description of it and would have been impossible to state if the promise and the measurement lived in the same field.
 
 Its `reflowBehaviour` declares that the primitive is intrinsic, uses no layout media queries, has no author-fixed dimensions, and no fixed heights.
 It names the mechanism as a flex column with a `rem`-expressed gap whose block direction grows with content, names `space.default` as the gap token and `typography.measure` as the measure token, and declares that it operates without JavaScript.
@@ -1293,7 +1318,10 @@ The evidence file declares its own version and then, before any record, declares
 
 Defining the vocabulary inside the file matters, because "partial" and "unsupported" mean different things to different testers, and a shared record needs a shared meaning.
 
-Each record then names an identifier, the component, the claim being tested, the engine, engine version, browser, browser version, assistive technology, its version, the platform, the device, the starting viewport, the zoom level, the date, the result, the observation, the tester, and a reference to the uncertainty record it relates to.
+Each record then names an identifier, the component, the assertion or assertions it evaluates, the claim being tested, the engine, engine version, browser, browser version, assistive technology, its version, the platform, the device, the starting viewport, the zoom level, the date, the result, the observation, the tester, and a reference to the uncertainty record it relates to.
+
+The assertion reference is the field that ties the two files together.
+Without it a result floats free of anything it could confirm or refute, and a guarantee's status would have to be asserted by whoever wrote the contract.
 
 The device, starting viewport, and zoom fields describe the environment an observation was or would be made in.
 They matter because a reflow claim is meaningless without them: "no content is clipped" is a different statement at a 320 CSS pixel viewport than at 1280 by 1024 with 400% zoom applied, and a screen reader on a phone is not the same observation as the same screen reader on a desktop.

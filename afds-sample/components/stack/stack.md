@@ -85,6 +85,23 @@ Three are automated and three require manual observation.
 | stack-a5 | Manual | Doubled root font size and text-spacing overrides cause no overlap |
 | stack-a6 | Manual | Visual order matches DOM order in the realistic-page fixture |
 
+## Guarantees
+
+Six commitments are declared, and each names the assertions that test it, as clause 14.2 of the specification requires.
+
+| Guarantee | Branch | Statement | Tested by |
+| --- | --- | --- | --- |
+| stack-g1 | Layout | Vertical rhythm resolves to the `space.default` token | stack-a1 |
+| stack-g2 | Layout | No fixed height or author-fixed dimension, so user spacing overrides cannot clip content | stack-a2, stack-a5 |
+| stack-g3 | Technology | No role, `aria-*` attribute, or `tabindex` on the primitive's own element | stack-a3 |
+| stack-g4 | Layout | No clipping and no page-level horizontal scrollbar at 320 CSS pixels and at 400% zoom | stack-a4 |
+| stack-g5 | Layout | Spacing grows with the user's text size, and nothing overlaps | stack-a5 |
+| stack-g6 | Technology | Visual order matches document order | stack-a6 |
+
+All six are currently unsubstantiated.
+That is a computed status rather than an authored one: every evidence record in this sample carries the result `not-yet-tested`, and three of the six assertions have no evidence record at all.
+The commitment and the measurement are separate things, and this sample is a package that has made commitments and measured none of them.
+
 ## Non-guarantees
 
 Stack does not provide list semantics.

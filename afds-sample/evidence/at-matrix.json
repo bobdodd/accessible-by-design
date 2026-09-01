@@ -1,6 +1,6 @@
 {
-  "afdsEvidenceVersion": "1.1.0",
-  "description": "Engine-qualified assistive-technology evidence records for the AFDS Sample package. Every result in this file is the placeholder value not-yet-tested. No record in this file describes an observation that actually took place. The value not-applicable carries two distinct senses here. As a result it means the combination cannot exhibit the behaviour, as defined in the result vocabulary below. In any other field it means that field does not apply to that record, for example a zoom level on a record whose claim is about screen-reader announcement, or an assistive-technology version on a record whose at value is none.",
+  "afdsEvidenceVersion": "2.0.0",
+  "description": "Engine-qualified assistive-technology evidence records for the AFDS Sample package. Every result in this file is the placeholder value not-yet-tested. No record in this file describes an observation that actually took place. Each record names the assertion it evaluates in assertionRef, which is what allows a guarantee's substantiation status to be computed rather than authored. The value not-applicable carries two distinct senses here. As a result it means the combination cannot exhibit the behaviour, as defined in the result vocabulary below. In any other field it means that field does not apply to that record, for example a zoom level on a record whose claim is about screen-reader announcement, or an assistive-technology version on a record whose at value is none.",
   "resultVocabulary": [
     {
       "value": "not-yet-tested",
@@ -27,6 +27,9 @@
     {
       "id": "stack-nvda-chromium",
       "componentId": "stack",
+      "assertionRef": [
+        "stack-a3"
+      ],
       "claim": "The Stack container element itself is not announced as an additional structural object.",
       "engine": "Blink",
       "engineVersion": "not-yet-tested",
@@ -47,6 +50,9 @@
     {
       "id": "stack-jaws-chromium",
       "componentId": "stack",
+      "assertionRef": [
+        "stack-a3"
+      ],
       "claim": "The Stack container element itself is not announced as an additional structural object.",
       "engine": "Blink",
       "engineVersion": "not-yet-tested",
@@ -67,6 +73,9 @@
     {
       "id": "stack-voiceover-webkit",
       "componentId": "stack",
+      "assertionRef": [
+        "stack-a3"
+      ],
       "claim": "The Stack container element itself is not announced as an additional structural object.",
       "engine": "WebKit",
       "engineVersion": "not-yet-tested",
@@ -87,6 +96,9 @@
     {
       "id": "stack-orca-gecko",
       "componentId": "stack",
+      "assertionRef": [
+        "stack-a3"
+      ],
       "claim": "The Stack container element itself is not announced as an additional structural object.",
       "engine": "Gecko",
       "engineVersion": "not-yet-tested",
@@ -107,6 +119,9 @@
     {
       "id": "stack-electron-font-scaling",
       "componentId": "stack",
+      "assertionRef": [
+        "stack-a5"
+      ],
       "claim": "Rem-anchored gaps grow with operating-system font scaling inside an Electron shell.",
       "engine": "Blink",
       "engineVersion": "not-yet-tested",
@@ -127,6 +142,9 @@
     {
       "id": "stack-reflow-narrow-viewport",
       "componentId": "stack",
+      "assertionRef": [
+        "stack-a4"
+      ],
       "claim": "At 320 CSS pixels of available inline size, and at 400% zoom, no content is clipped and no horizontal scrollbar appears at page level.",
       "engine": "Blink",
       "engineVersion": "not-yet-tested",
@@ -147,6 +165,9 @@
     {
       "id": "stack-reflow-400-zoom",
       "componentId": "stack",
+      "assertionRef": [
+        "stack-a4"
+      ],
       "claim": "At 320 CSS pixels of available inline size, and at 400% zoom, no content is clipped and no horizontal scrollbar appears at page level.",
       "engine": "Blink",
       "engineVersion": "not-yet-tested",
@@ -167,6 +188,9 @@
     {
       "id": "stack-voice-access-blink",
       "componentId": "stack",
+      "assertionRef": [
+        "stack-a3"
+      ],
       "claim": "The Stack container introduces no element that receives pointer or voice-driven activation, so voice targeting of its children is unaffected.",
       "engine": "Blink",
       "engineVersion": "not-yet-tested",
@@ -187,6 +211,9 @@
     {
       "id": "stack-voice-control-webkit",
       "componentId": "stack",
+      "assertionRef": [
+        "stack-a3"
+      ],
       "claim": "The Stack container introduces no element that receives pointer or voice-driven activation, so voice targeting of its children is unaffected.",
       "engine": "WebKit",
       "engineVersion": "not-yet-tested",

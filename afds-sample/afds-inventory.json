@@ -33,16 +33,16 @@
     {
       "path": "components/stack/stack.md",
       "mediaType": "text/markdown; charset=utf-8",
-      "byteLength": 6227,
+      "byteLength": 7437,
       "role": "documentation",
-      "sha256": "3e61f3612e215cf410fb9884dc8452f108e73d10275c3c44d888dac565ca98d1"
+      "sha256": "9e152b953807df2d5d57febf63c543b5d38a53690cda905ba02f32c4ae6aef25"
     },
     {
       "path": "components/stack/stack.spec.json",
       "mediaType": "application/json",
-      "byteLength": 7872,
+      "byteLength": 10204,
       "role": "canonical",
-      "sha256": "b6e61e72bf2a04a6eafa7e84be224673747de9191ef3b5900a84892b9267224d"
+      "sha256": "fbc3bbf8e016530044b42d583ec3926c25d2cc437e840f20c3512509ee58f7e8"
     },
     {
       "path": "docs/PACKAGE.md",
@@ -54,9 +54,9 @@
     {
       "path": "evidence/at-matrix.json",
       "mediaType": "application/json",
-      "byteLength": 7882,
+      "byteLength": 8506,
       "role": "evidence",
-      "sha256": "3bbfa21c5cc51d699c11ba554d7f65656e2ec3592ff81fa3e4f51b6dec856690"
+      "sha256": "9b15023cc905392ffb1291a26af2ae30ffab12ec70bcd545192cb47065956f8c"
     },
     {
       "path": "evidence/known-limitations.md",

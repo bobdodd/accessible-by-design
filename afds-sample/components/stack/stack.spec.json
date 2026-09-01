@@ -18,6 +18,12 @@
       "The consumer MUST NOT rely on Stack to convey any relationship between children."
     ]
   },
+  "derivation": {
+    "status": "native-first",
+    "rationale": "Stack is a flex column on a plain div. No published interaction pattern applies to it, because it has no interaction. The native element and one CSS declaration fully supply the behaviour, so no custom pattern is derived and none is needed.",
+    "deviations": [],
+    "supportDependent": false
+  },
   "keyboardContract": {
     "hasKeyboardContract": false,
     "statement": "Stack has no keyboard contract. It is stated explicitly rather than omitted so that a reviewer cannot mistake absence for oversight.",
@@ -86,6 +92,72 @@
       "note": "Stack conveys no relationships. The consumer owns this criterion."
     }
   ],
+  "guarantees": [
+    {
+      "id": "stack-g1",
+      "statement": "The vertical rhythm between sibling children resolves to the value of the space.default token.",
+      "branch": "user layout support",
+      "requirementKind": "project-convention",
+      "assertions": [
+        "stack-a1"
+      ]
+    },
+    {
+      "id": "stack-g2",
+      "statement": "The primitive declares no fixed height and no author-fixed dimension other than a hairline border, so user text-spacing overrides cannot cause it to clip content.",
+      "branch": "user layout support",
+      "requirementKind": "required-by-standard",
+      "assertions": [
+        "stack-a2",
+        "stack-a5"
+      ]
+    },
+    {
+      "id": "stack-g3",
+      "statement": "The primitive adds no role, no aria-* attribute, and no tabindex to its own element, so it contributes nothing to the accessibility tree.",
+      "branch": "user technology support",
+      "requirementKind": "project-convention",
+      "assertions": [
+        "stack-a3"
+      ]
+    },
+    {
+      "id": "stack-g4",
+      "statement": "At 320 CSS pixels of available inline size, and at 400% zoom, the primitive clips no content and produces no page-level horizontal scrollbar.",
+      "branch": "user layout support",
+      "requirementKind": "required-by-standard",
+      "assertions": [
+        "stack-a4"
+      ]
+    },
+    {
+      "id": "stack-g5",
+      "statement": "Spacing grows proportionally with the user's text size, and nothing overlaps when text-spacing overrides are applied.",
+      "branch": "user layout support",
+      "requirementKind": "required-by-standard",
+      "assertions": [
+        "stack-a5"
+      ]
+    },
+    {
+      "id": "stack-g6",
+      "statement": "Visual order matches document order, because the primitive never reorders its children.",
+      "branch": "user technology support",
+      "requirementKind": "required-by-standard",
+      "assertions": [
+        "stack-a6"
+      ]
+    }
+  ],
+  "nonGuarantees": [
+    "Stack does not provide list semantics.",
+    "Stack does not provide a grouping role or an accessible name.",
+    "Stack does not provide a heading structure or landmark.",
+    "Stack does not enforce the measure; that is the Center primitive's responsibility.",
+    "Stack does not manage focus, focus order, focus trapping, or focus return.",
+    "Stack does not guarantee contrast between any pair of colour tokens.",
+    "Stack does not provide a basis for claiming the WCAG 1.4.10 two-dimensional exception."
+  ],
   "assertions": [
     {
       "id": "stack-a1",
@@ -123,15 +195,6 @@
       "statement": "Visual order matches DOM order in the realistic-page fixture.",
       "procedure": "Compare a linearised reading of the DOM with the rendered order."
     }
-  ],
-  "nonGuarantees": [
-    "Stack does not provide list semantics.",
-    "Stack does not provide a grouping role or an accessible name.",
-    "Stack does not provide a heading structure or landmark.",
-    "Stack does not enforce the measure; that is the Center primitive's responsibility.",
-    "Stack does not manage focus, focus order, focus trapping, or focus return.",
-    "Stack does not guarantee contrast between any pair of colour tokens.",
-    "Stack does not provide a basis for claiming the WCAG 1.4.10 two-dimensional exception."
   ],
   "uncertainty": [
     {

@@ -177,8 +177,9 @@ A `derived` or `adapter` artefact MUST NOT be the only source of a fact owned by
 
 The rule follows from what each role means.
 A token value is owned by the canonical token file.
-A component's semantic model, keyboard contract, Reflow behaviour, WCAG mapping, assertions, non-guarantees, and uncertainty are owned by the canonical component contract.
+A component's semantic model, derivation, keyboard contract, Reflow behaviour, WCAG mapping, guarantees, non-guarantees, assertions, and uncertainty are owned by the canonical component contract.
 An observation of assistive-technology behaviour is owned by an evidence record.
+A guarantee's substantiation status is owned by neither, because it is computed from the two together and MUST NOT be written into either, as clause 14.3 of [the AFDS specification](AFDS-SPECIFICATION.md) requires.
 
 If a fact exists only in a generated stylesheet, a design-tool library, or a platform resource bundle, then the fact has left the portable bundle.
 At that point the package no longer carries the accessibility contract, which is the exact failure the format exists to prevent.
