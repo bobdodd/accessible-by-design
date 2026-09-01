@@ -182,6 +182,38 @@ It cannot confirm that an attribution is truthful, and the specification says so
 **Note.** This applies to profiles, not to components.
 Component-level traceability already exists through the `derivation` object of clause 9, which names the pattern a component derives from and why the native alternative was insufficient.
 
+### Native HTML first, and published patterns by reference
+
+**Decision.** Native HTML is the default engineering answer.
+A published interaction pattern is adopted only where a genuinely custom composite widget is required, and it is adopted by reference rather than copied.
+Responsibility for semantics, testing, and support evidence stays with the package that ships the code.
+This project claims the `afds-patterns-native-first` profile in the packages it publishes, and the sample package claims it.
+
+**Reasoning.** Native elements arrive with focus behaviour, activation semantics, disabled-state handling, and forced-colours treatment already implemented and already tested by browser vendors, so preferring them benefits every user of every assistive technology before this project writes a line.
+The ARIA Authoring Practices Guide is informative, while WCAG and WAI-ARIA are normative, so copying an APG example yields neither a conformance claim nor any evidence about the code actually shipped.
+Adoption by reference keeps the part that has value, which is an interaction and keyboard model users already know, and puts the evidence obligation in the only layer that can discharge it.
+The likeliest failure mode for a system that admires a pattern guide is to turn every familiar interaction into a custom widget, which is why the rule is written as a restriction rather than an endorsement.
+
+**Cost.** Native elements are harder to style consistently across engines, and declining a custom widget sometimes means declining a design that was already approved.
+A package claiming the profile also takes on the package-level pattern registry, which is an artefact to maintain that no per-component declaration produces.
+The position has to be defended case by case in review, because "the pattern guide has a component for this" is a persuasive argument and refusing it costs time.
+
+**Rejected.** Adopting the pattern guide as a house style and building its catalogue out, because each unused composite adds untested surface and an unearned appearance of rigour.
+Treating the guide as normative, which it does not claim to be.
+Making native-first a requirement of the format rather than a profile, because that would make AFDS a description of this design system instead of a format any design system can produce.
+Leaving the position unstated, which is what the project did until now, and which meant component reviews had no settled default to appeal to.
+
+**Verification.** The specification carries this as clause 24, the `afds-patterns-native-first` profile, and clause 24.3 forbids giving a component a `pattern-derived` status where a native element listed in its table would have supplied the semantics and interaction, unless the specification records why the native element was insufficient.
+The sample package claims the profile and carries a pattern registry at `patterns/registry.json`.
+
+**Note.** This supersedes the proposed decision formerly held at the end of `APG-SUPPORT.md`, which is withdrawn.
+That text described the twelve fields as an obligation of the pattern policy, and eight core clauses in fact own them, so adopting it unchanged would have put a wrong description of the specification into this record.
+It also used the status names `APG-derived` and `APG-adjacent`, which became `pattern-derived` and `pattern-adjacent` when the vocabulary moved into the core, because the core may not name one external pattern library.
+
+Rejecting a menubar for ordinary site navigation is a convention of this profile with a stated cost, and is not a claim that the pattern is being misused.
+The APG ships a navigation menubar example demonstrating site navigation, so that use is sanctioned by its publisher.
+This project declines it because the composite contract it imports is not worth the cost where a list of links in a navigation landmark already gives users a structure they know.
+
 ### Conformance is measured at two levels
 
 **Decision.** Components are tested in isolation and inside a realistic page with landmarks, header, footer, and realistic content.

@@ -273,7 +273,7 @@ Read it alongside the field table: every REQUIRED field appears, and every optio
   "description": "A minimal but complete Accessibility Focused Design System package.",
   "created": "2026-08-29",
   "conformanceProfile": "afds-components",
-  "methodProfiles": [],
+  "methodProfiles": ["afds-patterns-native-first"],
   "targetConformanceLevel": "AA",
   "licences": {
     "code": "GPL-3.0-only",
@@ -307,7 +307,16 @@ Read it alongside the field table: every REQUIRED field appears, and every optio
       }
     ]
   },
-  "patterns": { "canonicalSources": [] },
+  "patterns": {
+    "canonicalSources": [
+      {
+        "id": "pattern-registry",
+        "path": "patterns/registry.json",
+        "role": "canonical",
+        "description": "Package-level pattern registry required of a package claiming afds-patterns-native-first, at specification clause 24.2."
+      }
+    ]
+  },
   "evidence": {
     "canonicalSources": [
       {

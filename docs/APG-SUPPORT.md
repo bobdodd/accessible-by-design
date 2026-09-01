@@ -71,8 +71,8 @@ Two of the five statuses were renamed when the vocabulary moved into the core, b
 The other three keep their names as `native-first`, `custom`, and `prohibited`.
 The twelve fields below are, in the specification, a review checklist that collects requirements stated across eight core clauses rather than a requirement of the profile itself; clause 24.4 records which clause owns each item.
 
-The proposed colophon decision at the end of this note remains **PROPOSED** and **NOT ADOPTED**.
-Clause 24 defines the profile without settling whether this project adopts it as a project-wide position, and clause 24.7 records that as open.
+The policy is adopted. The colophon decision "Native HTML first, and published patterns by reference" records it, and this project claims `afds-patterns-native-first` in the packages it publishes.
+The proposed decision that formerly closed this note is withdrawn, for the reasons given under "The adopted decision" below.
 
 ## The core policy
 
@@ -526,45 +526,16 @@ If a future surface does adopt menubar, the justification belongs in its specifi
 A grid widget is justified by a need for directional cell navigation, not by a table looking crowded or by a desire to avoid reflowing content.
 If the underlying need is that a wide table is hard to use at high zoom, the answer is a scoped scroll container and a correctly justified two-dimensional exception, not a role change.
 
-## Proposed colophon decision
+## The adopted decision
 
-The following is **PROPOSED** and **NOT YET ADOPTED**.
-It is written in the shape defined by [COLOPHON.md](COLOPHON.md) so that it can be moved there unchanged if review accepts it.
-Until then it has no force, and no component specification should cite it as settled.
+This note originally ended with a proposed colophon decision, marked as not yet adopted, arguing that APG patterns should be adopted by reference rather than copied and that native HTML should be preferred.
+That position is now adopted, as the colophon decision "Native HTML first, and published patterns by reference" in [COLOPHON.md](COLOPHON.md).
+This project claims the `afds-patterns-native-first` profile in the packages it publishes.
 
-### APG patterns are adopted by reference, not copied by default
-
-**Decision.** APG patterns are adopted by reference, not copied by default.
-Native HTML is preferred.
-An APG pattern is selected only when a custom composite interaction is necessary.
-Every APG-derived component records twelve fields: its APG source, the native alternative considered, its semantic model, its keyboard contract, its focus lifecycle, pointer, touch, and speech-input equivalence, visible focus and forced-colours requirements, Reflow and two-dimensional exception behaviour, the WCAG criteria affected, its test matrix and assistive-technology evidence, its deviations from the pattern, and its non-guarantees and known uncertainty.
-
-**Reasoning.** The APG is informative guidance, while WCAG and WAI-ARIA are normative, so a system that copies APG examples inherits neither a conformance claim nor any evidence about the code it ships.
-Adoption by reference keeps the valuable part, which is the interaction and keyboard model users already know, and places responsibility for semantics, testing, and support evidence in the layer that actually ships.
-Users of keyboard interfaces, including scanning software, sip-and-puff systems, and speech recognition, benefit because the keyboard contract becomes a specified and tested artefact rather than an implementation accident.
-Preferring native HTML benefits every user of every assistive technology, because native elements arrive with focus, activation, and forced-colours behaviour already implemented and already tested by browser vendors.
-
-**Cost.** Specification work increases substantially, because each APG-derived component needs twelve recorded fields rather than a link to a pattern page.
-The system cannot claim the reassurance of "we follow the APG", and must instead defend its own contracts and publish its own gaps.
-Deliberate deviations become the team's burden to document, justify, and support, where copying would have deferred that cost to users.
-Assistive-technology evidence expires, so the record needs periodic re-testing rather than one-time completion.
-Refusing to copy example code forgoes a genuine short-term saving in implementation time.
-
-**Rejected.** Treating the APG as normative and claiming APG conformance as an accessibility result, because the APG has no conformance model and the claim would be false.
-Copying APG example code directly into production, because the examples are pedagogical, carry no evidence about this project's platform, and import complexity that would then have to be maintained.
-Linking to APG pattern pages from component documentation in place of writing contracts, because a link cannot be tested and cannot record support limitations.
-Implementing the full APG pattern set up front, because most patterns are unnecessary for an audit and remediation product and each unused composite adds untested surface.
-Allowing per-team ad-hoc keyboard models with no registry, because it produces inconsistent behaviour and no way to audit deviations.
-
-**Verification.** Review rejects any component labelled APG-derived that is missing one of the twelve required fields.
-Review rejects any documentation sentence that presents APG guidance as a WCAG requirement, or that claims APG conformance.
-Every requirement in a component specification carries one of the five requirement categories.
-Every assistive-technology claim names engine, version, browser, observed behaviour, and date, and any claim lacking one is recorded as uncertainty.
-No component may adopt an ARIA grid, tree, or treegrid role without a recorded user-research justification.
-
-**Note.** An earlier framing of this work treated the APG as the component layer of the design system.
-That was wrong in kind: the APG describes patterns, whereas a design system ships versioned artefacts with tests and evidence, and only the latter can be held to account.
-The registry status *APG-adjacent* was added specifically because the earlier framing left no honest label for a component that resembles a pattern without implementing it.
+The proposed text is withdrawn rather than moved, because it had gone stale in two ways that the specification work exposed.
+It described twelve recorded fields as an obligation of the pattern policy, when eight core clauses turned out to own them, so those fields bind every package and not only one that prefers native elements.
+It also used the status names `APG-derived` and `APG-adjacent`, which became `pattern-derived` and `pattern-adjacent` when the vocabulary moved into the core, since the core may not name one external pattern library.
+Its verification criteria survive in the specification, distributed across the clauses that own them, and its account of the reasoning survives in the adopted decision.
 
 ## Open questions raised
 

@@ -217,10 +217,13 @@ The order is reasoned rather than evidenced.
 
 ### G2. Adopting APG by reference
 
-A proposed decision states that APG patterns are adopted by reference and not copied by default.
-It is drafted but not yet adopted.
+**Settled, 2026-09-01.** Native HTML first, and published patterns adopted by reference rather than copied.
+The colophon decision "Native HTML first, and published patterns by reference" records it, the specification carries it as the `afds-patterns-native-first` profile at clause 24, and the sample package claims that profile.
+The proposed decision that formerly closed the APG research note was withdrawn rather than moved, because it attributed to the pattern policy twelve fields that eight core clauses turned out to own, and because two of the five status names changed when the vocabulary became core.
 
-**To settle:** whether the decision moves to the colophon as written, and how a deviation from an APG convention is recorded and reviewed.
+**Still open:** how a deviation from a pattern convention is recorded and reviewed.
+Clause 13 gives the deviation a requirement kind and clause 24.5 requires a menubar adoption to be justified in the component specification, but no review process is attached to either.
+**To settle:** where a deviation is reviewed, whether it needs sign-off, and how a user-facing discoverability cost is assessed.
 
 ### G3. Minimum assistive-technology matrix per component
 

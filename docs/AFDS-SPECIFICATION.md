@@ -1882,13 +1882,15 @@ Visual density *MUST NOT* be recorded as the gate justification for priority 8.
 
 #### 24.7 What this profile does not settle
 
-A package claiming this profile *MUST NOT* claim conformance to any pattern guide, and *MUST NOT* present adherence to this profile as evidence that a service is accessible.
-Clause 4.4 states both prohibitions for every package, and they are recalled here because this profile is where the temptation arises.
+Clause 4.4 already forbids every package from claiming conformance to a pattern guide, and from presenting a package claim as evidence that a service is accessible.
+Both prohibitions are recalled here, informatively, because this profile is where the temptation to do either arises.
+This subclause adds no requirement.
 
 The catalogue in clause 24.6 is sized for an accessibility audit and remediation product.
 It is not a general recommendation, and a package with a different purpose should expect a different catalogue.
 
-Whether the pattern guide this profile leans on should be adopted by reference as a project-wide position, rather than only inside this profile, is an open question in this project and is not settled by this clause.
+Whether any given project adopts this profile as a standing position is a matter for that project and not for this specification.
+The profile defines what claiming it commits a package to; it does not recommend that a package claim it.
 
 #### 24.8 Provenance
 

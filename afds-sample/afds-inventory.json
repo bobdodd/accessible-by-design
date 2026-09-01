@@ -6,7 +6,7 @@
   "digestAlgorithm": "SHA-256",
   "digestEncoding": "lowercase-hex",
   "excludesSelf": true,
-  "entryCount": 9,
+  "entryCount": 10,
   "description": "Inventory of every entry in this package except this inventory itself. A consumer must verify every record before relying on package content. These digests detect transfer changes; they are not a digital signature and do not identify a signer or prove provenance.",
   "records": [
     {
@@ -26,9 +26,9 @@
     {
       "path": "afds-manifest.json",
       "mediaType": "application/json",
-      "byteLength": 2825,
+      "byteLength": 3215,
       "role": "canonical",
-      "sha256": "4a7f171b105b8e055a10a6ce1c40df63cb27b1857b48e0d57ae10ae3d2d0884a"
+      "sha256": "354fce01f3e78e1eca60021261a2b15a54546f572faf4fa7e93af4731386053c"
     },
     {
       "path": "components/stack/stack.md",
@@ -47,9 +47,9 @@
     {
       "path": "docs/PACKAGE.md",
       "mediaType": "text/markdown; charset=utf-8",
-      "byteLength": 5131,
+      "byteLength": 6995,
       "role": "documentation",
-      "sha256": "15dd5265ecd1d7eb18b377600b8c0f48d6074b44401527487173e5d56fc20c53"
+      "sha256": "2f81fe12f278328a9c5528a321583f30e665c3352dfe0a0994498782966700f2"
     },
     {
       "path": "evidence/at-matrix.json",
@@ -64,6 +64,13 @@
       "byteLength": 4374,
       "role": "evidence",
       "sha256": "b06d39ef3b57244b53ca780590a0825acd1d143ced7abd0eec3426cddcd677a0"
+    },
+    {
+      "path": "patterns/registry.json",
+      "mediaType": "application/json",
+      "byteLength": 3540,
+      "role": "canonical",
+      "sha256": "3ca9b0eb69194d8e9571c5dbd48ef4ddb4059bbab7ac20515e617ec9eb820c27"
     },
     {
       "path": "tokens/core.tokens.json",

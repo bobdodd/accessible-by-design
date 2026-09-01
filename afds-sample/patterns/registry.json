@@ -1,0 +1,36 @@
+{
+  "afdsPatternRegistryVersion": "1.0.0",
+  "description": "Package-level pattern registry for the AFDS sample, required of a package claiming the afds-patterns-native-first profile at specification clause 24.2. Entries with a componentId restate that component's own derivation.status and must not disagree with it; where they differ the component specification governs and this package is defective. Entries without a componentId record a pattern this package has declined, which no per-component declaration can express.",
+  "methodProfile": "afds-patterns-native-first",
+  "entries": [
+    {
+      "id": "stack",
+      "pattern": "Vertical spacing of adjacent siblings",
+      "componentId": "stack",
+      "status": "native-first",
+      "rationale": "Ordinary flow content in a block container, spaced with a margin applied between adjacent siblings. No widget role, no keyboard contract of its own, and nothing for ARIA to repair.",
+      "nativeAlternativeConsidered": "The native element is the answer here rather than an alternative to a widget: Stack is a styling contract over normal block layout."
+    },
+    {
+      "id": "site-navigation-as-menubar",
+      "pattern": "Menu and menubar used for ordinary site navigation",
+      "componentId": null,
+      "status": "prohibited",
+      "rationale": "Declined as a convention of this package, with a stated cost, at specification clause 24.5. Adopting a menubar for ordinary navigation imports the whole composite contract: a roving-focus model, a single tab stop, author-managed arrow-key movement, submenu open and close behaviour, and a role that causes a screen reader to describe the thing as a menu rather than as navigation. A list of links inside a navigation landmark gives users a structure they already know and costs nothing to maintain.",
+      "notMisuse": "The ARIA Authoring Practices Guide ships a navigation menubar example demonstrating site navigation, so that use is sanctioned by its publisher. This entry is a convention of this package and is not a claim that the pattern is being misused.",
+      "reconsiderIf": "A product need arises for a genuine application menu, in which case the prohibition covers ordinary navigation only and the menubar would be assessed on its own terms."
+    },
+    {
+      "id": "aria-grid-for-density",
+      "pattern": "ARIA grid role adopted to manage a visually dense table",
+      "componentId": null,
+      "status": "prohibited",
+      "rationale": "A grid widget is justified by a need for directional cell navigation, and specification clause 24.5 forbids justifying one by a table looking crowded or by a wish to avoid reflowing content. Where a wide table is hard to use at high zoom, the response is a scoped scroll container and a correctly justified two-dimensional exception under clause 22, not a role change.",
+      "reconsiderIf": "Recorded user research demonstrates a need for directional cell navigation, which is the gate on catalogue priority 8 at clause 24.6. The prohibition is on the justification, not on the role."
+    }
+  ],
+  "notes": [
+    "This package contains one component, so the registry is mostly prohibitions. That is the expected shape for a small package and is the reason clause 24.2 requires the artefact at all: a decision not to build something leaves no component behind to declare it.",
+    "No entry in this registry carries assistive-technology evidence. Every result in this package is not-yet-tested, and a status is a design decision rather than an observation."
+  ]
+}

@@ -1186,13 +1186,18 @@ The example below quotes the sample's actual contents.
 Its identifier is `com.a11ybob.abd.afds-sample` at package version `1.0.0`, and the format version is `1.0.0`.
 It declares the `afds-components` completeness profile, code under GPL-3.0-only and documentation under CC BY-SA 4.0, and a token declaration naming version `2025.10` of the token format with one canonical source at `tokens/core.tokens.json`.
 
-It declares `methodProfiles` as an empty array and `targetConformanceLevel` as `AA`.
+It declares `methodProfiles` as `["afds-patterns-native-first"]` and `targetConformanceLevel` as `AA`.
 Those are three separate statements and none of them implies the others.
-The first says the package is complete at the component level; the second says it claims none of the specification's method profiles; the third says it targets WCAG Level AA by default, which any component may amend if it records the reason.
-The empty method array is the interesting one, because Stack is in fact built the way the intrinsic layout profile describes, and the package declines to claim the profile because it has no forced-colours evidence to support the claim.
+The first says the package is complete at the component level, the second says which of the specification's method profiles it claims, and the third says it targets WCAG Level AA by default, which any component may amend if it records the reason.
+
+The method array is the interesting one, because of what it leaves out.
+Stack is also built the way the intrinsic layout profile describes, and the package does not claim that profile, because clause 21.4 requires forced-colours evidence and this package has no real evidence records at all.
+The pattern profile is claimed because everything it requires can be shown in the package as it stands.
+Claiming one method and withholding another, when both describe how the package was actually built, is the distinction the two axes exist to make expressible.
 
 It declares one component, Stack, of kind `layout-primitive`, with a machine-readable contract at `components/stack/stack.spec.json` and prose at `components/stack/stack.md`.
-It declares two evidence sources and three documentation sources, and it declares empty arrays for patterns, schemas, adapters, and stories, which is the positive statement of absence described earlier.
+It declares one canonical pattern source, the pattern registry at `patterns/registry.json` that the claimed profile requires, along with two evidence sources and three documentation sources.
+It declares empty arrays for schemas, adapters, and stories, which is the positive statement of absence described earlier.
 
 It ends with three notes, and they are the tone of the whole project in three lines.
 AFDS 1.0.0 is a project draft, not a W3C standard.
