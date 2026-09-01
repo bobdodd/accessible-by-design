@@ -147,7 +147,7 @@ The most consequential near-term questions are token source-of-truth, AAA contra
 | Document | Purpose |
 | --- | --- |
 | [APG support](APG-SUPPORT.md) | How ARIA Authoring Practices patterns are adopted by reference, with a registry, keyboard contracts, and a testing model |
-| [AFDS package format](AFDS-PACKAGE-FORMAT.md) | The `.afds` container, manifest, inventory, verification procedure, and security rules |
+| [AFDS specification](AFDS-SPECIFICATION.md) | The full specification. Part IV carries the `.afds` container, manifest, inventory, verification procedure, and security rules |
 | [Portable representations](../research/PORTABLE-REPRESENTATIONS.md) | Survey of DTCG, Custom Elements Manifest, CSF, Open UI, W3C community work, and the commercial ecosystem |
 
 ## Sources

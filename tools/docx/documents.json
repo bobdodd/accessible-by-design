@@ -1,15 +1,15 @@
 {
  "spec": {
-  "source": "docs/AFDS-PACKAGE-FORMAT.md",
+  "source": "docs/AFDS-SPECIFICATION.md",
   "output": "dist/AFDS-Draft-Specification-v1.0.0.docx",
   "title": "AFDS Draft Specification",
   "version": "1.0.0",
   "headerSuffix": "project draft",
-  "subtitle": "The .afds package: the single-file distribution format for an Accessibility Focused Design System bundle.",
+  "subtitle": "A portable, verifiable format in which a design system states what it guarantees for accessibility, what it does not, and on what evidence.",
   "abstractHeading": "Abstract",
-  "description": "Specification of the .afds single-file distribution format for an Accessibility Focused Design System bundle.",
-  "subject": "Accessibility Focused Design System package format",
-  "keywords": "accessibility, design system, AFDS, package format, WCAG, design tokens",
+  "description": "The Accessibility Focused Design System specification: the component contract, the method profiles, and the .afds single-file serialisation.",
+  "subject": "Accessibility Focused Design System specification",
+  "keywords": "accessibility, design system, AFDS, WCAG, design tokens, conformance, package format",
   "status": [
    [
     "Version",
@@ -33,7 +33,7 @@
    ],
    [
     "Canonical source",
-    "docs/AFDS-PACKAGE-FORMAT.md and docs/COLOPHON.md"
+    "docs/AFDS-SPECIFICATION.md and docs/COLOPHON.md"
    ],
    [
     "Source commit",
@@ -56,8 +56,8 @@
    "file": "docs/COLOPHON.md",
    "start": "## Portable representation decisions",
    "end": "## Repository decisions",
-   "heading": "Annex A. Adopted colophon decisions",
-   "intro": "This annex is informative. It reproduces the two adopted project decisions that this specification implements, as recorded in docs/COLOPHON.md. Each decision states what was chosen, the reasoning, the cost accepted, the alternatives rejected, and how the decision is verified."
+   "heading": "Annex B. Adopted colophon decisions",
+   "intro": "This annex is informative, and follows Annex A of the specification. It reproduces the two adopted project decisions that this specification implements, as recorded in docs/COLOPHON.md. Each decision states what was chosen, the reasoning, the cost accepted, the alternatives rejected, and how the decision is verified."
   },
   "numberedHeadings": false
  },

@@ -24,7 +24,7 @@ A system manages some of the available UI resources and modalities; it cannot re
 | [Layout method](docs/LAYOUT-METHOD.md) | Intrinsic layout, primitives, axioms, and WCAG mapping |
 | [Reflow and data tables](docs/REFLOW-AND-DATA-TABLES.md) | SC 1.4.10 research and the semantic scope of its exception |
 | [APG support](docs/APG-SUPPORT.md) | How the system adopts ARIA Authoring Practices patterns by reference |
-| [AFDS package format](docs/AFDS-PACKAGE-FORMAT.md) | The `.afds` ZIP container, manifest, inventory, and verification rules |
+| [AFDS specification](docs/AFDS-SPECIFICATION.md) | The full specification. Part IV carries the `.afds` ZIP container, manifest, inventory, and verification rules |
 | [Open questions](docs/OPEN-QUESTIONS.md) | Single source of truth for the research agenda |
 | [Design systems research](research/DESIGN-SYSTEMS.md) | Scope, prior art, tokens, annotations, and gaps |
 | [Portable representations research](research/PORTABLE-REPRESENTATIONS.md) | Standards, proposals, and commercial formats for portable design systems |

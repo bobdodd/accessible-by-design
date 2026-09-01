@@ -19,9 +19,9 @@
     {
       "path": "adapters/README.md",
       "mediaType": "text/markdown; charset=utf-8",
-      "byteLength": 5418,
+      "byteLength": 5427,
       "role": "documentation",
-      "sha256": "5538f94639f9482e7efdbde9ae8900eeb3529b85dca58f5ba1dac74cd7ee6a90"
+      "sha256": "dbc258e85daa283aca0d8e52db795a863e869c478ad8a22ded1e977da1b90657"
     },
     {
       "path": "afds-manifest.json",
@@ -47,9 +47,9 @@
     {
       "path": "docs/PACKAGE.md",
       "mediaType": "text/markdown; charset=utf-8",
-      "byteLength": 6995,
+      "byteLength": 6999,
       "role": "documentation",
-      "sha256": "2f81fe12f278328a9c5528a321583f30e665c3352dfe0a0994498782966700f2"
+      "sha256": "1d79da7ea030127027791d53bc132bb930035b852c28885bb201539f8052990b"
     },
     {
       "path": "evidence/at-matrix.json",

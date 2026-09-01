@@ -51,7 +51,7 @@ Both directions report `mappings` and `warnings`.
 An export report adds `losses` and `unsupported`.
 An import report adds `gaps`, for facts an AFDS artefact requires and the source could not supply, and `unmapped`, for source content AFDS has no representation for.
 
-The shape of that report is specified in `docs/AFDS-PACKAGE-FORMAT.md` in the project repository.
+The shape of that report is specified at clause 33.6 of the AFDS specification, in the project repository.
 
 ## What an import may not do
 

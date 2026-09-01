@@ -235,7 +235,7 @@ No minimum matrix has been fixed for an APG-derived component.
 ## H. Portable representation and packaging
 
 Two decisions are adopted and recorded in [the colophon](COLOPHON.md): AFDS is a portable bundle rather than a monolithic format, and a bundle is distributed as a single `.afds` package.
-The supporting survey is in [the portable representations research note](../research/PORTABLE-REPRESENTATIONS.md) and the container is specified in [the AFDS package format document](AFDS-PACKAGE-FORMAT.md).
+The supporting survey is in [the portable representations research note](../research/PORTABLE-REPRESENTATIONS.md) and the container is specified in Part IV of [the AFDS specification](AFDS-SPECIFICATION.md).
 What remains open is listed there in full; the headline items follow.
 
 ### H1. The component-contract schema

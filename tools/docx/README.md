@@ -11,7 +11,7 @@ The build takes a **document key** naming an entry in `documents.json`. Two docu
 
 | Key | Source | Output |
 | --- | --- | --- |
-| `spec` | `docs/AFDS-PACKAGE-FORMAT.md`, plus the two adopted portable-representation decisions in `docs/COLOPHON.md` as Annex A | `dist/AFDS-Draft-Specification-v1.0.0.docx` |
+| `spec` | `docs/AFDS-SPECIFICATION.md`, plus the two adopted portable-representation decisions in `docs/COLOPHON.md` as Annex B | `dist/AFDS-Draft-Specification-v1.0.0.docx` |
 | `guide` | `docs/AFDS-USER-GUIDE.md` | `dist/AFDS-User-Guide-v1.0.0.docx` |
 
 Each entry in `documents.json` holds the source path, the output path, the title, version, subtitle, the heading used for the opening section, the rows of the title-page status table, the document metadata, and an optional `annex` block naming a second file and the span to slice out of it. Adding a document means adding an entry, not editing the scripts.

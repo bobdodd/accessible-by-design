@@ -1418,7 +1418,7 @@ Project sources, which are authoritative where this guide and they disagree.
 
 | Source | Location |
 | --- | --- |
-| AFDS package format specification | `docs/AFDS-PACKAGE-FORMAT.md` |
+| AFDS specification, Part IV for the package format | `docs/AFDS-SPECIFICATION.md` |
 | Layout method | `docs/LAYOUT-METHOD.md` |
 | Reflow and data tables research | `docs/REFLOW-AND-DATA-TABLES.md` |
 | ARIA Authoring Practices Guide support research note | `docs/APG-SUPPORT.md` |

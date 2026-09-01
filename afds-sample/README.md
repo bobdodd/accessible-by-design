@@ -4,7 +4,7 @@
 # AFDS Sample package source
 
 This directory is the unpacked source of the **AFDS Sample** `.afds` package, version 1.0.0.
-The format it conforms to is specified in [AFDS-PACKAGE-FORMAT.md](../docs/AFDS-PACKAGE-FORMAT.md).
+The format it conforms to is specified in Part IV of [the AFDS specification](../docs/AFDS-SPECIFICATION.md).
 
 The repository holds sources only.
 A built `.afds` file is never committed, because it is a derived artefact reproducible from what is here.

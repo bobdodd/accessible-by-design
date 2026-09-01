@@ -4,7 +4,7 @@
 # What this package demonstrates
 
 This is **AFDS Sample** version 1.0.0.
-It is a small but complete `.afds` package built to exercise the rules in `docs/AFDS-PACKAGE-FORMAT.md`.
+It is a small but complete `.afds` package built to exercise the rules in Part IV of the AFDS specification.
 
 Its purpose is to be verifiable rather than impressive.
 Everything in it is either a real artefact or an explicitly marked placeholder.

@@ -530,7 +530,7 @@ The package passes configured limits for entry count, compressed and uncompresse
 **Note.** The underlying registered media type is `application/zip` until AFDS has a dedicated IANA registration.
 The `.afds` extension and root manifest identify the format in the interim.
 AFDS 1.0.0 inventory integrity is not a digital signature and does not prove author identity or trusted provenance.
-The container is specified in full in [the AFDS package format document](AFDS-PACKAGE-FORMAT.md).
+The container is specified in full in Part IV of [the AFDS specification](AFDS-SPECIFICATION.md).
 
 ### Adapters carry information in both directions
 
@@ -576,7 +576,7 @@ An import declaration lists the canonical artefacts promoted from it, and every 
 An import report carrying a gap of severity `error` reports a validation status of failed, which states that the source cannot yield a conforming artefact without human authorship.
 Every import is a discrete run with a dated report, and no adapter holds a live read-through dependency on an external tool's model.
 
-**Note.** Adapter requirements for both directions are specified in clause 11 of [the AFDS package format document](AFDS-PACKAGE-FORMAT.md).
+**Note.** Adapter requirements for both directions are specified at clause 33 of [the AFDS specification](AFDS-SPECIFICATION.md).
 That clause previously defined export only, and the correction is recorded here rather than made silently, because the one-directional wording had already been published as a project position.
 How a promotion is recorded in the promoted artefact is not yet decided and is tracked in [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md).
 AFDS 1.0.0 ships no adapter implementations in either direction; the clause defines the contract an adapter must satisfy.

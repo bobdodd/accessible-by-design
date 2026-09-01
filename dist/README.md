@@ -14,7 +14,7 @@ If a file here disagrees with the Markdown or JSON it was generated from, **the 
 | File | Generated from | Regenerate with |
 | --- | --- | --- |
 | `AFDS-Sample-1.0.0.afds` | `afds-sample/` | `cd afds-sample && python3 tools/build-inventory.py pack ../dist/AFDS-Sample-1.0.0.afds` |
-| `AFDS-Draft-Specification-v1.0.0.docx` | `docs/AFDS-PACKAGE-FORMAT.md` and the portable-representation decisions in `docs/COLOPHON.md` | see `tools/docx/README.md` |
+| `AFDS-Draft-Specification-v1.0.0.docx` | `docs/AFDS-SPECIFICATION.md` and the portable-representation decisions in `docs/COLOPHON.md` | see `tools/docx/README.md` |
 | `AFDS-User-Guide-v1.0.0.docx` | `docs/AFDS-USER-GUIDE.md` | see `tools/docx/README.md` |
 
 ## Verifying the sample package
@@ -24,7 +24,7 @@ cd afds-sample
 python3 tools/build-inventory.py verify
 ```
 
-The `verify` step checks that every inventory record matches the file it names, in both directions, before the package is built. It is the same check a consumer performs on the packed `.afds` file, as specified in `docs/AFDS-PACKAGE-FORMAT.md` section 9.
+The `verify` step checks that every inventory record matches the file it names, in both directions, before the package is built. It is the same check a consumer performs on the packed `.afds` file, as specified at clause 31 of `docs/AFDS-SPECIFICATION.md`.
 
 Inventory integrity is **not** a digital signature. A SHA-256 digest detects accidental change in transfer; it does not identify a signer and does not prove provenance. See section 10.3 of the specification.
 
