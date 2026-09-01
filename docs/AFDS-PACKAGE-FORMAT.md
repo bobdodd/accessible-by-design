@@ -46,8 +46,10 @@ They are used in this document with the following force.
 | SHOULD NOT | A strong expectation against. Doing it anyway requires a stated reason. |
 | MAY, OPTIONAL | Genuinely optional. A consumer MUST NOT assume the optional behaviour is present. |
 
-These keywords are written in capitals throughout.
-Capitalisation is the only signal used, and it never depends on colour or typographic weight.
+These keywords are written in capitals throughout, and are also marked as emphasis.
+The capitalisation is the signal and the emphasis is redundant reinforcement of it, so a reader or renderer that conveys no emphasis loses nothing.
+No requirement depends on colour, on typographic weight, or on emphasis being perceived.
+Clause 4.1 of [the AFDS specification](AFDS-SPECIFICATION.md) states this convention in full and governs it.
 
 Two roles are used in requirements.
 A **producer** is any tool or person that creates a package.
