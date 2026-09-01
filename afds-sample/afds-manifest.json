@@ -7,6 +7,7 @@
   "description": "A minimal but complete Accessibility Focused Design System package demonstrating the declared hierarchy, canonical source declarations, a DTCG token sample, one layout-primitive component contract, structured assistive-technology evidence, adapter guidance, and dual licensing.",
   "created": "2026-08-29",
   "conformanceProfile": "afds-components",
+  "methodProfiles": [],
   "licences": {
     "code": "GPL-3.0-only",
     "documentation": "CC-BY-SA-4.0"

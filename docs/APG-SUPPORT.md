@@ -60,6 +60,20 @@ Reinventing them per product is both wasteful and hostile to users.
 The value is in the interaction model, not in the example code.
 This note returns to that point in the section on reference implementations.
 
+## Normative form
+
+Clause 24 of [the AFDS specification](AFDS-SPECIFICATION.md) now carries this policy as the claimable profile `afds-patterns-native-first`, and clause 9 carries the five-status derivation vocabulary as a core requirement binding every package.
+Where this note and those clauses disagree, the clauses govern.
+This note remains as the reasoning behind the profile.
+
+Two differences are worth naming.
+Two of the five statuses were renamed when the vocabulary moved into the core, because the core may not name a particular external pattern library: `APG-derived` and `APG-adjacent` below are `pattern-derived` and `pattern-adjacent` in clause 9.
+The other three keep their names as `native-first`, `custom`, and `prohibited`.
+The twelve fields below are, in the specification, a review checklist that collects requirements stated across eight core clauses rather than a requirement of the profile itself; clause 24.4 records which clause owns each item.
+
+The proposed colophon decision at the end of this note remains **PROPOSED** and **NOT ADOPTED**.
+Clause 24 defines the profile without settling whether this project adopts it as a project-wide position, and clause 24.7 records that as open.
+
 ## The core policy
 
 The system should adopt a single policy statement and repeat it wherever the question arises.

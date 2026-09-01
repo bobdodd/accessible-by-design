@@ -122,6 +122,31 @@ The two are independent: a tokens-only package may follow the layout method, and
 They therefore travel in separate manifest fields rather than in one profile identifier.
 This entry is also distinct from the testing decision below, which is about where a component is tested rather than about what the specification binds.
 
+### Every method profile states where its ideas came from
+
+**Decision.** Every method profile in the specification states its provenance in four parts: what it adopts from work outside this project, the source of each adopted idea identified by author and title, what it changes about an adopted idea including where it is stricter than its source, and what originates in the profile itself and has no external source.
+The requirement is normative for a locally defined profile, at clause 20.5.
+
+**Reasoning.** A profile is where this project's opinions are concentrated, and opinions borrow authority.
+Naming influences is the easy half.
+The half that matters is declaring which rules are this project's own inventions, because a profile that lists its sources and stays quiet about its inventions lets a reader mistake asserted authority for borrowed authority.
+That is the same fault as recording an untested result as a passing one: it presents something unearned as settled.
+Stating that a rule originates here tells a reader exactly which rules to argue with, and it stops an external body's credibility being lent to a decision that body never made.
+
+**Cost.** Every profile carries a subclause that is pure bookkeeping and will need maintaining as clauses change.
+Some entries are uncomfortable to write, because they amount to recording that a rule rests on nothing but this project's judgement.
+The 3:1 ratio between the largest and smallest text on a surface is the clearest case, and clause 23.8 now says so in as many words.
+
+**Rejected.** A bibliography, because a reference list establishes that a document was read and not which idea came from where, which is the only thing that makes provenance traceable.
+Attribution in prose scattered through the clauses, because it cannot be checked for completeness.
+Recording influences without recording inventions, because that is the failure the decision exists to prevent.
+
+**Verification.** Every profile clause ends in a Provenance subclause containing all four parts.
+No requirement is attributed to an external source that does not support it; clause 20.5 makes such an attribution a conformance failure.
+
+**Note.** This applies to profiles, not to components.
+Component-level traceability already exists through the `derivation` object of clause 9, which names the pattern a component derives from and why the native alternative was insufficient.
+
 ### Conformance is measured at two levels
 
 **Decision.** Components are tested in isolation and inside a realistic page with landmarks, header, footer, and realistic content.

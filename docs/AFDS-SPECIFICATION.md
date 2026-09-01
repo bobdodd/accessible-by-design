@@ -436,6 +436,10 @@ The following inform the document without creating requirements.
 - W3C Design System Documentation Community Group. <https://www.w3.org/community/designsystemdocs/>
 - Open UI Community Group. <https://www.w3.org/community/open-ui/>
 - Pickering, H. and Bell, A. *Every Layout: Relearn CSS layout*. <https://every-layout.dev/>
+- Pickering, H. (2014). *Axiomatic CSS and Lobotomized Owls*. A List Apart, 21 October 2014. <https://alistapart.com/article/axiomatic-css-and-lobotomized-owls/>
+- W3C WAI, *Understanding Success Criterion 1.4.10: Reflow*. <https://www.w3.org/WAI/WCAG22/Understanding/reflow.html>
+- W3C, *Techniques for WCAG 2.2*. Cited in clause 22.6: C31, C33, C34, C38, G206, G224, G225, SCR34. <https://www.w3.org/WAI/WCAG22/Techniques/>
+- Braille Institute, *Atkinson Hyperlegible font*. <https://www.brailleinstitute.org/freefont/>
 
 ## Part II. The component contract
 
@@ -1064,3 +1068,748 @@ An annotation *SHOULD NOT* restate behaviour the coded component already guarant
 
 The annotation identifies the selected component and any product-level choices or deviations.
 Restating guaranteed behaviour makes annotations long, makes them drift from the code, and trains reviewers to skim them, which defeats the annotations that carry something the code does not.
+
+## Part III. The method profiles
+
+This part is normative only for a package that claims the profile in question.
+A package that claims no profile conforms to this specification by satisfying clause 4, clause 5, Part II, and Part IV, and nothing in this part applies to it.
+
+Part II says what a component must declare.
+This part says what a component must do, and it exists as a separate part because those are different kinds of obligation with different claims to authority.
+
+The obligation to disclose is general.
+Any organisation building an accessible component ought to record its semantic model, its keyboard contract, what it guarantees, what it refuses to guarantee, and what it does not yet know, whatever design opinions it holds.
+That is why those obligations sit in the core, where they bind every package.
+
+The obligation to build in a particular way is not general.
+The layout method in clause 21 is one defensible answer to intrinsic layout, not the only one.
+An organisation with a working breakpoint system, a different reflow policy, or a different component catalogue is not failing at accessibility, and a specification that told it otherwise would be overreaching and would deserve to be ignored.
+
+So the method choices are gathered here, named, given identifiers, and made claimable.
+A package that wants them can adopt them and be measured against them.
+A package that does not can ignore this part entirely and still conform.
+The value of writing them down is that the choices become inspectable and comparable rather than tacit, and that a package claiming a profile is making a statement a reader can check.
+
+The profiles are also where this project's debts are most concentrated, which is why clause 20.5 requires each one to say where its ideas came from.
+
+### 20. Method profiles
+
+#### 20.1 What a profile is
+
+A method profile is a named, versioned set of requirements about how components are built, which a package *MAY* claim and against which it can then be measured.
+
+A profile is not a level.
+The profiles defined in this part are not ordered, do not build on one another, and carry no ranking.
+A package claiming three profiles is not more conformant than a package claiming one, and a package claiming none is not deficient.
+
+A profile *MUST NOT* restate a core requirement.
+Where a profile appears to require something Part II already requires, Part II governs and the profile's restatement has no independent force.
+This keeps the core and the profiles from drifting apart, and it means a reader can always determine which requirements survive the removal of a profile claim.
+
+A profile *MUST NOT* weaken a core requirement.
+A profile that purported to excuse a package from a Part II obligation would not be a profile, and a package claiming it does not conform to this specification.
+
+#### 20.2 Claiming a profile
+
+A package that claims one or more method profiles *MUST* declare them in a `methodProfiles` array in its manifest.
+Each element *MUST* be a profile identifier defined in this part or a profile identifier defined outside it as permitted by clause 20.4.
+A package claiming no profile *MUST* either omit the array or supply it empty, and the two forms have identical meaning.
+
+Method adherence and package completeness are separate axes and *MUST NOT* be conflated.
+
+The `conformanceProfile` field defined in Part IV states how complete a package is, using the values `afds-tokens`, `afds-components`, and `afds-full`.
+It says nothing whatever about method.
+The `methodProfiles` array states which method choices the package has adopted.
+It says nothing whatever about completeness.
+
+A package can be complete and claim no method profile.
+A package can claim every method profile in this part and contain tokens only.
+Software reading a package *MUST NOT* infer a value of either field from the other.
+
+The two axes are separated because they answer different questions.
+A consumer asking "is there enough here for me to use?" is asking about completeness.
+A consumer asking "was this built the way my system is built?" is asking about method.
+A single field would have forced those questions together and made both answers less useful.
+
+#### 20.3 A profile is claimed whole
+
+A package *MUST NOT* claim a profile in part.
+A package that satisfies some but not all of a profile's requirements *MUST NOT* list that profile in `methodProfiles`.
+
+Partial claims are prohibited because a partial claim cannot be interpreted.
+If a package could claim the layout profile while using layout media queries, the claim would tell a reader nothing about the package, and every consumer would have to re-derive from the component contracts what the claim was supposed to summarise.
+
+Adopting a profile's requirements without claiming the profile is permitted, and is expected to be common.
+A package *MAY* satisfy any requirement in this part, cite the clause it came from, and record it with the requirement kind that honestly describes its status under clause 13.
+Doing so *MUST NOT* be described as claiming the profile, in the manifest or in any human-readable artefact.
+
+A package that adopts most of a profile and departs from it deliberately is in a well-defined position.
+It does not list the profile.
+It records the departure as a requirement of kind `product-deviation`, names the clause it departs from, and states why.
+That is a more informative statement about the package than a partial claim would have been, because it identifies the specific difference rather than leaving a reader to find it.
+
+#### 20.4 Profile identifiers
+
+This part defines four profiles.
+
+| Identifier | Clause | Subject |
+| --- | --- | --- |
+| `afds-layout-intrinsic` | 21 | Intrinsic, available-space layout built from composable primitives |
+| `afds-reflow-scoped` | 22 | The WCAG 1.4.10 two-dimensional exception, and where scrolling is allowed to reach |
+| `afds-typography-colour` | 23 | One modular scale for type and space, and colour that does not carry meaning alone |
+| `afds-patterns-native-first` | 24 | Native HTML first, recognised interaction patterns second, and a gated catalogue |
+
+An identifier defined in this part *MUST NOT* be used for any other set of requirements.
+The identifiers are stable for the life of this major version.
+
+An organisation *MAY* define its own method profile.
+An identifier for a profile not defined in this specification *MUST* be namespaced with a prefix that is not `afds-`, so that no reader can mistake a local profile for one defined here.
+A profile defined outside this specification *MUST* satisfy clause 20.1, clause 20.3, and clause 20.5, and a package claiming a local profile that does not satisfy those clauses does not conform.
+
+#### 20.5 Provenance
+
+Every profile *MUST* state its provenance.
+
+The statement *MUST* identify four things.
+
+First, what the profile adopts from work outside this project, described specifically enough that a reader can tell which parts are borrowed.
+Second, the source of each adopted idea, identified well enough to be found, which for a published work means author and title.
+Third, what the profile changes about an adopted idea, including any place where it is stricter than its source or reaches a different conclusion.
+Fourth, what originates in the profile itself and has no external source.
+
+The fourth element is the one most likely to be omitted and the most important to include.
+A profile that lists its influences and stays quiet about its own inventions leaves a reader unable to tell borrowed authority from asserted authority.
+That is the more damaging error of the two, because it launders an untested opinion as settled practice.
+Stating plainly that a rule originates here and rests on nobody else's reasoning is not a weakness in the document.
+It tells a reader exactly which rules to argue with, and it prevents the profile from lending an external body's credibility to a decision that body never made.
+
+A provenance statement *MUST NOT* attribute a requirement to an external source that does not support it.
+Citing a standards body, specification, or published work as the origin of a rule it does not contain is a defect of the same kind as recording an untested result as a passing one, and a package whose profile does so does not conform.
+
+A provenance statement *MUST NOT* be replaced by a bibliography.
+A list of references establishes that a document was read.
+It does not establish which idea came from where, which is the only thing that makes provenance traceable.
+
+Each profile in this part carries its provenance in its final subclause.
+A package claiming a profile defined here inherits that statement and *MUST NOT* be required to restate it.
+A package defining a local profile *MUST* supply its own.
+
+### 21. The intrinsic layout profile
+
+Identifier: `afds-layout-intrinsic`.
+
+#### 21.1 Statement
+
+> Layout responds to the space actually available to it, not to the width of the viewport.
+> Every dimension is expressed so that it moves with the user's settings.
+> Interfaces are composed from single-purpose primitives rather than assembled from bespoke per-screen layouts.
+
+#### 21.2 The axioms
+
+A package claiming this profile *MUST* satisfy the following five axioms in every component it contains.
+
+1. The measure *MUST NOT* exceed 60ch, subject to the exception mechanism in clause 23.3.
+2. Every dimension *MUST* be user-relative.
+   Author-fixed dimensions *MUST NOT* be used, except for hairline borders.
+3. Layout *MUST* respond to available space rather than viewport width.
+4. An element *MUST NOT* be given a fixed height.
+5. Layout *MUST* be complete with JavaScript disabled.
+
+The axioms are stated as absolutes because each one fails in the presence of a single exception.
+One fixed height in a shared primitive reintroduces clipping under text-spacing overrides across every screen that uses it, and the primitive's other correctness does not compensate.
+
+Axiom 2 prohibits values frozen against the user's font-size and zoom settings.
+It does not assert that the CSS pixel is a badly designed unit.
+A CSS pixel is an angular reference measurement, and the objection here is to author-chosen values that cannot move, not to the unit.
+A package claiming this profile *MUST NOT* justify author-fixed dimensions on the grounds that the value is small.
+
+Axiom 5 is a layout requirement and not a general prohibition on JavaScript.
+A component *MAY* require JavaScript for its interaction.
+Its layout *MUST NOT* require JavaScript to be correct, because a layout that collapses before script executes is a layout that fails intermittently on slow connections and permanently when script errors.
+
+#### 21.3 The primitive set
+
+A package claiming this profile *MUST* build layout from single-purpose primitives, each of which does one thing.
+
+The profile adopts twelve primitives.
+Each *MUST*, if present in the package, have a component specification conforming to Part II, and *MUST* declare the semantics it does not supply.
+
+| Primitive | Single purpose | Supplies no |
+| --- | --- | --- |
+| Stack | Vertical rhythm between adjacent siblings | List semantics, grouping, heading structure |
+| Box | Intrinsic surface: padding, border treatment, colour inheritance | Semantic role |
+| Center | Constrains the measure, with gutters growing outward | Guarantee of visibility in every zoomed context |
+| Cluster | Wraps indeterminate groups the way words wrap | Semantics or grouping |
+| Sidebar | Two-element arrangement responding to container width | Semantics or landmark |
+| Switcher | Switches axis at a container-width threshold | Semantics |
+| Cover | Vertical centring with a minimum height | Semantics |
+| Frame | Constrains media by aspect ratio | Alternative text or media semantics |
+| Grid | Wraps self-contained items by content-driven measurement | Semantics, and no basis for the clause 22 exception |
+| Reel | Horizontally scrolling container that acknowledges its overflow | Guarantee that overflowed content is otherwise reachable |
+| Imposter | Overlay geometry that cannot trap its own content | Focus trap, modal semantics, focus return |
+| Icon | Sizes an icon relative to the text beside it | Accessible name or meaning |
+
+The right-hand column is the operative one.
+A layout primitive that silently omits semantics invites a developer to assume semantics were handled, and the omission is only safe when it is declared.
+Stack supplies vertical rhythm and not list semantics, and a consumer stacking list content *MUST* supply the list semantics itself.
+
+Two entries carry additional requirements.
+
+Grid arranges self-contained items and creates no header-to-cell relationship.
+Clause 11.2 already forbids every package, profile or not, from resting an exception rationale on a layout technique.
+What this profile adds is a named consequence: the Grid primitive *MUST* declare in its own specification that it supplies no basis for the claim.
+The core forbids the bad rationale; the profile requires the primitive most likely to invite it to say so in advance.
+
+Reel acknowledges overflow rather than concealing it.
+Every item in a Reel *MUST* be independently readable within 320 CSS pixels, so that a user scrolls in one direction to reach an item and not in two directions to read one.
+Content that leaves the visible region *MUST* remain reachable.
+
+Composition, rather than increasingly capable individual components, produces the interface.
+A package claiming this profile *MUST NOT* resolve a layout need by adding configuration options to an existing primitive where composing two primitives would serve.
+
+#### 21.4 Surface delineation under forced colours
+
+A surface described only by a background colour can vanish in a forced-colours mode, because the mode may replace author backgrounds with system ones.
+
+Every delineated surface in a package claiming this profile *MUST* carry a transparent outline with a negative offset in addition to any background colour.
+The outline is invisible in normal rendering, occupies no layout space, and becomes visible when a forced-colours mode assigns it a system colour.
+
+The accepted cost is that `outline` is no longer available for unrelated surface decoration, and that every surface carries a declaration whose purpose is invisible in normal use.
+
+A package claiming this profile *MUST* inspect every delineated surface in a forced-colours mode, and *MUST* record the result as evidence under clause 16 rather than as an assertion believed to pass.
+
+#### 21.5 Media queries
+
+A package claiming this profile *MUST NOT* use layout media queries.
+
+Preference queries are permitted, and are the only permitted queries: `prefers-reduced-motion`, `prefers-color-scheme`, `prefers-contrast`, and `forced-colors`.
+
+The distinction is that a preference query asks what the user has asked for, while a layout media query asks how wide the viewport is and then guesses what that implies.
+Viewport width does not reliably indicate available space.
+A user at 400% zoom, a user with a raised default font size, and a component nested inside a narrow container can all present a component with far less room than the viewport suggests, and no set of breakpoints anticipates the combinations.
+
+Because designing for the web means designing without seeing the final combination, the profile requires programs that respond to space rather than artefacts tuned to named widths.
+
+This axiom has a known unresolved consequence, recorded in clause 21.7.
+
+#### 21.6 Styling tiers and encapsulation
+
+Styles in a package claiming this profile *MUST* be organised so that reach is inversely proportional to specificity: universal and inherited styles first, layout primitives second, utilities last.
+
+A component *MUST NOT* restate an inherited `font-family`, `color`, or `line-height`.
+Restating an inherited value breaks the inheritance chain the user's own settings and stylesheets travel down.
+
+Utilities are final adjustments and *MUST NOT* be introduced before a need exists.
+
+Utility-first, breakpoint-prefixed layout is prohibited under this profile, because it encodes a viewport assumption into each individual element and so contradicts axiom 3.
+
+Layout primitives in a package claiming this profile *MUST NOT* use Shadow DOM.
+
+Three reasons support the prohibition.
+A shadow boundary complicates the relationships accessible names and descriptions depend on, including `aria-labelledby`, `aria-describedby`, `aria-controls`, and the `for` attribute.
+Encapsulation can prevent a user stylesheet or a forced-colours override from reaching the content inside it.
+Light DOM permits build-time primitive styles, which is what allows axiom 5 to hold.
+
+The accepted cost is exposure to global style leakage.
+The profile accepts it, on the grounds that inherited and user styles *MUST* be able to reach primitive content, and an encapsulation boundary that blocks a user's own stylesheet has defeated a mechanism the user relies on.
+
+#### 21.7 What this profile does not settle
+
+The profile has one known unresolved conflict and *MUST NOT* be read as having resolved it.
+
+Advisory technique C34 un-fixes a sticky header using media queries, so that sticky content does not obscure focus or consume reading space at high zoom.
+Clause 21.5 prohibits layout media queries, so the advisory remedy is unavailable under this profile.
+
+Until a container-driven equivalent is designed, a package claiming this profile *MUST NOT* use `position: sticky` or `position: fixed`.
+
+This is a deferral and not a finding.
+The profile does not assert that sticky positioning is inaccessible.
+It records that this profile cannot currently implement the published remedy, and declines to ship the pattern without one.
+A package needing sticky positioning should not claim this profile, and should record its own approach and evidence.
+
+The profile also does not settle whether the 60ch measure of clause 23.3 applies inside a region claiming the clause 22 exception, is reduced there, or is suspended there.
+
+#### 21.8 Provenance
+
+**Adopted.** The intrinsic-layout argument, the axiomatic framing, the composable single-purpose primitive approach, and the twelve primitives named in clause 21.3 are adopted from *Every Layout: Relearn CSS layout* by Heydon Pickering and Andy Bell, at <https://every-layout.dev/>.
+The 60ch measure, the modular scale generated by successive `calc()` from a `1rem` root, the Stack primitive's use of an adjacent-sibling relationship rather than per-element margins, the Switcher primitive's container-width threshold technique, and the transparent-outline treatment for forced colours are adopted from the same work.
+
+The adjacent-sibling selector `* + *` that the Stack primitive rests on was introduced as the "lobotomized owl selector" by Heydon Pickering in *Axiomatic CSS and Lobotomized Owls*, A List Apart, 21 October 2014, at <https://alistapart.com/article/axiomatic-css-and-lobotomized-owls/>.
+The reasoning that margin is a relationship between adjacent elements rather than a property of an element belongs to that article.
+
+Every Layout is a commercial publication.
+This profile describes the method and attributes it.
+It reproduces neither the source text nor the source code, and a reader wanting the original reasoning should consult the authors' work.
+
+The requirement that layout respond to available space rather than viewport width is consistent with W3C sufficient technique C31, which treats a Flexbox-based approach as sufficient for WCAG 2.2 Success Criterion 1.4.10, and with technique SCR34 for sizes and positions that scale with text.
+
+**Changed.** Every Layout names a thirteenth primitive, The Container, which this profile does not adopt.
+The prohibition on layout media queries in clause 21.5 is absolute in this profile, which is stricter than the source work requires.
+Clause 21.3's requirement that every primitive declare the semantics it does not supply is an application of the Part II disclosure obligation and is not a requirement of the source work.
+
+**Originates here.** The following have no external source and rest on this project's own reasoning.
+
+The prohibition on Shadow DOM in layout primitives, and the three grounds given for it in clause 21.6.
+The requirement that every delineated surface be inspected in a forced-colours mode and the result recorded as dated evidence rather than assumed, which is this project's evidence discipline applied to a technique borrowed from elsewhere.
+The prohibition in clause 21.3 on a Grid-primitive region founding a two-dimensional exception claim.
+The Reel requirement that each item be independently readable within 320 CSS pixels, which is stricter than merely permitting horizontal scrolling; it is this project's reading of technique G225 rather than a restatement of it.
+The deferral of sticky and fixed positioning in clause 21.7, which is a project judgement in the face of an unresolved conflict and not a published position of any standards body.
+The requirement that primitives be tested at 400% zoom, in forced colours, at a doubled root font size, under text-spacing overrides, and inside realistic pages rather than in isolation alone.
+
+### 22. The scoped reflow profile
+
+Identifier: `afds-reflow-scoped`.
+
+#### 22.1 Statement
+
+> Two-dimensional scrolling is permitted only where the content's meaning genuinely requires two axes, is justified by naming those axes, and is confined to the element that needs it.
+> It never reaches the page.
+
+#### 22.2 The exception is semantic
+
+WCAG 2.2 Success Criterion 1.4.10 requires content to be presentable without loss of information or functionality and without two-dimensional scrolling, at a width equivalent to 320 CSS pixels for vertically scrolling content and a height equivalent to 256 CSS pixels for horizontally scrolling content.
+A width of 320 CSS pixels corresponds to a 1280 CSS pixel starting viewport at 400% zoom.
+The criterion excepts parts of the content that require two-dimensional layout "for usage or meaning", and its cited examples include data tables, qualified as "not individual cells".
+
+That the rationale must rest on semantic structure rather than on visual arrangement is a core requirement, stated in clause 11.2 and binding on every package.
+This clause adds no requirement.
+It explains how the core test resolves in practice, because the test is easy to state and routinely misapplied.
+
+A region qualifies when a cell's significance depends on its relationship to both a row axis and a column axis, so that flattening the structure would destroy meaning rather than merely rearrange appearance.
+
+A CSS Grid container has no table semantics.
+Declaring `display: grid`, or wrapping items with a content-driven measurement, creates no row header, no column header, and no header-to-cell relationship.
+Visual grid arrangement therefore *MUST NOT* be offered as a basis for the exception.
+
+The table below records how the test resolves for common cases.
+
+| Content | Basis | Excepted |
+| --- | --- | --- |
+| Results table with genuine row and column header relationships | A cell's significance depends on both axes | Yes, as a scoped region |
+| Programme guide organised by channel and time | Channel and time are both meaning-bearing axes | Yes, as a scoped region |
+| Collection of self-contained cards | Arrangement is presentational | No |
+| Dashboard laid out in grid areas | Arrangement is presentational | No |
+| Filter panel beside a results list | Adjacency is convenience, not meaning | No |
+
+The programme-guide row establishes that a meaning-bearing two-dimensional structure need not be a conventional data table.
+It *MUST NOT* be read as extending the exception to visual grids generally.
+
+#### 22.3 Claiming the exception
+
+Clause 11.2 requires a rationale resting on semantic two-dimensional structure.
+This profile makes that rationale specific.
+
+A component or region in a package claiming this profile *MUST NOT* claim the two-dimensional exception without recording all of the following in its component specification.
+
+The identification of both meaning-bearing axes.
+An explanation of how a cell's significance depends on each axis.
+A statement of the semantic structure that carries the relationship, which *MUST* be a table structure or an ARIA grid structure, and *MUST NOT* be a purely presentational arrangement.
+The boundary of the excepted region, so that a tester knows what is inside the claim and what is outside it.
+
+"It is displayed as a grid" *MUST NOT* be recorded as a justification, and a specification offering it does not conform.
+
+A region needing the exception needs semantic structure first.
+Where the semantic structure is absent, the correct response is to supply it or to abandon the claim.
+Changing a role in order to qualify is already forbidden by clause 11.2 and is not restated as a profile requirement here.
+
+#### 22.4 Scoping the scroll
+
+An excepted region *MUST* be placed in its own scrollable container.
+
+Two-dimensional scrolling *MUST NOT* reach the page in a package claiming this profile.
+
+Page-level bidirectional scrolling can conform where the content is genuinely excepted, so this requirement is stricter than the criterion.
+The profile adopts it because a page-level horizontal scrollbar tells a user that content exists off-screen everywhere, when in fact it exists in one region, and the user is left searching for material that is not there.
+Scoping the scroll also allows every surrounding part of the page to reflow normally, which is what clause 22.5 requires.
+
+#### 22.5 Cells and surrounding content
+
+The exception applies to the excepted region and to nothing else.
+
+A heading introducing an excepted region, its surrounding prose, a search field, filter controls, pagination, and any other adjacent interface *MUST* reflow as ordinary content and *MUST* be tested as ordinary content.
+
+An individual cell *MUST* meet the criterion as ordinary flow content, unless it contains material that independently requires two-dimensional presentation for usage or meaning.
+The qualification "not individual cells" marks where the semantic two-dimensional relationship stops: the table needs both axes to mean what it means, and the content inside one cell does not depend on either axis in that way.
+
+In a package claiming this profile, a long selector, a URL, a failure description, and a code excerpt appearing in a cell *MUST* either wrap at 320 CSS pixels or provide a mechanism by which a user can reveal the complete value.
+
+A truncated string *MUST NOT* be the only presentation of a value.
+Truncation is permitted only where a user can reveal the complete value or reach a complete alternative presentation.
+
+Content *MUST NOT* disappear on reflow without remaining reachable.
+
+Where indentation carries meaning, as in nested lists and code, it *MUST* be reduced under magnification rather than removed.
+Whether a particular code cell may wrap or must preserve non-wrapping indentation is a component-level judgement, and clause 22.7 records that this profile does not settle it.
+
+#### 22.6 Recorded techniques
+
+A package claiming this profile *MUST* record, for every reflow assertion, the device, the browser, the starting viewport, and the zoom level at which the observation was made or is to be made.
+A reflow result without those four values is not interpretable, because "no content is clipped" is a different statement at a 320 CSS pixel viewport than at a 1280 by 1024 starting viewport with 400% zoom applied.
+
+The profile relies on the following published techniques.
+
+| Technique | Use under this profile |
+| --- | --- |
+| C31, Flexbox to reflow content | Primary mechanism for the Cluster, Sidebar, and Switcher primitives |
+| C33, Reflow with long URLs and strings | Required in table cells |
+| C38, Width, max-width, and Flexbox for labels and inputs | Required for filters and forms |
+| SCR34, Sizes and positions scale with text | Satisfied by the modular scale of clause 23.2 |
+| G224, Meaningful indentation and Reflow | Required wherever indentation carries meaning |
+| G225, Horizontally scrolling panels fit 320 CSS pixels | Required for Reel items, read strictly per clause 21.8 |
+| G206, Layout alternative without horizontal scrolling | Permitted enhancement for an excepted region; not required |
+| C34, Un-fix sticky headers with media queries | Unavailable under `afds-layout-intrinsic`; see clause 21.7 |
+
+C31 is a sufficient technique for Success Criterion 1.4.10 rather than a statement of compatibility with it.
+A package claiming this profile and building composition from Flexbox is therefore implementing a technique the Working Group deems sufficient, which is a stronger position than asserting that the criterion is met.
+
+#### 22.7 What this profile does not settle
+
+Success Criterion 1.4.4 Resize Text requires text to be resizable to at least 200%.
+The criterion does not require a specific amount of text enlargement at the test condition of Success Criterion 1.4.10, and a 200% zoom producing a viewport smaller than that test condition is not for that reason alone a failure of 1.4.10.
+This profile records the distinction and does not rely on it to excuse anything.
+
+Three questions remain open, and a package claiming this profile *MUST NOT* represent them as answered.
+
+Whether an excepted region should also offer a user-selectable alternative presentation without horizontal scrolling, under technique G206.
+When code inside a cell needs preserved non-wrapping indentation and when it must wrap.
+Whether the 60ch measure applies inside an excepted region, is reduced there, or is suspended there.
+
+#### 22.8 Provenance
+
+**Adopted.** The criterion, its test conditions, the phrase "for usage or meaning", the cited examples, and the qualification "not individual cells" are from W3C, *Web Content Accessibility Guidelines (WCAG) 2.2*, Success Criterion 1.4.10 Reflow, at <https://www.w3.org/TR/WCAG22/>.
+The stated intent of preventing users from scrolling back and forth to read enlarged text line by line, and the correspondence between a 320 CSS pixel width and a 1280 CSS pixel starting viewport at 400% zoom, are from W3C WAI, *Understanding Success Criterion 1.4.10: Reflow*, at <https://www.w3.org/WAI/WCAG22/Understanding/reflow.html>.
+
+The techniques named in clause 22.6 are W3C techniques for WCAG 2.2 and are cited as published.
+
+**Changed.** Clause 22.4 is stricter than the criterion.
+Page-level bidirectional scrolling can conform where content is genuinely excepted, and this profile prohibits it anyway.
+The reason given in clause 22.4 is a usability argument of this project's own and is not a WCAG requirement.
+
+Clause 22.5's treatment of long strings in cells applies technique C33 as a requirement of this profile, where the technique itself is sufficient rather than required.
+
+**Originates here.** The following have no external source.
+
+The reading in clause 22.2 that the exception rests on a semantic relationship rather than a visual arrangement is this project's analysis of the criterion's wording, specifically of "for usage or meaning" together with "not individual cells".
+It is a defensible reading and it is not a W3C ruling.
+The resolution table in clause 22.2 is this project's application of that reading to cases, and the Working Group has not adjudicated those cases.
+
+The requirement in clause 22.3 that a claim name both axes, explain the cell-to-axis dependency, identify the carrying semantic structure, and state the region's boundary.
+The prohibition on "it is displayed as a grid" as a justification.
+The prohibition on a Grid-primitive region founding a claim, shared with clause 21.3.
+The requirement that every reflow assertion record device, browser, starting viewport, and zoom.
+
+Two corrections are recorded here because a reader is entitled to know the profile changed its mind.
+An earlier position in this project treated wide tables at 400% zoom as an unresolved weakness of its layout method; that was wrong, because a table with genuine two-dimensional semantic relationships is excepted, and the real work is scoping the exception correctly.
+An earlier wording claimed the exception "covers grid-based UI generally"; that was wrong, because it conflated semantic grid structure with CSS Grid layout.
+
+### 23. The typography and colour profile
+
+Identifier: `afds-typography-colour`.
+
+#### 23.1 Statement
+
+> Type and space are generated from one scale seeded at the user's own text size, so that changing that size moves the whole interface together.
+> Colour reinforces meaning and never carries it alone.
+
+#### 23.2 One scale
+
+A package claiming this profile *MUST* generate font sizes and spacing from a single modular scale.
+
+The scale *MUST* be anchored at `1rem`, so that the user's own root font size is the seed for every derived value.
+Each point on the scale *MUST* be derived from the preceding point by calculation rather than chosen independently.
+Body text *MUST* use a line height of 1.5.
+
+The largest and smallest text on one surface *MUST NOT* differ by more than 3:1.
+
+A font-size or spacing declaration *MUST* reference a scale value, and a literal value *MUST NOT* be used.
+
+The shared seed is the highest-value accessibility property of this profile.
+Because type, gaps, and padding all derive from the same root, a user who raises the default text size gets a proportionally larger interface rather than larger text crammed into unchanged spacing.
+One line of body text is the natural denominator for vertical rhythm, which is why the line height and the scale ratio are the same number.
+
+The accepted cost is that available sizes are few and widely separated, and that display typography is constrained.
+
+#### 23.3 The measure
+
+The measure is line length expressed in characters.
+
+A package claiming this profile *MUST NOT* allow the measure to exceed 60ch.
+
+The cap *MUST* be applied exception-based: content is capped broadly, and deliberate exceptions are named per container rather than granted by default.
+An exception *MUST* be documented, and an undocumented exception fails review.
+
+The measure *MUST* be expressed in `ch` or another font-relative unit and *MUST NOT* be expressed as an author-fixed width.
+A character measure cannot be guaranteed by a pixel width, because the number of characters that fits in a fixed width changes as the font size changes.
+
+Because `1ch` varies with font size, text at different sizes occupies different proportions of the same wide container.
+That is a consequence of the axiom and *MUST NOT* be treated as a defect.
+
+The measure axiom and Success Criterion 1.4.10 approach one concern from opposite directions.
+The axiom limits line length positively, as a typographic commitment.
+The criterion prevents unbounded line length under magnification, as a floor.
+Satisfying one does not satisfy the other.
+
+#### 23.4 Colour does not carry meaning alone
+
+In a package claiming this profile, status, severity, and any other meaning conveyed by colour *MUST* also be conveyed by text or by shape.
+Colour *MUST* be reinforcement only.
+
+An unlabelled colour-coded severity scheme *MUST NOT* be used.
+
+The requirement holds for two independent reasons, and either alone would justify it.
+A colour-only encoding is unavailable to users whose colour vision does not distinguish the chosen hues.
+A colour-only encoding is also unavailable to any user in a forced-colours mode, because the mode may replace the author's palette entirely, and a distinction carried only by hue does not survive that replacement.
+
+The accepted cost is that interfaces look plainer.
+
+#### 23.5 Contrast is declared, not fixed by this profile
+
+A package claiming this profile *MUST* declare the contrast threshold it holds itself to, and *MUST* record, for each foreground and background token pair it treats as valid, the measured ratio and the threshold that pair satisfies.
+
+This profile *MUST NOT* be read as fixing a threshold.
+
+The omission is deliberate and is not an oversight.
+Whether this project commits to the WCAG 2.2 AAA threshold of 7:1 for body text as a per-surface obligation, and whether that threshold remains usable in data-dense reporting, is an open question in this project and is not settled.
+Fixing a number in a normative clause while the question is open would state a commitment that has not been made, and a reader would have no way to know it was unsettled.
+
+What the profile does require is that the threshold be stated rather than assumed, and that the claim be measured per token pair rather than asserted for the palette as a whole.
+A palette-level claim is not checkable, because contrast is a property of a pair and not of a set.
+
+There is a known gap here that this profile cannot close.
+Design token formats carry values and have no standard expression for the statement that one foreground token is valid on one background token at a given threshold.
+Until such an expression exists, a package claiming this profile *MUST* carry its verified pairs as assertions under clause 15, with evidence under clause 16, rather than expecting the token file to express them.
+
+#### 23.6 Typeface
+
+This profile *MUST NOT* be read as requiring a particular typeface.
+
+A package claiming this profile *MUST* declare the typefaces it depends on, and *MUST* declare whether the interface remains usable when they are unavailable.
+
+No typeface requirement is stated because this project has not settled one.
+Atkinson Hyperlegible, published by the Braille Institute, is under consideration and has not been adopted, and clause 23.8 records what is known about it.
+
+#### 23.7 What this profile does not settle
+
+The contrast threshold of clause 23.5 and the typeface of clause 23.6 are both open.
+
+Whether the 60ch measure applies inside a region claiming the clause 22 exception is also open, and is recorded identically in clause 21.7 and clause 22.7.
+
+#### 23.8 Provenance
+
+**Adopted.** The 60ch measure, the modular scale generated by successive calculation from a `1rem` root, and the practice of deriving spacing and type from one seed are adopted from *Every Layout: Relearn CSS layout* by Heydon Pickering and Andy Bell, at <https://every-layout.dev/>, as recorded in clause 21.8.
+
+The requirement that sizes and positions scale with text is consistent with W3C technique SCR34 for WCAG 2.2.
+A line height of 1.5 for body text corresponds to the line-height value that Success Criterion 1.4.12 Text Spacing requires content to tolerate, at <https://www.w3.org/TR/WCAG22/>.
+
+The reasoning that over-long lines make it harder to track from one line to the next, and that this bears particularly on users with dyslexia, low vision, or attention-related disabilities, is the standard argument for a measure cap in typographic practice.
+This profile asserts no research finding of its own on the point and quantifies no benefit.
+
+The 7:1 body-text figure named in clause 23.5 is the WCAG 2.2 Success Criterion 1.4.6 Contrast (Enhanced) threshold, at <https://www.w3.org/TR/WCAG22/>.
+It is named there as the threshold under consideration and is not adopted by this profile.
+
+Atkinson Hyperlegible is published by the Braille Institute at <https://www.brailleinstitute.org/freefont/>.
+The family is offered in three versions, and the original typeface was introduced in 2019.
+The download page and the release announcement of 10 February 2025 differ on the name of the monospaced member, which the download page calls Mono and the announcement calls Monospace, at <https://www.brailleinstitute.org/about-us/news/braille-institute-launches-enhanced-atkinson-hyperlegible-font-to-make-reading-easier/>.
+This profile records the discrepancy rather than resolving it, because resolving it is the publisher's to do.
+
+**Changed.** Clause 23.3 requires the measure cap to be applied exception-based with documented per-container exceptions, which is a process requirement of this project and not a requirement of the source work.
+
+**Originates here.** The following have no external source.
+
+The 3:1 limit on the ratio between the largest and smallest text on one surface.
+No published source is claimed for this figure.
+It rests on the argument that a screen-magnifier user should not have to change zoom repeatedly when moving between a heading and the body copy beneath it, and that argument is this project's own.
+A reader who wants to challenge one number in this clause should challenge this one.
+
+The requirement in clause 23.5 that a package declare its threshold and record measured ratios per token pair, and the accompanying refusal to fix a threshold while the question is open.
+The requirement in clause 23.6 that a package declare its typeface dependencies and whether the interface survives their absence.
+The observation in clause 23.3 that the measure axiom and Success Criterion 1.4.10 address line length from opposite directions and that satisfying one does not satisfy the other.
+
+### 24. The native-first pattern profile
+
+Identifier: `afds-patterns-native-first`.
+
+#### 24.1 Statement
+
+> WCAG establishes the required outcome.
+> Native HTML is preferred.
+> ARIA fills genuine semantic gaps.
+> A published pattern guide supplies the interaction model for recognised custom patterns.
+> The package specifies, tests, versions, and evidences the implementation actually shipped.
+
+Each clause does work.
+
+The first fixes the acceptance criteria in a normative standard, so that a disagreement about behaviour resolves against an outcome rather than against a preference.
+The second sets the default engineering answer, because native elements arrive with focus behaviour, activation semantics, disabled-state handling, and forced-colours treatment already implemented and already tested by browser vendors.
+The third confines ARIA to the repair role it was designed for.
+The fourth admits that some interactions have no native equivalent, and that a custom one should behave the way users already expect.
+The fifth locates responsibility, because no external document can carry evidence about the code a package actually ships.
+
+#### 24.2 The registry
+
+Clause 9 already requires every component to declare a `derivation.status` from a fixed set of five values, and already imposes the extra obligations that `pattern-adjacent` and `prohibited` carry.
+None of that is restated here, and a package that claims no profile is bound by all of it.
+
+What this profile adds is a package-level artefact.
+
+A package claiming this profile *MUST* carry a registry listing every component and pattern in the package against its status.
+
+The registry *MUST NOT* disagree with any component's own declaration.
+Where the registry and a component specification differ, the component specification governs and the package is defective.
+
+The registry *MUST* record a `prohibited` entry for a pattern the package has declined, even though no component implements it.
+
+That last requirement is the reason the artefact is worth having, and it is the one thing a set of per-component declarations cannot supply.
+A decision not to build something leaves no component behind to declare it.
+Without a package-level registry, a prohibition is invisible: the absence of a menubar component looks identical to nobody having considered a menubar, and the argument gets held again in the next review.
+The registry is where a package says no once, in writing, and where a reader can see what was rejected as well as what was built.
+
+#### 24.3 Native first
+
+> Use native HTML when it provides the needed semantics and interaction.
+> Adopt a published pattern only when a genuinely custom composite widget is required.
+
+The rule is stated as a restriction rather than as an endorsement, because the likeliest failure mode for a system that admires a pattern guide is to turn every familiar interaction into a custom widget.
+
+| Product need | Preferred response | Why |
+| --- | --- | --- |
+| Action | Native `<button>` | Activation, focus, disabled state, and keyboard behaviour are already provided |
+| Choice between options | Native radio or checkbox inputs | Avoids recreating form semantics |
+| Navigation | Links inside a navigation landmark | Do not convert site navigation into a menu widget |
+| Reveal supplementary content | Native `<details>`, or a button with controlled content | Often avoids a full custom disclosure implementation |
+| Modal confirmation | A dialog component following the published dialog model | A genuine composite interaction with focus-management needs |
+| Rich autocomplete | A combobox, only where native controls cannot satisfy the task | High complexity; semantics and keyboard contract must be complete |
+| Large interactive results table | A native table first; an ARIA grid only where directional cell navigation is genuinely needed | A visual CSS grid is not a semantic grid and does not justify the clause 22 exception |
+
+The rows are ordered from cheapest to most expensive.
+In a package claiming this profile, a component *MUST NOT* be given a `pattern-derived` status where a native element in this table would have supplied the semantics and interaction, unless the component specification records why the native element was insufficient.
+
+That last requirement is the profile's counterpart to the Part II disclosure obligation.
+Part II requires a package to record the native baseline it considered.
+This profile requires it to prefer that baseline.
+
+#### 24.4 Review checklist for a derived component
+
+This subclause is informative and creates no requirement.
+
+It exists because reviewing a derived component means checking twelve things, and those twelve things are distributed across eight core clauses.
+A reviewer working from the core alone has to reassemble the list every time, and in practice reassembles it incompletely.
+
+Every item below is required by the clause named beside it.
+Clause 20.1 forbids a profile from restating a core requirement, so nothing here is a requirement of this profile, and removing this profile's claim removes none of these obligations.
+
+| Review item | Required by |
+| --- | --- |
+| 1. The published pattern it derives from, with its source URL | 9.3 |
+| 2. The native alternative considered, and why it was insufficient | 9.3 |
+| 3. Every deviation from the pattern, with reason and cost | 9.3 |
+| 4. Whether the pattern is support-dependent, and its reassessment trigger | 9.3, 9.5 |
+| 5. The semantic model | 8 |
+| 6. The keyboard contract | 10 |
+| 7. The focus lifecycle | 10.4 |
+| 8. Pointer and touch parity, and speech-recognition operation | 10.2 |
+| 9. Reflow behaviour, and any two-dimensional exception claim | 11, 11.2 |
+| 10. The WCAG success criteria the component affects | 12 |
+| 11. Assistive-technology evidence for its claims | 16 |
+| 12. Its guarantees, non-guarantees, and recorded uncertainty | 14, 17 |
+
+A specification missing any of the twelve is incomplete under the core, not under this profile.
+
+These twelve review items are written for engineering review.
+They are not the eleven design-tool annotation fields of clause 19, which are written for design handoff.
+The two lists overlap in subject and differ in audience, count, and purpose, and a count of one is never a count of the other.
+
+#### 24.5 Two cautions
+
+Two cautions are strong enough to belong in the profile itself.
+
+**Menu and menubar are not for ordinary navigation or action lists.**
+
+Accuracy about the pattern's scope comes first, because the temptation is to overstate the case.
+The published menu and menubar pattern is not restricted to application menus, and the pattern guide ships a navigation menubar example demonstrating site navigation.
+Using a menubar for site navigation is therefore a sanctioned use of that pattern and *MUST NOT* be described as a misuse of it.
+
+The caution stands as a convention of this profile with a stated cost, which is the honest form for it.
+Adopting a menubar for ordinary navigation imports the whole composite contract: a roving-focus model, a single tab stop, author-managed arrow-key movement, submenu open and close behaviour, and a role that causes a screen reader to describe the thing as a menu rather than as navigation.
+This profile judges that cost unjustified where a list of links inside a navigation landmark already gives users a structure they know and costs nothing to maintain.
+A list of buttons is usually an action group, and a toolbar is the cheaper composite where one is genuinely warranted.
+
+A package claiming this profile *MAY* nonetheless adopt a menubar, and if it does, the justification *MUST* appear in the component's specification, tagged as a `product-deviation` under clause 13, with the keyboard contract written out in full.
+
+**An ARIA grid is not a remedy for visual density.**
+
+A grid widget is justified by a need for directional cell navigation and *MUST NOT* be justified by a table looking crowded or by a wish to avoid reflowing content.
+Where the underlying difficulty is that a wide table is hard to use at high zoom, the response is a scoped scroll container and a correctly justified exception under clause 22, and *MUST NOT* be a role change.
+
+#### 24.6 The catalogue and its gates
+
+A package claiming this profile *MUST NOT* implement a pattern catalogue larger than the product needs.
+
+The profile defines an ordered catalogue.
+Priorities 1 to 5 *MAY* be adopted on judgement.
+Priorities 6 to 8 *MUST NOT* be adopted without a recorded justification, and the justification *MUST* be recorded at the time the gate is passed rather than reconstructed later.
+
+| Priority | Pattern or primitive | Gate |
+| --- | --- | --- |
+| 1 | Native button, link, checkbox, radio, text input, select | None |
+| 2 | Disclosure | None |
+| 3 | Dialog | None |
+| 4 | Alert and status messaging | None |
+| 5 | Native table with a scoped scroll container | None |
+| 6 | Tabs | Recorded finding that persistent peer views improve a task |
+| 7 | Combobox | Recorded finding that a large controlled vocabulary must be searched |
+| 8 | Tree, treegrid, or ARIA grid | Recorded user research demonstrating the need |
+
+The ordering is deliberate.
+Priorities 1 to 5 consist almost entirely of native elements and one simple composite, and in an audit and remediation product they cover the core work.
+Priorities 6 to 8 carry complex keyboard and assistive-technology contracts, and each unused composite adds untested surface.
+
+Visual density *MUST NOT* be recorded as the gate justification for priority 8.
+
+#### 24.7 What this profile does not settle
+
+A package claiming this profile *MUST NOT* claim conformance to any pattern guide, and *MUST NOT* present adherence to this profile as evidence that a service is accessible.
+Clause 4.4 states both prohibitions for every package, and they are recalled here because this profile is where the temptation arises.
+
+The catalogue in clause 24.6 is sized for an accessibility audit and remediation product.
+It is not a general recommendation, and a package with a different purpose should expect a different catalogue.
+
+Whether the pattern guide this profile leans on should be adopted by reference as a project-wide position, rather than only inside this profile, is an open question in this project and is not settled by this clause.
+
+#### 24.8 Provenance
+
+**Adopted.** The interaction models, keyboard expectations, and pattern definitions this profile refers to as published patterns are those of the W3C ARIA Working Group, *ARIA Authoring Practices Guide (APG)*, at <https://www.w3.org/WAI/ARIA/apg/>, with the pattern index at <https://www.w3.org/WAI/ARIA/apg/patterns/>.
+
+The APG is informative and has no conformance model, which is why clause 24.7 prohibits claiming conformance to it and why the fifth clause of the statement in clause 24.1 places evidence in the shipping layer.
+
+The scope statements in clause 24.5 about the menu and menubar pattern, including the existence of a navigation menubar example demonstrating site navigation, are the APG's own, at <https://www.w3.org/WAI/ARIA/apg/patterns/menubar/>.
+The characterisation of the grid pattern as covering both tabular information and layout containers is the APG's own; the pattern is titled "Grid (Interactive Tabular Data and Layout Containers)" in the pattern index.
+
+The required outcomes this profile defers to are W3C, *Web Content Accessibility Guidelines (WCAG) 2.2*, at <https://www.w3.org/TR/WCAG22/>.
+The repair role assigned to ARIA in clause 24.1 reflects W3C, *Accessible Rich Internet Applications (WAI-ARIA) 1.2*, at <https://www.w3.org/TR/wai-aria-1.2/>.
+The native elements preferred in clause 24.3 are those of WHATWG, *HTML*, Living Standard, at <https://html.spec.whatwg.org/multipage/>.
+
+The judgement that a design system is the right layer at which to hold accessibility responsibility is supported by Putnam, Rose and MacDonald's study of accessibility in user-experience practice, in which design systems were the most frequently reported concrete action, at <https://doi.org/10.1145/3575662>.
+That study also warns that concentrating responsibility in specialist teams risks abdication elsewhere, and this profile does not claim the paper endorses its approach.
+
+**Changed.** The five-clause statement in clause 24.1 is this project's formulation.
+No external body states it, and it *MUST NOT* be attributed to the W3C or to any working group.
+
+The registry status names in clause 24.2 are deliberately method-neutral.
+Earlier drafts in this project named them after the APG specifically, and they were renamed so that the core vocabulary of clause 9 does not presuppose one pattern guide.
+
+**Originates here.** The following have no external source.
+
+The five-status registry vocabulary, the requirement that every component carry exactly one status, and the definitions of `pattern-adjacent` and `prohibited`.
+Those originated in this project and have since been moved into the core at clause 9, so they are no longer this profile's to claim; they are recorded here because this is where they were devised.
+The package-level registry artefact of clause 24.2, and the requirement that a declined pattern be recorded as a `prohibited` entry even though no component implements it.
+The grouping of twelve review items in clause 24.4, which is this project's consolidation and not a list published anywhere else.
+The requirement in clause 24.3 that a component *MUST NOT* be derived where a listed native element would have served unless insufficiency is recorded, which is the design rule that Part II deliberately declined to impose.
+The caution against menubar for ordinary navigation in clause 24.5, which is a project convention with a stated cost and not a position of the ARIA Working Group; the APG sanctions the use this profile declines.
+The caution against adopting an ARIA grid for visual density.
+The catalogue in clause 24.6, its ordering, and the gates on priorities 6 to 8.
+
+One correction is recorded because a reader is entitled to know the profile changed its mind.
+An earlier framing in this project treated the APG as the component layer of the design system.
+That was wrong in kind, because the APG describes patterns while a design system ships versioned artefacts with tests and evidence, and only the latter can be held to account.
+The status `pattern-adjacent` was added specifically because the earlier framing left no honest label for a component resembling a pattern without implementing it.

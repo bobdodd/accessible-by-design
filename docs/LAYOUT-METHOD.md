@@ -7,6 +7,10 @@ How layout is done in this project, and why.
 The method derives from *Every Layout* by Heydon Pickering and Andy Bell.
 The method is described and attributed here; its commercial source text and source code are not reproduced.
 
+**Normative form.** Clause 21 of [the AFDS specification](AFDS-SPECIFICATION.md) now carries this method as the claimable profile `afds-layout-intrinsic`.
+Where this note and clause 21 disagree, clause 21 governs.
+This note remains as the reasoning behind the profile, and is the longer-form argument rather than the requirement.
+
 ## Core argument
 
 Designing for the web is designing **without seeing**.
@@ -208,5 +212,16 @@ C33, C38, G224, and G225 govern specific contexts and primitives.
 
 ## Attribution
 
-The axioms, scale, Stack relation selector, Switcher threshold, transparent-outline pattern, and primitive approach derive from *Every Layout* by Heydon Pickering and Andy Bell.
+The axioms, scale, Stack relation selector, Switcher threshold, transparent-outline pattern, and primitive approach derive from *Every Layout* by Heydon Pickering and Andy Bell, at <https://every-layout.dev/>.
 Readers should consult the authors' publication for the original reasoning.
+
+The adjacent-sibling selector `* + *` that Stack rests on was introduced as the "lobotomized owl selector" by Heydon Pickering in *Axiomatic CSS and Lobotomized Owls*, A List Apart, 21 October 2014, at <https://alistapart.com/article/axiomatic-css-and-lobotomized-owls/>.
+The argument that margin is a relationship between adjacent elements rather than a property of an element belongs to that article.
+
+**Correction, 2026-09-01.** This project has described the primitive set as "the twelve Every Layout primitives".
+That wording implied Every Layout names twelve.
+Its own list of layouts names thirteen, including The Container, which this project does not adopt.
+The accurate statement is that this project adopts twelve of the primitives Every Layout names.
+
+What does not derive from Every Layout, and is this project's own, is recorded in clause 21.8 of the specification.
+It includes the Shadow DOM prohibition, the absolute prohibition on layout media queries, the requirement that forced-colours inspection be recorded as dated evidence, the prohibition on a Grid-primitive region claiming the Reflow two-dimensional exception, the strict reading of G225 for Reel items, and the deferral of sticky and fixed positioning.

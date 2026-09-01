@@ -6,6 +6,15 @@
 Research note on WCAG 2.2 Success Criterion 1.4.10 Reflow.
 It resolves the data-dense-layout premise formerly recorded as open question D4.
 
+**Normative form.** Clause 22 of [the AFDS specification](AFDS-SPECIFICATION.md) now carries these rules as the claimable profile `afds-reflow-scoped`, and clause 11.2 carries the core requirement that an exception rationale rest on semantic structure.
+Where this note and those clauses disagree, the clauses govern.
+This note remains as the reasoning behind the profile.
+
+The semantic reading of the exception set out below is this project's analysis of the criterion's wording, specifically of "for usage or meaning" together with "not individual cells".
+It is a defensible reading and it is not a W3C ruling.
+The resolution table is this project's application of that reading to cases the Working Group has not adjudicated.
+Clause 22.8 of the specification records the full provenance, including which rules here are stricter than the criterion requires.
+
 ## Criterion
 
 Content must be presentable without loss of information or functionality and without two-dimensional scrolling at a width equivalent to 320 CSS pixels for vertically scrolling content, or a height equivalent to 256 CSS pixels for horizontally scrolling content.

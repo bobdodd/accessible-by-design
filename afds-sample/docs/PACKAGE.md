@@ -35,6 +35,20 @@ The `adapters/` directory is present but contains guidance only, and the manifes
 Absence is declared rather than implied.
 `components/stack/stack.spec.json` records the paths of its two test fixtures and states that this sample does not ship them.
 
+### No method profile is claimed
+
+The manifest declares `methodProfiles` as an empty array.
+
+That is a substantive statement and not an omission.
+Stack is in fact built the way Part III's `afds-layout-intrinsic` profile describes, so claiming the profile would be tempting and would be wrong.
+
+Clause 21.4 of the specification requires a package claiming that profile to inspect every delineated surface in a forced-colours mode and to record the result as dated evidence.
+This sample has no such evidence record, because it has no real evidence records at all.
+A profile claim asserting a method the package cannot show it followed would be exactly the kind of unearned claim the format exists to prevent, and the specification separates the two profile axes so that the honest answer is available: this package is complete at the component level, `afds-components`, and claims no method.
+
+The empty array and an omitted array have identical meaning under clause 20.2.
+The array is written out anyway, because a reader can tell an empty declaration from an unconsidered one and cannot tell an absent field from an oversight.
+
 ## What the sample proves and what it does not
 
 The sample proves that the container rules, the manifest shape, the inventory shape, and the verification algorithm are implementable, because a script regenerates the inventory and then verifies it.
