@@ -3511,7 +3511,9 @@ All three hold here.
 }
 ```
 
-The `evidence` block declares two sources, one JSON matrix and one prose file, both with role `evidence`.
+The `evidence` block declares one source, the JSON matrix, with role `evidence`.
+The package's known-limitations prose sits in the same directory but is declared in `documentation.sources` with role `documentation`, because clause 28.1 defines `evidence` as a record of observation carrying an engine, an assistive technology, a date, and a result, and narrative prose carries none of those.
+The directory and the role are independent: clause 27.2 assigns known-limitations prose to `evidence/`, and the role describes what the artefact is rather than where it sits.
 Then the empty declarations, which are the part a reader most often misreads.
 
 ```json
@@ -3534,7 +3536,7 @@ That is an object containing an empty array, not an empty array, whereas `adapte
 `adapters` is required by clause 29.1 even when a package ships none, and the empty array is the declaration that it ships none.
 `stories` is optional, and the empty array is clause 27.3's positive declaration of absence in preference to omitting the field.
 
-The `documentation.sources` array enumerates three prose artefacts, and each carries the `id` that clause 29.1 marks as *REQUIRED* of every source object.
+The `documentation.sources` array enumerates four prose artefacts, and each carries the `id` that clause 29.1 marks as *REQUIRED* of every source object.
 
 ```json
 {
@@ -3557,6 +3559,12 @@ The `documentation.sources` array enumerates three prose artefacts, and each car
         "path": "adapters/README.md",
         "role": "documentation",
         "description": "Adapter guidance and the no-adapter-is-canonical rule."
+      },
+      {
+        "id": "known-limitations",
+        "path": "evidence/known-limitations.md",
+        "role": "documentation",
+        "description": "Narrative account of known limitations, non-guarantees, and uncertainty. Explanatory only; the records it discusses are canonical."
       }
     ]
   }
@@ -3998,14 +4006,18 @@ The items most likely to affect a reader adopting the system now:
 | D5. Measure inside excepted regions | Open | Whether `--measure` applies, reduces, or suspends inside an excepted region |
 | E1. Assistive-technology matrix | Open | Supported combinations, pass criteria, re-test cadence, and stale-result marking |
 | E3. Usability testing with disabled people | Open | A feasible participation model, or an explicit limitation statement |
+| E4. Naming an assistive technology | Open | Whether `at` carries a vendor-styled display name, a normalised identifier, or both, and whether matching is case-sensitive. Vendors disagree, and each is right about its own product |
+| E5. Unchecked manual assertions | Open | How a manual assertion that is not an assistive-technology claim records that nobody has checked it. Clause 17.3 reaches assistive-technology claims only |
+| E6. Matrix membership and support | Open | Whether the specification states that a combination's presence in an evidence matrix carries no claim of support for it |
 | G1. Which patterns enter the catalogue | Open | What user or task evidence admits a pattern, and what removes one |
 | G2. Adopting published patterns by reference | Settled, 2026-09-01 | Native HTML first, patterns adopted by reference rather than copied. Still open: how a deviation is recorded, reviewed, and signed off, and how a discoverability cost is assessed |
 | G3. Minimum matrix per component | Open | Which browser, engine and screen-reader pairs are mandatory, and the retest cadence |
 | H1. The component-contract schema | Open | The JSON Schema, the stable identifier scheme, and how the vocabulary maps onto external work |
 | H3. Package identity and signing | Open | The signature mechanism, what it signs, and how a consumer expresses trust in a publisher. Clause 1.2 confirms the specification defines no signature format |
 | H5. Recording a promotion | Open | Whether a promoted artefact carries a provenance field, and whether a reviewer's identity belongs in a package that makes no other identity claim |
+| H6. Declaring a known-limitations artefact | Open | Clause 34 requires the artefact of a full-profile package, but no clause says which manifest field declares it |
 
-Two of these deserve a note for anyone reading the guide as an adoption plan.
+Three of these deserve a note for anyone reading the guide as an adoption plan.
 
 **A2 is the one that will cost you time.**
 Clause 2.2 records the honest version: an organisation without a design system cannot adopt this method directly, because it must first identify its de facto components.
@@ -4014,6 +4026,11 @@ The register has not settled how to do that.
 **C3 affects every contrast decision you record.**
 Clause 23 sets Level AA as the default and the mechanism for declaring otherwise is settled, but the project has not decided whether to raise its own default.
 Record the level you are claiming rather than assuming the project's.
+
+**E6 affects how anyone reads your evidence.**
+A matrix row records a combination someone thought worth considering, not a combination observed to work, and the specification does not yet say so.
+Until it does, a reader who skims the rows without reading the `result` field can take your matrix for a support table.
+The practical protection is the one the sample package uses: state in your own limitations prose what the results are and are not, and keep every `result` field populated from the clause 16.3 vocabulary rather than left blank.
 
 ### Where the rest of the material lives
 

@@ -60,12 +60,6 @@
         "path": "evidence/at-matrix.json",
         "role": "evidence",
         "description": "Engine-qualified assistive-technology evidence records. All results in this sample are placeholders."
-      },
-      {
-        "id": "known-limitations",
-        "path": "evidence/known-limitations.md",
-        "role": "evidence",
-        "description": "Narrative record of known limitations, non-guarantees, and uncertainty."
       }
     ]
   },
@@ -91,6 +85,12 @@
         "path": "adapters/README.md",
         "role": "documentation",
         "description": "Adapter guidance and the no-adapter-is-canonical rule."
+      },
+      {
+        "id": "known-limitations",
+        "path": "evidence/known-limitations.md",
+        "role": "documentation",
+        "description": "Narrative account of known limitations, non-guarantees, and uncertainty. Explanatory only; the records it discusses are canonical."
       }
     ]
   },

@@ -26,9 +26,9 @@
     {
       "path": "afds-manifest.json",
       "mediaType": "application/json",
-      "byteLength": 3307,
+      "byteLength": 3371,
       "role": "canonical",
-      "sha256": "db592488fc2582a758e47d0a4c80eb6b405bd6dfca3043845351b0b4acf85cb9"
+      "sha256": "dcd3ecea101d5df12f535db4906599449096c7dd069bbcff783a2308dacbed45"
     },
     {
       "path": "components/stack/stack.md",
@@ -47,9 +47,9 @@
     {
       "path": "docs/PACKAGE.md",
       "mediaType": "text/markdown; charset=utf-8",
-      "byteLength": 7108,
+      "byteLength": 7113,
       "role": "documentation",
-      "sha256": "06c9352b0d4089e2df27ba62b6731fa24e18fbc1ca3c7c832aabf9676e0df460"
+      "sha256": "2e44dfe7e7cd8826768604600be67cdfc40718581980f1ceddcd549591ed64f4"
     },
     {
       "path": "evidence/at-matrix.json",
@@ -61,9 +61,9 @@
     {
       "path": "evidence/known-limitations.md",
       "mediaType": "text/markdown; charset=utf-8",
-      "byteLength": 4473,
+      "byteLength": 5595,
       "role": "evidence",
-      "sha256": "35e95f09e28c47f1a06b72e9c7420c9206b0b98e5d64f416f1baacc9bf5dfb76"
+      "sha256": "92ececcd66497d64b68e258673e91c14c4a2b0f6efbaba03dd25a328ee74749e"
     },
     {
       "path": "patterns/registry.json",

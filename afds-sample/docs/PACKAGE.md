@@ -23,7 +23,7 @@ Ten of them are inventory records; the eleventh is the inventory itself, which n
 | `components/stack/stack.md` | documentation | The component documentation for `stack.spec.json` |
 | `patterns/registry.json` | canonical | The pattern registry, including its prohibition entries |
 | `evidence/at-matrix.json` | evidence | Engine-qualified evidence record structure with placeholder results |
-| `evidence/known-limitations.md` | evidence | Honest limitations, non-guarantees, and uncertainty |
+| `evidence/known-limitations.md` | documentation | Honest limitations, non-guarantees, and uncertainty |
 | `adapters/README.md` | documentation | Adapter guidance and the no-adapter-is-canonical rule |
 | `docs/PACKAGE.md` | documentation | This file |
 | `LICENSES.md` | documentation | The dual licensing arrangement |

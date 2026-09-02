@@ -476,6 +476,31 @@ Leaving the collision recorded as an open question, which was the state before t
 No use of "human-readable specification" or "machine-readable contract" remains in the specification; the three occurrences in the package hierarchy, the manifest component-object table, and the completeness-profile table were corrected.
 The user guide's appendix records the resolution rather than the collision.
 
+### A known-limitations artefact is documentation, not evidence
+
+**Decision.** `evidence/known-limitations.md` carries the `documentation` role rather than the `evidence` role, and is declared in `documentation.sources` rather than in `evidence.canonicalSources`.
+Its path is unchanged, because clause 27.2 assigns known-limitations prose to `evidence/` and the role a source object carries is independent of the directory the file sits in.
+
+**Reasoning.** Neither role fitted the file as it stood, so the label had to be chosen rather than read off.
+Clause 28.1 defines `evidence` as a record of observation carrying an engine, an assistive technology, a date, and a result, and the file carries none of those fields.
+Clause 34 lists the full profile as requiring "canonical evidence records and a known-limitations artefact", naming the two separately, which reads as though the limitations prose was never conceived as an evidence record.
+The deciding argument was found rather than reasoned.
+The file asserted that two manual assertions had no evidence record of any kind, naming `stack-a5` and `stack-a6`; `stack-a5` in fact had both a matrix row and an uncertainty reference, so the prose had drifted from the records it described.
+Prose that is the only home for a fact is prose that drifts, and the `documentation` role is the one that says so.
+
+**Cost.** The file loses its own normative voice.
+Its closing paragraph read "a consumer *MUST NOT* treat any placeholder value in this package as a test result, and *MUST NOT* infer support for a combination merely because the combination appears in the matrix", which clause 28.3 forbids a `documentation` artefact from saying on its own authority.
+The first half now cites clause 16.3, which supplies it.
+The second half has no clause behind it and is now stated as a caution the specification does not yet make, recorded as open question E6.
+Moving the declaration out of `evidence.canonicalSources` also exposes a gap: clause 34 requires the artefact of a full-profile package, `documentation.sources` is *OPTIONAL*, and no clause says where the artefact must be declared.
+That is recorded as open question H6.
+
+**Rejected.** Keeping the `evidence` role and widening clause 28.1 to admit records of non-observation, which is consistent with this project's treatment of uncertainty as first-class but costs `evidence` its checkable meaning: a consumer could no longer assume an evidence artefact carries an engine, a date, and a result.
+Adding a seventh role, such as `limitations`, which is self-describing and lets the clause 28.2 ownership rule treat the artefact specially, at the cost of a new entry in a normative table that every consumer must learn in order to read one file.
+Leaving the role as it was, which was the state this decision replaces and which left the file both mislabelled and unaccountable to the records it described.
+
+**Verification.** `evidence/known-limitations.md` carries role `documentation` in the manifest and appears in `documentation.sources`; the file states no requirement in its own voice; every requirement it reports cites the clause that supplies it.
+
 ## Portable representation decisions
 
 ### AFDS uses a portable bundle, not a monolithic format

@@ -195,6 +195,32 @@ Two packages may hold evidence for the same combination under names that differ 
 
 **To settle:** whether `at` carries a vendor-styled display name, a normalised identifier, or both in separate fields; whether matching is case-sensitive; and whether the project maintains a registry of known assistive-technology identifiers rather than leaving each producer to invent them.
 
+### E5. How a manual assertion that is not an assistive-technology claim records that it has not been checked
+
+Clause 17.3 requires an assistive-technology claim without a test record to be recorded as uncertainty rather than as a guarantee.
+A manual assertion that does not depend on assistive technology falls outside that rule, and no other clause supplies one.
+
+The sample package holds a worked instance.
+`stack-a6` asserts that visual order matches DOM order in the realistic-page fixture.
+It is a manual assertion, it is not an assistive-technology claim, and it carries neither a matrix row nor an uncertainty record.
+Nothing in the package therefore states whether it has ever been checked, and nothing in the specification is violated by that silence.
+
+The cost of leaving it open is that a reader cannot distinguish a manual assertion someone has verified from one nobody has looked at.
+That is the distinction the whole substantiation vocabulary exists to draw, and it does not currently reach this case.
+
+**To settle:** whether the uncertainty vocabulary extends to non-assistive-technology assertions, whether such assertions need an evidence record of a different shape from the engine-qualified one at clause 16.2, or whether the clause 18 testing levels already cover this and should say so.
+
+### E6. Whether the presence of a combination in an evidence matrix implies support for it
+
+An evidence matrix records combinations that have been considered.
+A reader may take a row's presence as a statement that the combination works, particularly when the `result` field is one they do not recognise.
+
+Nothing in the specification forbids that reading.
+Clause 16.3 defines `not-yet-tested` as meaning no observation has been made, which settles the case of a reader who reads the field; it does not address the reader who reads only the row.
+The sample package's own limitations prose used to state the prohibition directly, but as a `documentation` artefact it cannot make a requirement the specification does not make.
+
+**To settle:** whether clause 16 states that matrix membership carries no claim of support, and if so whether that belongs with the result vocabulary at clause 16.3 or as a separate consumer obligation alongside the clause 12 prohibitions on inferring an effective level.
+
 ## F. Positioning
 
 ### F1. Annotation tradition
@@ -290,6 +316,17 @@ The adapter declaration lists the artefacts promoted from an import, so the pack
 What the promoted artefact says about its own origin is undefined, so a reader of a canonical contract cannot currently tell which of its statements a transform drafted and which a person authored.
 
 **To settle:** whether a promoted artefact carries a provenance field naming the import report, whether a promotion records a reviewer and a date, and whether a reviewer's identity belongs in a package that makes no other identity claim.
+
+### H6. Where a known-limitations artefact must be declared
+
+Clause 34 requires a package claiming the full profile to carry a known-limitations artefact.
+No clause says where that artefact is declared in the manifest.
+
+The question was invisible while the artefact carried the `evidence` role, because `evidence.canonicalSources` is *REQUIRED* in the full profile and the artefact sat there.
+The artefact is now `documentation`, and `documentation.sources` is *OPTIONAL*, so a package can satisfy clause 34 by shipping the file while declaring it nowhere.
+A consumer looking for the artefact has no field to look in.
+
+**To settle:** whether clause 34 names the field the artefact must be declared in, whether `documentation.sources` becomes *REQUIRED* in the full profile, or whether the full profile gains a dedicated field for the artefact so that its presence is checkable without inspecting paths.
 
 ## I. Deferred
 

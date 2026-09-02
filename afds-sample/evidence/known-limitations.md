@@ -25,7 +25,7 @@ The single component is a layout primitive, so no claim in this sample exercises
 No assistive-technology result in this package is real.
 
 Every `result` field in `evidence/at-matrix.json` carries the value `not-yet-tested`, and every date, observation, and tester field carries the same placeholder.
-The version fields carry it too, with one exception: the record whose `at` value is `none` carries `not-applicable` for `atVersion`, because there is no assistive technology to have a version.
+The version fields carry it too, with one exception: the three records whose `at` value is `none` carry `not-applicable` for `atVersion`, because there is no assistive technology to have a version.
 This is a deliberate choice.
 Fabricated evidence is worse than absent evidence, because absent evidence is visible as a gap while fabricated evidence looks like a guarantee.
 
@@ -36,9 +36,13 @@ The matrix records nine combinations against four claims: screen-reader announce
 The environment fields `device`, `startingViewport`, and `zoom` were added so that the reflow records can state the conditions an observation would have to be made under.
 They carry `not-applicable` on records whose claim does not involve them, which is the field-level sense of that value rather than the result-level one.
 
-Two manual assertions still have no evidence record of any kind.
-`stack-a5` covers text-spacing overrides with a doubled root font size, and `stack-a6` covers visual order matching DOM order.
-Neither has a matching uncertainty entry or matrix row, so the propagation rule has not yet been applied to them.
+One assertion still has no evidence record of any kind.
+`stack-a6` covers visual order matching DOM order in the realistic-page fixture, and it has neither a matrix row nor an uncertainty record.
+It is a manual assertion about visual order rather than an assistive-technology claim, so specification clause 17.3 does not by itself require an uncertainty record for it, but nothing in this package records whether it has been checked.
+That gap is a limitation of the format rather than of the sample, and it is recorded as an open question.
+
+The two automated assertions, `stack-a1` and `stack-a2`, likewise carry no assistive-technology record.
+Clause 17.3 governs assistive-technology claims, and neither of those two is one.
 
 ## Limitations of the Stack component
 
@@ -61,4 +65,12 @@ In a complete package that constraint belongs in the component specification, an
 
 None of the entries above is a defect report against a shipped product.
 They are the honest boundary of a draft sample.
-A consumer MUST NOT treat any placeholder value in this package as a test result, and MUST NOT infer support for a combination merely because the combination appears in the matrix.
+
+This file is declared with the `documentation` role, in the sense specification clause 28.1 gives that word, so it explains the records around it and states no requirement of its own.
+Two requirements in the specification bear on how it should be read.
+A `not-yet-tested` result means that no observation has been made and that the claim it would support is uncertainty rather than a guarantee (clause 16.3), so no placeholder value in this package is a test result.
+An uncertainty record has the same standing as a record stating a result, and its presence is not a defect (clause 17.3).
+
+One further caution has no clause behind it.
+The matrix rows record combinations that would have to be observed, not combinations observed to work, so the presence of a combination is not support for it.
+The specification does not state that, and whether it should is an open question.

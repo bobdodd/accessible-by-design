@@ -2232,12 +2232,6 @@ Read it alongside the field table: every *REQUIRED* field appears, and every opt
         "path": "evidence/at-matrix.json",
         "role": "evidence",
         "description": "Engine-qualified assistive-technology evidence records. All results in this sample are placeholders."
-      },
-      {
-        "id": "known-limitations",
-        "path": "evidence/known-limitations.md",
-        "role": "evidence",
-        "description": "Narrative record of known limitations, non-guarantees, and uncertainty."
       }
     ]
   },
@@ -2263,6 +2257,12 @@ Read it alongside the field table: every *REQUIRED* field appears, and every opt
         "path": "adapters/README.md",
         "role": "documentation",
         "description": "Adapter guidance and the no-adapter-is-canonical rule."
+      },
+      {
+        "id": "known-limitations",
+        "path": "evidence/known-limitations.md",
+        "role": "documentation",
+        "description": "Narrative account of known limitations, non-guarantees, and uncertainty. Explanatory only; the records it discusses are canonical."
       }
     ]
   },
@@ -2280,7 +2280,7 @@ Four details in the example are worth naming.
 
 The `dtcgVersion` field is what makes token validation possible at all, because a validator otherwise has to guess which version of the token format applies.
 
-Every source object throughout the manifest carries an `id`, including the three in `documentation.sources`.
+Every source object throughout the manifest carries an `id`, including the four in `documentation.sources`.
 That field is *REQUIRED* of every source object and it is the field most often omitted, because a path already looks like an identifier; it is not one, because a path can change without the artefact changing role.
 
 The `notes` array carries the three statements a consumer most needs before trusting the package, and the third is the one that matters most here: no assistive-technology result in the sample is real, and every `result` field is `not-yet-tested`.
@@ -2435,9 +2435,9 @@ Only the `records` array is abridged, and every other field is reproduced as it 
     {
       "path": "afds-manifest.json",
       "mediaType": "application/json",
-      "byteLength": 3307,
+      "byteLength": 3371,
       "role": "canonical",
-      "sha256": "db592488fc2582a758e47d0a4c80eb6b405bd6dfca3043845351b0b4acf85cb9"
+      "sha256": "dcd3ecea101d5df12f535db4906599449096c7dd069bbcff783a2308dacbed45"
     },
     {
       "path": "tokens/core.tokens.json",
