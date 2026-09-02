@@ -2396,13 +2396,23 @@ A worked scale, for illustration only:
 
 Each step is the previous one multiplied by the ratio, and spacing tokens are aliases of scale steps rather than independent values — which is what "*MUST* reference a scale value" (clause 23.2) means in practice.
 
-##### There is no minimum text size in the specification
+##### Building from the browser default rather than setting a floor
 
-Say this plainly, because a 16px floor has been asserted as project policy before.
-The specification sets no minimum text size anywhere, and the string `16px` does not occur in `docs/AFDS-SPECIFICATION.md`.
-The nearest provisions are the `1rem` scale anchor and the 3:1 on-surface ratio, both in clause 23.2, and neither is a floor in absolute units.
-A `1rem` anchor is deliberately *not* a minimum: it defers to whatever the user's root font size is, which is the whole point of anchoring there.
-If you want a floor, do not read one into clause 23.2 — raise it against the specification; this guide records the absence as a specification gap in its audit block rather than inventing a number.
+A 16px minimum is widely repeated as a rule for interface text, and it is worth being exact about what it is, because the specification states no minimum text size anywhere and a reader may take that for an omission.
+
+No accessibility standard sets a 16px floor.
+WCAG 2.2 specifies no minimum text size in absolute units at all.
+Its requirement about text size is Success Criterion 1.4.4 Resize Text, which asks that text, apart from captions and images of text, "can be resized without assistive technology up to 200 percent without loss of content or functionality", from W3C, *Web Content Accessibility Guidelines (WCAG) 2.2*, at <https://www.w3.org/TR/WCAG22/>, and discussed in the specification at clause 22.7.
+The 18 point and 14 point bold sizes in the WCAG glossary define large-scale text for the contrast criteria and are not a general floor either.
+
+What 16px is, is the default root font size in an unmodified browser.
+The accessible practice built on that default is to express every size relative to it, in `rem`, so that a user who changes the default carries all derived values with them.
+That is exactly what clause 23.2 does when it anchors the scale at `1rem`, "so that the user's own root font size is the seed for every derived value".
+
+So the figure and the specification are not in tension, and no floor clause is missing.
+Anchoring at `1rem` is the practice, expressed in the only terms that survive a user changing the default.
+Writing `16px` into a token would abandon it, because the number would stop tracking the user's choice at the moment they made one.
+The provisions that do constrain text are the `1rem` anchor and the 3:1 on-surface ratio, both in clause 23.2, and neither is a floor in absolute units.
 
 #### The measure
 
