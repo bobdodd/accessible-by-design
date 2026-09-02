@@ -12,9 +12,9 @@
     {
       "path": "LICENSES.md",
       "mediaType": "text/markdown; charset=utf-8",
-      "byteLength": 2136,
+      "byteLength": 2180,
       "role": "documentation",
-      "sha256": "59e2e4430494ceadffc00f9bd7c6465074df86b233fd9fe835cb538f8e3dd136"
+      "sha256": "bedd3036d453487186e2f516a70368969d0c6e75466c85eed9a909e322651e35"
     },
     {
       "path": "adapters/README.md",

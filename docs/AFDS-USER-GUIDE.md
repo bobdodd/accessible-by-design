@@ -3409,6 +3409,13 @@ afds-sample/
 
 The last two are not package entries: `tools/build-inventory.py` excludes them explicitly, with `EXCLUDED_TOP_LEVEL = {"tools", "README.md"}` and the comment "Repository-side helpers that are not part of the distributable package."
 That is consistent with clause 27.1, which defines no root-level file beyond the two required ones and `LICENSES.md`.
+
+It is worth being clear about what kind of rule that is.
+The specification says nothing about the directory a package is built from, so nothing in it makes those two files excludable and nothing in it would be violated if they were included.
+The boundary is the sample's own, stated in a table in its `README.md` that marks every path in the directory as package content or not, and the verify command checks that table against the package it builds so the two cannot drift apart.
+If you publish from a working directory that holds more than the package, the same is true of you: the boundary is yours to draw and yours to write down.
+Open question H7 records that the specification is silent on the matter.
+
 ##### What the manifest says
 
 The specification reproduces this manifest in full at clause 29.2, generated from the file rather than transcribed so that the example cannot drift from what it describes.
@@ -3622,9 +3629,9 @@ The first and last records show the shape, and the digests are the full sixty-fo
 {
   "path": "LICENSES.md",
   "mediaType": "text/markdown; charset=utf-8",
-  "byteLength": 2136,
+  "byteLength": 2180,
   "role": "documentation",
-  "sha256": "59e2e4430494ceadffc00f9bd7c6465074df86b233fd9fe835cb538f8e3dd136"
+  "sha256": "bedd3036d453487186e2f516a70368969d0c6e75466c85eed9a909e322651e35"
 }
 ```
 
@@ -3869,10 +3876,12 @@ Running `verify` recomputes everything and reports.
 
 ```text
 inventory: 10 records, 10 entries digest-checked
+boundary: README.md agrees with the exclusions
 VERIFY PASSED: every entry is inventoried, lengths and SHA-256 digests match
 ```
 
-The checks it performs map onto steps 5 to 8 of clause 31.
+The checks it performs map onto steps 5 to 8 of clause 31, with one addition of its own.
+The boundary line has no counterpart in clause 31, because the boundary it checks is not a specification rule; an unpacked archive carries no `README.md`, so the check reports that it was skipped and the verification still passes.
 It confirms `digestAlgorithm` is `SHA-256` and `excludesSelf` is `true`; it confirms the inventory holds no record for itself; it reports entries present but not inventoried and entries inventoried but not present, in both directions rather than stopping at the first; it compares `byteLength`, `sha256`, `mediaType` and `role` for every entry; and it confirms `entryCount` matches the number of records.
 Reporting both directions separately is clause 31 step 6 taken literally, and gathering every problem before reporting is the second of clause 31's two deliberate properties.
 
@@ -4016,6 +4025,7 @@ The items most likely to affect a reader adopting the system now:
 | H3. Package identity and signing | Open | The signature mechanism, what it signs, and how a consumer expresses trust in a publisher. Clause 1.2 confirms the specification defines no signature format |
 | H5. Recording a promotion | Open | Whether a promoted artefact carries a provenance field, and whether a reviewer's identity belongs in a package that makes no other identity claim |
 | H6. Declaring a known-limitations artefact | Open | Clause 34 requires the artefact of a full-profile package, but no clause says which manifest field declares it |
+| H7. How a source directory relates to a package | Open | The specification describes only the archive, so the boundary between a publisher's working directory and the package it produces is undefined |
 
 Three of these deserve a note for anyone reading the guide as an adoption plan.
 

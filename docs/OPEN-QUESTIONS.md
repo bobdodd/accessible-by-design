@@ -328,6 +328,19 @@ A consumer looking for the artefact has no field to look in.
 
 **To settle:** whether clause 34 names the field the artefact must be declared in, whether `documentation.sources` becomes *REQUIRED* in the full profile, or whether the full profile gains a dedicated field for the artefact so that its presence is checkable without inspecting paths.
 
+### H7. How a source directory relates to a package
+
+Part IV specifies an archive.
+It says nothing about the directory a publisher builds that archive from: the words source tree, source directory, unpacked, and repository appear nowhere in the specification.
+
+A publisher's working directory generally holds material the package does not: build scripts, contributor guidance, continuous-integration configuration.
+The sample package's directory holds two such things, and they are excluded from the inventory by a constant in the build script and described in that directory's own README.
+Neither is reachable by a consumer, and neither is checkable by a tool.
+The practical consequence is narrow, because a directory holding non-package files is simply not itself a package and no clause is violated by its existence.
+The consequence for a publisher is that the boundary is theirs to draw, and nothing tells them that it exists to be drawn.
+
+**To settle:** whether the specification acknowledges a source directory at all, and if it does, whether the boundary is declared in the manifest, recorded outside the package, or left to the publisher with the specification saying so explicitly rather than by omission.
+
 ## I. Deferred
 
 - Implementation language and framework beyond Electron with raw HTML, CSS, and JavaScript

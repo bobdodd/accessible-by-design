@@ -6,13 +6,17 @@
 This directory is the unpacked source of the **AFDS Sample** `.afds` package, version 1.0.0.
 The format it conforms to is specified in Part IV of [the AFDS specification](../docs/AFDS-SPECIFICATION.md).
 
-The repository holds sources only.
-A built `.afds` file is never committed, because it is a derived artefact reproducible from what is here.
+This directory holds sources only.
+The pack command refuses any destination inside it, so a built archive can never be committed alongside the files it was built from.
+The released archive is built to `dist/` at the repository root and is committed there, so that the exact bytes a consumer receives are reviewable and can be checked against a rebuild.
 
 ## What is in the package and what is not
 
-Nine files plus the generated inventory make up the package.
+Ten files plus the generated inventory make up the package.
 Two things in this directory are repository helpers and are deliberately excluded from the package: this `README.md` and the `tools/` directory.
+The specification does not describe a source directory at all, so that boundary is a convention of this repository rather than a conformance rule, and the table below is its only statement.
+Open question H7 records that the specification is silent on the matter.
+The verify command checks the table against the package it builds, so the two cannot drift apart.
 
 | Path | In the package? | Purpose |
 | --- | --- | --- |
@@ -20,16 +24,17 @@ Two things in this directory are repository helpers and are deliberately exclude
 | `afds-inventory.json` | Yes | Generated. Real byte lengths and real SHA-256 digests |
 | `tokens/core.tokens.json` | Yes | DTCG token sample with groups and alias references |
 | `components/stack/stack.spec.json` | Yes | Machine-readable Stack contract |
-| `components/stack/stack.md` | Yes | Human-readable Stack specification |
+| `components/stack/stack.md` | Yes | Stack component documentation, the prose counterpart of the contract |
+| `patterns/registry.json` | Yes | Package-level pattern registry, required by clause 24.2 of a native-first package |
 | `evidence/at-matrix.json` | Yes | Assistive-technology evidence records, all results placeholders |
-| `evidence/known-limitations.md` | Yes | Known limitations and uncertainty |
+| `evidence/known-limitations.md` | Yes | Known limitations and uncertainty. Declared as `documentation`, not as evidence |
 | `adapters/README.md` | Yes | Adapter guidance and the no-adapter-is-canonical rule |
 | `docs/PACKAGE.md` | Yes | What this sample demonstrates |
 | `LICENSES.md` | Yes | Dual licensing arrangement |
 | `README.md` | No | This file. Repository guidance, not package content |
 | `tools/build-inventory.py` | No | Helper script that builds, verifies, and packs |
 
-The inventory therefore holds nine records, and the packed archive holds ten entries, because the inventory never records itself.
+The inventory therefore holds ten records, and the packed archive holds eleven entries, because the inventory never records itself.
 
 ## Prerequisites
 
@@ -60,12 +65,14 @@ python3 tools/build-inventory.py verify
 
 The command re-walks the tree, recomputes every digest, and compares each record's path, media type, byte length, role, and digest.
 It reports missing entries, uninventoried entries, and any record for the inventory itself.
+It also checks the table above against what it actually builds, so a file added to the package without a row, or a row that no longer matches, fails the verification rather than going unnoticed.
 It exits with status 0 on success and 1 on any failure, so it is usable in a pre-commit hook or a continuous-integration job.
 
 Expected output for a clean tree is the following.
 
 ```text
-inventory: 9 records, 9 entries digest-checked
+inventory: 10 records, 10 entries digest-checked
+boundary: README.md agrees with the exclusions
 VERIFY PASSED: every entry is inventoried, lengths and SHA-256 digests match
 ```
 
@@ -103,7 +110,10 @@ mkdir -p tools && cp /path/to/abd/afds-sample/tools/build-inventory.py tools/
 python3 tools/build-inventory.py verify
 ```
 
-A production consumer implements the full ten-step procedure in section 9 of the format specification, which also covers path-traversal checks, encryption checks, decompression limits, and token validation against the declared DTCG version.
+An extracted archive carries no `README.md`, because that file is not package content.
+The boundary check reports that it was skipped and the verification still passes, because a directory with no boundary to state is an unpacked package rather than a source directory.
+
+A production consumer implements the full ten-step procedure at clause 31 of the specification, which also covers path-traversal checks, encryption checks, decompression limits, and token validation against the declared DTCG version.
 The helper script here covers the inventory steps only and is a development aid rather than a conforming verifier.
 
 ## Two things this sample does not prove

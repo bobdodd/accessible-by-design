@@ -18,6 +18,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import sys
 import zipfile
 from pathlib import Path
@@ -27,6 +28,12 @@ INVENTORY_NAME = "afds-inventory.json"
 MANIFEST_NAME = "afds-manifest.json"
 
 # Repository-side helpers that are not part of the distributable package.
+#
+# The specification does not describe a package source directory, so this
+# boundary is a convention of this repository rather than a conformance rule;
+# see open question H7. Its authority is the table in README.md, which states
+# for every path in this directory whether it is package content. Adding an
+# entry here without adding a row there is reported by check_boundary below.
 EXCLUDED_TOP_LEVEL = {"tools", "README.md"}
 EXCLUDED_NAMES = {".DS_Store"}
 
@@ -80,6 +87,53 @@ def role_for(path: str) -> str:
     if path.startswith("docs/"):
         return "documentation"
     return "documentation"
+
+
+def check_boundary(recorded: set[str]) -> tuple[str, list[str]]:
+    """Compare README.md's table against the package this script builds.
+
+    The specification does not describe a source directory, so the table in
+    README.md is the only authority for which files are package content. This
+    reports disagreement rather than letting the table and EXCLUDED_TOP_LEVEL
+    drift apart, which is how the table went stale once already.
+
+    Returns a status of "ok", "skip", or "fail" with any problems. A tree with
+    no README.md is an unpacked package rather than a source directory, and so
+    has no boundary to state: the check is skipped rather than failed, because
+    verifying an extracted archive must stay possible.
+    """
+    readme = PACKAGE_ROOT / "README.md"
+    if not readme.is_file():
+        return "skip", []
+
+    rows = re.findall(
+        r"^\|\s*`([^`]+)`\s*\|\s*(Yes|No)\s*\|", readme.read_text(encoding="utf-8"), re.M
+    )
+    if not rows:
+        return "fail", ["README.md states no package boundary, so the exclusions are undocumented"]
+    claimed = {path: answer == "Yes" for path, answer in rows}
+
+    problems = []
+    actual_in = recorded | {INVENTORY_NAME}
+    actual_out = {
+        rel
+        for rel in (
+            str(p.relative_to(PACKAGE_ROOT)).replace(os.sep, "/")
+            for p in PACKAGE_ROOT.rglob("*")
+            if p.is_file()
+        )
+        if rel.split("/", 1)[0] in EXCLUDED_TOP_LEVEL
+    }
+
+    for path in sorted(actual_in - {p for p, yes in claimed.items() if yes}):
+        problems.append(f"{path}: package content, but README.md does not list it as such")
+    for path in sorted(actual_out - {p for p, yes in claimed.items() if not yes}):
+        problems.append(f"{path}: excluded from the package, but README.md does not say so")
+    for path in sorted(set(claimed) - actual_in - actual_out):
+        problems.append(f"{path}: listed in README.md but absent from this directory")
+    for path in sorted(actual_in & {p for p, yes in claimed.items() if not yes}):
+        problems.append(f"{path}: README.md calls it excluded, but it is inventoried")
+    return ("fail" if problems else "ok"), problems
 
 
 def collect_entries() -> list[str]:
@@ -181,7 +235,15 @@ def cmd_verify() -> int:
     if inventory.get("entryCount") != len(recorded):
         problems.append(f"entryCount {inventory.get('entryCount')} does not match {len(recorded)} records")
 
+    boundary_status, boundary_problems = check_boundary(set(recorded))
+    problems.extend(boundary_problems)
+
     print(f"inventory: {len(recorded)} records, {checked} entries digest-checked")
+    print("boundary: " + {
+        "ok": "README.md agrees with the exclusions",
+        "fail": "README.md disagrees with the exclusions",
+        "skip": "not checked, no README.md, so this is an unpacked package rather than a source directory",
+    }[boundary_status])
     if problems:
         print("VERIFY FAILED")
         for problem in problems:

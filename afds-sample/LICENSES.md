@@ -23,6 +23,7 @@ Both licences are copyleft, so a derivative of either kind of material stays und
 | `afds-inventory.json` | GPL-3.0-only |
 | `tokens/core.tokens.json` | GPL-3.0-only |
 | `components/stack/stack.spec.json` | GPL-3.0-only |
+| `patterns/registry.json` | GPL-3.0-only |
 | `evidence/at-matrix.json` | GPL-3.0-only |
 | `components/stack/stack.md` | CC-BY-SA-4.0 |
 | `evidence/known-limitations.md` | CC-BY-SA-4.0 |
