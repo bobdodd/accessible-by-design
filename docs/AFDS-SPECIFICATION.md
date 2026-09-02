@@ -371,9 +371,14 @@ Where a term defined here is used in a normative clause, it carries this meaning
 
 **Pattern.** Several components co-operating through a task, together with the guidance governing that co-operation.
 
-**Component contract.** The machine-readable declaration of what a component guarantees, what it does not guarantee, and the assertions that make those statements checkable.
+**Component contract.** The whole set of commitments a component makes about itself: what it guarantees, what it does not guarantee, and the assertions that make those statements checkable.
+Part II defines it, and it is carried by a component specification rather than being a separate artefact.
 
-**Component specification.** The human-readable counterpart to a component contract, carrying the reasoning a contract cannot express.
+**Component specification.** The machine-readable record carrying a component contract, whose form and required fields clause 7 defines.
+It is a JSON document, and it is the authoritative source of every fact it carries.
+
+**Component documentation.** The human-readable counterpart to a component specification, carrying the reasoning the specification's fields cannot express.
+It is explanatory and introduces no fact of its own, and where it and the specification disagree the specification governs.
 
 **Guarantee.** A statement of behaviour or property that a component commits to, expressed so that it can be tested.
 
@@ -536,14 +541,14 @@ A component version is independent of the package version and of `afdsSpecVersio
 
 A `deprecated` or `withdrawn` specification *MUST* state the reason and, where one exists, the replacement `id`.
 
-#### 7.5 The human-readable counterpart
+#### 7.5 Component documentation
 
-Every component specification *SHOULD* have a human-readable counterpart carrying the reasoning the JSON cannot express.
+Every component specification *SHOULD* have component documentation: a human-readable counterpart carrying the reasoning the JSON cannot express.
 
-The counterpart *MUST NOT* contradict the specification.
+Component documentation *MUST NOT* contradict the specification.
 Where the two disagree, the specification governs, and the disagreement is a defect in the package rather than a matter for interpretation.
 
-The counterpart exists because a machine-readable contract records decisions without recording why they were taken, and a decision whose reasoning is lost cannot be safely revisited.
+Component documentation exists because a component specification records decisions without recording why they were taken, and a decision whose reasoning is lost cannot be safely revisited.
 
 ### 8. The semantic model
 
@@ -1273,7 +1278,7 @@ This follows from clause 20.1, which requires a profile to impose at least one r
 A profile with nothing in `originates` is asserting that it adopts everything and adds nothing, and the two statements cannot both be true of a conforming profile.
 A validator can therefore treat an empty `originates` as a defect without reading a word of the content.
 
-An entry *MUST NOT* name a source in `adopted` that does not support the thing adopted from it, which is the clause 20.5 prohibition applied to the serialized form.
+An entry *MUST NOT* name a source in `adopted` that does not support the thing adopted from it, which is the clause 20.5 prohibition applied to the serialised form.
 
 The structure exists so that provenance can be checked mechanically for completeness, which prose cannot be.
 A validator can determine that every `changed` entry references a real `adopted` entry and that `originates` is non-empty.
@@ -2015,7 +2020,7 @@ At the archive root sit exactly two required files.
 
 Beneath the root sit up to nine directories.
 `tokens/` holds design-token files.
-`components/` holds one subdirectory per component, each containing a machine-readable contract and a human-readable specification.
+`components/` holds one subdirectory per component, each containing a component specification and its component documentation.
 `patterns/` holds multi-component flow documentation.
 `manifests/` holds generated interface manifests such as a Custom Elements Manifest.
 `evidence/` holds assistive-technology evidence records and known-limitations prose.
@@ -2152,15 +2157,16 @@ A **component object** replaces `path` with two paths, because a component alway
 | `id` | String | *REQUIRED* | Stable component identifier. |
 | `name` | String | *REQUIRED* | Human-readable component name. |
 | `kind` | String | *REQUIRED* | Component kind, for example `layout-primitive` or `interactive-component`. |
-| `specification` | String | *REQUIRED* | Path to the machine-readable contract. |
-| `documentation` | String | *REQUIRED* | Path to the human-readable specification. |
+| `specification` | String | *REQUIRED* | Path to the component specification. |
+| `documentation` | String | *REQUIRED* | Path to the component documentation. |
 | `role` | String | *REQUIRED* | *MUST* be `canonical`. |
 
 An **adapter object** is specified in clause 33.
 
 #### 29.2 Worked example
 
-The example below is the complete manifest of the sample package that accompanies this specification, with the `adapters` array shown empty because that package ships no adapters.
+The example below is the manifest of the sample package that accompanies this specification, reproduced verbatim.
+It is generated from `afds-sample/afds-manifest.json` rather than transcribed, so that it cannot drift from the file it describes.
 Read it alongside the field table: every *REQUIRED* field appears, and every optional array that is absent from the payload is present as an empty array rather than omitted.
 
 ```json
@@ -2170,10 +2176,12 @@ Read it alongside the field table: every *REQUIRED* field appears, and every opt
   "packageId": "com.a11ybob.abd.afds-sample",
   "packageVersion": "1.0.0",
   "title": "AFDS Sample",
-  "description": "A minimal but complete Accessibility Focused Design System package.",
+  "description": "A minimal but complete Accessibility Focused Design System package demonstrating the declared hierarchy, canonical source declarations, a DTCG token sample, one layout-primitive component contract, structured assistive-technology evidence, adapter guidance, and dual licensing.",
   "created": "2026-08-29",
   "conformanceProfile": "afds-components",
-  "methodProfiles": ["afds-patterns-native-first"],
+  "methodProfiles": [
+    "afds-patterns-native-first"
+  ],
   "targetConformanceLevel": "AA",
   "licences": {
     "code": "GPL-3.0-only",
@@ -2191,7 +2199,7 @@ Read it alongside the field table: every *REQUIRED* field appears, and every opt
         "id": "core",
         "path": "tokens/core.tokens.json",
         "role": "canonical",
-        "description": "Core spacing, typography, measure, and colour tokens."
+        "description": "Core spacing, typography, measure, and colour tokens for the sample."
       }
     ]
   },
@@ -2213,7 +2221,7 @@ Read it alongside the field table: every *REQUIRED* field appears, and every opt
         "id": "pattern-registry",
         "path": "patterns/registry.json",
         "role": "canonical",
-        "description": "Package-level pattern registry required of a package claiming afds-patterns-native-first, at specification clause 24.2."
+        "description": "Package-level pattern registry required of a package claiming afds-patterns-native-first, at specification clause 24.2. Records the status of every component and every pattern this package has declined."
       }
     ]
   },
@@ -2223,24 +2231,61 @@ Read it alongside the field table: every *REQUIRED* field appears, and every opt
         "id": "at-matrix",
         "path": "evidence/at-matrix.json",
         "role": "evidence",
-        "description": "Engine-qualified evidence records. All results are placeholders."
+        "description": "Engine-qualified assistive-technology evidence records. All results in this sample are placeholders."
+      },
+      {
+        "id": "known-limitations",
+        "path": "evidence/known-limitations.md",
+        "role": "evidence",
+        "description": "Narrative record of known limitations, non-guarantees, and uncertainty."
       }
     ]
   },
-  "schemas": { "canonicalSources": [] },
+  "schemas": {
+    "canonicalSources": []
+  },
+  "documentation": {
+    "sources": [
+      {
+        "id": "package-doc",
+        "path": "docs/PACKAGE.md",
+        "role": "documentation",
+        "description": "What this sample package demonstrates."
+      },
+      {
+        "id": "licences-doc",
+        "path": "LICENSES.md",
+        "role": "documentation",
+        "description": "Dual licensing arrangement for code and documentation."
+      },
+      {
+        "id": "adapters-readme",
+        "path": "adapters/README.md",
+        "role": "documentation",
+        "description": "Adapter guidance and the no-adapter-is-canonical rule."
+      }
+    ]
+  },
   "adapters": [],
   "stories": [],
   "notes": [
     "AFDS 1.0.0 is a project draft, not a W3C standard.",
-    "Inventory integrity is not a digital signature and does not prove provenance."
+    "Inventory integrity is not a digital signature and does not prove provenance.",
+    "No assistive-technology test results in this package are real; every result field is marked not-yet-tested."
   ]
 }
 ```
 
-Three details in the example are worth naming.
+Four details in the example are worth naming.
+
 The `dtcgVersion` field is what makes token validation possible at all, because a validator otherwise has to guess which version of the token format applies.
-The `notes` array carries the two statements a consumer most needs before trusting the package.
-The empty `adapters` array is a positive declaration, not an oversight, and clause 27.3 requires it in preference to omitting the field.
+
+Every source object throughout the manifest carries an `id`, including the three in `documentation.sources`.
+That field is *REQUIRED* of every source object and it is the field most often omitted, because a path already looks like an identifier; it is not one, because a path can change without the artefact changing role.
+
+The `notes` array carries the three statements a consumer most needs before trusting the package, and the third is the one that matters most here: no assistive-technology result in the sample is real, and every `result` field is `not-yet-tested`.
+
+The empty `adapters` and `stories` arrays are positive declarations, not oversights, and clause 27.3 requires them in preference to omitting the fields.
 
 #### 29.3 Local profile declarations
 
@@ -2261,10 +2306,10 @@ A **local profile object** has the following fields.
 | `specification` | String | *OPTIONAL* | Package-relative path to the profile's full text. *MUST* appear in the inventory where present. |
 | `provenance` | Provenance object | *REQUIRED* | The profile's provenance, per clause 20.6 and clause 29.3.1. |
 
-##### 29.3.1 The serialized provenance object
+##### 29.3.1 The serialised provenance object
 
 Clause 20.6 defines the provenance object and its four members.
-This subclause fixes their serialized form.
+This subclause fixes their serialised form.
 
 A **provenance object** has the following members.
 
@@ -2372,7 +2417,8 @@ Sorting is a review convenience: a rebuilt inventory then produces a diff that s
 #### 30.3 Worked example
 
 The example below is an abridged inventory from the sample package.
-Two of the nine records are shown; the omitted records have the same shape.
+Two of the ten records are shown, taken verbatim from `afds-sample/afds-inventory.json`; the omitted records have the same shape.
+Only the `records` array is abridged, and every other field is reproduced as it stands, so the example cannot drift from the file it describes.
 
 ```json
 {
@@ -2383,29 +2429,32 @@ Two of the nine records are shown; the omitted records have the same shape.
   "digestAlgorithm": "SHA-256",
   "digestEncoding": "lowercase-hex",
   "excludesSelf": true,
-  "entryCount": 9,
-  "description": "Inventory of every entry except this inventory itself. These digests detect transfer changes; they are not a digital signature.",
+  "entryCount": 10,
+  "description": "Inventory of every entry in this package except this inventory itself. A consumer must verify every record before relying on package content. These digests detect transfer changes; they are not a digital signature and do not identify a signer or prove provenance.",
   "records": [
     {
       "path": "afds-manifest.json",
       "mediaType": "application/json",
-      "byteLength": 2767,
+      "byteLength": 3307,
       "role": "canonical",
-      "sha256": "b480866e44ae0d66..."
+      "sha256": "db592488fc2582a758e47d0a4c80eb6b405bd6dfca3043845351b0b4acf85cb9"
     },
     {
       "path": "tokens/core.tokens.json",
       "mediaType": "application/json",
       "byteLength": 3055,
       "role": "canonical",
-      "sha256": "b45bb732e28f4c3f..."
+      "sha256": "b45bb732e28f4c3f906bb37231442e7051fb2ffe34ef6b57753b29dc68c7a29b"
     }
   ]
 }
 ```
 
-The digests in the example are truncated for readability.
-In a real inventory a `sha256` value *MUST* be the full 64 lowercase hexadecimal characters, and a consumer *MUST* reject a truncated, uppercase, or base-64 digest rather than attempting to interpret it.
+A `sha256` value *MUST* be the full 64 lowercase hexadecimal characters, and a consumer *MUST* reject a truncated, uppercase, or base-64 digest rather than attempting to interpret it.
+The two digests above are shown in full for that reason: an example that shortened them would put a non-conforming value in front of a reader who is likely to copy it.
+
+Note also that `entryCount` is 10 while the packed archive holds 11 entries.
+The difference is the inventory itself, which clause 30.1 requires the inventory to exclude from its own records.
 
 ### 31. Verification algorithm
 
@@ -2655,7 +2704,7 @@ None of the three may be inferred from either of the others: a package may be `a
 | Profile | Identifier | Requires |
 | --- | --- | --- |
 | Tokens only | `afds-tokens` | Root manifest and inventory, and at least one canonical token file declared in `tokens.canonicalSources` |
-| Components | `afds-components` | Everything in `afds-tokens`, plus at least one component with both a machine-readable contract and a human-readable specification |
+| Components | `afds-components` | Everything in `afds-tokens`, plus at least one component with both a component specification and component documentation |
 | Full | `afds-full` | Everything in `afds-components`, plus canonical evidence records and a known-limitations artefact, and a declared test fixture for every component |
 
 Three rules govern profiles.

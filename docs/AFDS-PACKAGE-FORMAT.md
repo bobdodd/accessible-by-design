@@ -23,6 +23,6 @@ Part IV, Serialisation, carries the container rules, the media type, the declare
 | 15. Open questions | [OPEN-QUESTIONS.md](OPEN-QUESTIONS.md) |
 | 16. References | Clause 6 |
 
-Part IV also specifies three bindings this document never carried, because the clauses that needed them did not exist when it was written: the `methodProfiles` array at clause 29.1, a locally defined method profile and its serialized provenance object at clause 29.3, and the pattern registry path at clause 29.4.
+Part IV also specifies three bindings this document never carried, because the clauses that needed them did not exist when it was written: the `methodProfiles` array at clause 29.1, a locally defined method profile and its serialised provenance object at clause 29.3, and the pattern registry path at clause 29.4.
 
 The `conformanceProfile` field keeps its name and is now described as a completeness profile, which is all it ever stated.

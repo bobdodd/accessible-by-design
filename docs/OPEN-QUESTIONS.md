@@ -182,6 +182,19 @@ Automated and manual testing cannot substitute for it.
 
 **To settle:** feasible participation model or an explicit limitation statement.
 
+### E4. How an assistive technology is named in an evidence record
+
+Clause 16.2 requires an evidence record to carry an `at` value, and clause 5 defines an assistive-technology combination as a named tuple, but nothing says how the name is written.
+
+Vendors do not agree with each other, and each is right about its own product.
+Microsoft's documentation styles the Windows feature lowercase as "voice access", while Apple styles its equivalent "Voice Control" with both words capitalised.
+The sample package follows each vendor's own house style and therefore holds both forms, which is faithful to the vendors and unhelpful to a consumer trying to match records across packages.
+
+The cost of leaving it open is a real interoperability problem rather than an aesthetic one.
+Two packages may hold evidence for the same combination under names that differ only in case or spacing, and no conforming consumer can be required to treat them as equal.
+
+**To settle:** whether `at` carries a vendor-styled display name, a normalised identifier, or both in separate fields; whether matching is case-sensitive; and whether the project maintains a registry of known assistive-technology identifiers rather than leaving each producer to invent them.
+
 ## F. Positioning
 
 ### F1. Annotation tradition

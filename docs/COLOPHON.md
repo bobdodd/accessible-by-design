@@ -451,6 +451,31 @@ The standard advisory remedy uses media queries, which the method forbids for la
 
 **Rejected.** Unlabelled red/amber/green severity coding.
 
+### Specification, contract, and documentation name three different things
+
+**Decision.** The three terms are fixed as follows, and clause 5 defines all three.
+A **component contract** is the whole set of commitments a component makes about itself, defined by Part II, and is not a separate artefact.
+A **component specification** is the machine-readable JSON record that carries the contract, whose form clause 7 fixes.
+**Component documentation** is the human-readable counterpart to a specification, carrying the reasoning the JSON cannot express.
+
+**Reasoning.** Clause 5 had previously defined the first two terms the other way round, making the contract machine-readable and the specification its human-readable counterpart, while clause 7 and every other use in the document treated the specification as the JSON record.
+The contradiction was load-bearing rather than cosmetic: clause 7.5 read "every component specification *SHOULD* have a human-readable counterpart", which under the old clause 5 said that every human-readable counterpart should have a human-readable counterpart.
+Usage decided the outcome.
+Ten uses in the specification, the manifest's `specification` and `documentation` field pair, the `.spec.json` filename convention, and the `documentation` artefact role at clause 28.1 all treat the specification as machine-readable, against one glossary entry that did not.
+
+**Cost.** A term has been added to clause 5, which now defines thirty-eight terms rather than thirty-seven.
+The heading at clause 7.5 changed from "The human-readable counterpart" to "Component documentation", so an external citation of that heading text no longer resolves; the clause number is unchanged.
+"Component contract" is now the abstract thing rather than an artefact, so sentences that speak of placing or reading a contract are speaking loosely of the specification that carries it.
+Those readings remain true and were left as they stand rather than swept.
+
+**Rejected.** Renaming the machine-readable record to match the old clause 5, which would have touched ten uses in the specification, twenty-three in the user guide, the manifest field name, and the filename convention, in order to preserve a single glossary entry.
+Coining two fresh terms and retiring the bare phrase, which removes the ambiguity permanently but discards a phrase already correct in the great majority of its uses.
+Leaving the collision recorded as an open question, which was the state before this decision and which left every downstream tool free to guess.
+
+**Verification.** Clause 5 defines component contract, component specification, and component documentation as three separate entries.
+No use of "human-readable specification" or "machine-readable contract" remains in the specification; the three occurrences in the package hierarchy, the manifest component-object table, and the completeness-profile table were corrected.
+The user guide's appendix records the resolution rather than the collision.
+
 ## Portable representation decisions
 
 ### AFDS uses a portable bundle, not a monolithic format
