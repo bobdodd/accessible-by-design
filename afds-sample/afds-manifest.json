@@ -75,16 +75,19 @@
   "documentation": {
     "sources": [
       {
+        "id": "package-doc",
         "path": "docs/PACKAGE.md",
         "role": "documentation",
         "description": "What this sample package demonstrates."
       },
       {
+        "id": "licences-doc",
         "path": "LICENSES.md",
         "role": "documentation",
         "description": "Dual licensing arrangement for code and documentation."
       },
       {
+        "id": "adapters-readme",
         "path": "adapters/README.md",
         "role": "documentation",
         "description": "Adapter guidance and the no-adapter-is-canonical rule."

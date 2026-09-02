@@ -4,7 +4,7 @@
 # Stack
 
 Stack is a layout primitive that applies consistent vertical rhythm between sibling elements in document order.
-It is the human-readable counterpart of `stack.spec.json`, which is the machine-readable contract.
+It is the component documentation for `stack.spec.json`, which is the component specification.
 Where the two disagree, the machine-readable specification is canonical and the disagreement is a defect to be fixed.
 
 ## Purpose

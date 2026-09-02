@@ -11,16 +11,17 @@ Everything in it is either a real artefact or an explicitly marked placeholder.
 
 ## Contents
 
-The package contains ten entries.
-Nine of them are inventory records; the tenth is the inventory itself, which never records itself.
+The package contains eleven entries.
+Ten of them are inventory records; the eleventh is the inventory itself, which never records itself (clause 30.2).
 
 | Path | Role | What it demonstrates |
 | --- | --- | --- |
 | `afds-manifest.json` | canonical | A complete manifest with canonical source declarations, licences, profile, and DTCG version |
 | `afds-inventory.json` | canonical | Real byte lengths and real lowercase hexadecimal SHA-256 digests for every other entry |
 | `tokens/core.tokens.json` | canonical | DTCG groups, `$type`, `$value`, `$description`, and alias references |
-| `components/stack/stack.spec.json` | canonical | A machine-readable component contract, including an explicit "no keyboard contract" statement |
-| `components/stack/stack.md` | documentation | The human-readable counterpart of the contract |
+| `components/stack/stack.spec.json` | canonical | A component specification, including an explicit "no keyboard contract" statement |
+| `components/stack/stack.md` | documentation | The component documentation for `stack.spec.json` |
+| `patterns/registry.json` | canonical | The pattern registry, including its prohibition entries |
 | `evidence/at-matrix.json` | evidence | Engine-qualified evidence record structure with placeholder results |
 | `evidence/known-limitations.md` | evidence | Honest limitations, non-guarantees, and uncertainty |
 | `adapters/README.md` | documentation | Adapter guidance and the no-adapter-is-canonical rule |

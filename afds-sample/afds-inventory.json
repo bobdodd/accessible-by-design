@@ -19,23 +19,23 @@
     {
       "path": "adapters/README.md",
       "mediaType": "text/markdown; charset=utf-8",
-      "byteLength": 5427,
+      "byteLength": 5695,
       "role": "documentation",
-      "sha256": "dbc258e85daa283aca0d8e52db795a863e869c478ad8a22ded1e977da1b90657"
+      "sha256": "2bf1b6eee8dba5e2351d7079331cf06f3c1071499b3214d4b43e99925f00b799"
     },
     {
       "path": "afds-manifest.json",
       "mediaType": "application/json",
-      "byteLength": 3215,
+      "byteLength": 3307,
       "role": "canonical",
-      "sha256": "354fce01f3e78e1eca60021261a2b15a54546f572faf4fa7e93af4731386053c"
+      "sha256": "db592488fc2582a758e47d0a4c80eb6b405bd6dfca3043845351b0b4acf85cb9"
     },
     {
       "path": "components/stack/stack.md",
       "mediaType": "text/markdown; charset=utf-8",
-      "byteLength": 7437,
+      "byteLength": 7433,
       "role": "documentation",
-      "sha256": "9e152b953807df2d5d57febf63c543b5d38a53690cda905ba02f32c4ae6aef25"
+      "sha256": "a18db560b2274924372073dff14d6846310db96c934f840c212eb995f4af3c41"
     },
     {
       "path": "components/stack/stack.spec.json",
@@ -47,9 +47,9 @@
     {
       "path": "docs/PACKAGE.md",
       "mediaType": "text/markdown; charset=utf-8",
-      "byteLength": 6999,
+      "byteLength": 7108,
       "role": "documentation",
-      "sha256": "1d79da7ea030127027791d53bc132bb930035b852c28885bb201539f8052990b"
+      "sha256": "06c9352b0d4089e2df27ba62b6731fa24e18fbc1ca3c7c832aabf9676e0df460"
     },
     {
       "path": "evidence/at-matrix.json",
@@ -61,9 +61,9 @@
     {
       "path": "evidence/known-limitations.md",
       "mediaType": "text/markdown; charset=utf-8",
-      "byteLength": 4374,
+      "byteLength": 4473,
       "role": "evidence",
-      "sha256": "b06d39ef3b57244b53ca780590a0825acd1d143ced7abd0eec3426cddcd677a0"
+      "sha256": "35e95f09e28c47f1a06b72e9c7420c9206b0b98e5d64f416f1baacc9bf5dfb76"
     },
     {
       "path": "patterns/registry.json",

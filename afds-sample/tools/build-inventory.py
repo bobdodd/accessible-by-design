@@ -66,7 +66,7 @@ def role_for(path: str) -> str:
     if path.startswith(("tokens/", "patterns/")):
         return "canonical"
     if path.startswith("components/"):
-        # A machine-readable contract is canonical; its prose companion is documentation.
+        # A component specification is canonical; its component documentation is documentation.
         return "canonical" if path.endswith(".spec.json") else "documentation"
     if path.startswith("evidence/"):
         return "evidence"

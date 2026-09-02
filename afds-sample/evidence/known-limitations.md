@@ -15,7 +15,7 @@ The single component is a layout primitive, so no claim in this sample exercises
 | Limitation | Consequence |
 | --- | --- |
 | No `schemas/` directory is shipped | Schema validation of the manifest and inventory cannot be demonstrated from inside the package |
-| No `patterns/` directory is shipped | Multi-component flow documentation is untested by this sample |
+| The `patterns/` directory holds the registry only | `patterns/registry.json` is shipped, but no pattern documentation accompanies it, so multi-component flow documentation is untested by this sample |
 | No `stories/` directory is shipped | The isolated and realistic-page fixtures referenced by `stack.spec.json` are absent |
 | No adapters are shipped | `adapters/README.md` states the rules but no adapter transform report is present to check them against |
 | No signature is present | The inventory detects transfer changes but proves nothing about who produced the package |

@@ -17,10 +17,11 @@ This file records the rules that any adapter in a real package must follow, so t
 
 An adapter output MUST NOT be the only source of a fact owned by a canonical artefact.
 
-The reason is ownership.
+The reason is ownership, and clause 28.2 of the AFDS specification is the authority for it.
 A token value is owned by the DTCG token file.
-A component's semantic model, keyboard contract, Reflow behaviour, WCAG mapping, non-guarantees, and uncertainty are owned by the component specification.
+A component's semantic model, derivation, keyboard contract, Reflow behaviour, WCAG mapping, guarantees, non-guarantees, assertions, and uncertainty are owned by the component specification.
 An assistive-technology observation is owned by an evidence record.
+A guarantee's substantiation status is owned by none of them, because it is computed from a guarantee and its evidence together and must not be written into either.
 
 If a fact exists only in a Figma library, a generated stylesheet, or a platform resource bundle, then the fact has left the portable bundle and the accessibility contract is no longer portable.
 That is precisely the failure the package format exists to prevent.
