@@ -55,21 +55,23 @@ SRC = "docs/AFDS-USER-GUIDE.md"
 BASE = "/adaptation/afds/user-guide"
 SPEC_BASE = "/adaptation/afds/specification"
 
-# Page slug, the `##` heading it starts at, and the short label used
-# in navigation. Order is the document's order.
+# Page slug and the `##` heading it starts at. Order is the document's
+# order. There is no separate short label: the guide is not read in
+# order, so a reader choosing a part from the navigation is choosing by
+# subject, and "Part 5" alone does not say what the part is about. The
+# navigation therefore carries the heading itself.
 PAGES = [
-    ("status", "Status of this guide", "Status"),
-    ("part-1", "Part 1. Before you start", "Part 1"),
+    ("status", "Status of this guide"),
+    ("part-1", "Part 1. Before you start"),
     ("part-2", "Part 2. What a design system is, and why accessibility "
-               "drives this one", "Part 2"),
-    ("part-3", "Part 3. Conformance, claims, and the three axes", "Part 3"),
-    ("part-4", "Part 4. The component contract", "Part 4"),
-    ("part-5", "Part 5. The method profiles", "Part 5"),
-    ("part-6", "Part 6. The package", "Part 6"),
-    ("part-7", "Part 7. Reading paths, mistakes, and what is open",
-     "Part 7"),
-    ("appendix-a", "Appendix A. Glossary", "Appendix A"),
-    ("references", "References", "References"),
+               "drives this one"),
+    ("part-3", "Part 3. Conformance, claims, and the three axes"),
+    ("part-4", "Part 4. The component contract"),
+    ("part-5", "Part 5. The method profiles"),
+    ("part-6", "Part 6. The package"),
+    ("part-7", "Part 7. Reading paths, mistakes, and what is open"),
+    ("appendix-a", "Appendix A. Glossary"),
+    ("references", "References"),
 ]
 
 BANNER = (
@@ -252,10 +254,10 @@ def main() -> int:
     starts: dict[str, int] = {}
     for i, line in enumerate(lines):
         if line.startswith("## "):
-            for slug, heading, _ in PAGES:
+            for slug, heading in PAGES:
                 if line[3:].strip() == heading:
                     starts[slug] = i
-    missing = [s for s, _, _ in PAGES if s not in starts]
+    missing = [s for s, _ in PAGES if s not in starts]
     if missing:
         sys.stderr.write(f"headings not found for: {missing}\n")
         return 1
@@ -271,7 +273,7 @@ def main() -> int:
     # order and is therefore stable for as long as the order is.
     anchors: dict[tuple[str, int], str] = {}   # (slug, line) -> anchor
     contents: list[dict[str, object]] = []
-    for slug, heading, label in PAGES:
+    for slug, heading in PAGES:
         begin, end = bounds[slug]
         used: dict[str, int] = {}
         sections: list[dict[str, str]] = []
@@ -290,7 +292,6 @@ def main() -> int:
         contents.append({
             "slug": slug,
             "heading": heading,
-            "label": label,
             "sections": sections,
         })
 
@@ -357,7 +358,7 @@ def main() -> int:
 
     # ---- pass two: render each page
     written = []
-    for slug, heading, _ in PAGES:
+    for slug, heading in PAGES:
         begin, end = bounds[slug]
         out: list[str] = []
         i = begin + 1
